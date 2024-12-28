@@ -10,7 +10,7 @@
             <label for="logo" class="form-label">Logo</label>
             <input type="file" class="form-control" id="logo" name="logo">
             @if($media->logo)
-                <img src="{{ asset($media->logo) }}" alt="Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
+                <img src="{{asset($media->logo)}}" alt="Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
             @endif
         </div>
 

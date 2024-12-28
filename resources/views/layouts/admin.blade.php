@@ -81,6 +81,23 @@
                   </ul>
                 </div>
               </li>
+              <li class="nav-item mt-2">
+                <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
+                  <i class="fas fa-box"></i> Users
+                </button>
+                <div class="collapse" id="userMenu">
+                  <ul class="nav flex-column ms-3">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fas fa-plus"></i> All Users
+                      </a>
+                    </li>
+                   
+                    
+                    
+                  </ul>
+                </div>
+            </li>
 
             <!-- Orders Section -->
             <li class="nav-item mt-2">
@@ -115,40 +132,26 @@
 
             <!-- Tags Section -->
             <li class="nav-item mt-2">
-                <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#tagMenu" aria-expanded="false" aria-controls="tagMenu">
-                  <i class="fas fa-tags"></i> Tags
+                <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#storesMenu" aria-expanded="false" aria-controls="storesMenu">
+                  <i class="fas fa-store"></i> Stores
                 </button>
-                <div class="collapse" id="tagMenu">
+                <div class="collapse" id="storesMenu">
                   <ul class="nav flex-column ms-3">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="fas fa-plus"></i> Add Tags
+                      <a class="nav-link" href="{{route('stores.create')}}">
+                        <i class="fas fa-plus"></i> Add Store
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="fas fa-list"></i> Tags List
+                      <a class="nav-link" href="{{route('stores.index')}}">
+                        <i class="fas fa-list"></i> Stores List
                       </a>
                     </li>
                   </ul>
                 </div>
             </li>
 
-            <!-- Social Media Section -->
-            <li class="nav-item mt-2">
-                <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#mediaMenu" aria-expanded="false" aria-controls="mediaMenu">
-                  <i class="fas fa-share-alt"></i> Social Media
-                </button>
-                <div class="collapse" id="mediaMenu">
-                  <ul class="nav flex-column ms-3">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="fas fa-sync-alt"></i> Update Media
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-            </li>
+           
 
             <!-- Charges Section -->
             <li class="nav-item mt-2">
@@ -159,12 +162,38 @@
                   <ul class="nav flex-column ms-3">
                     <li class="nav-item">
                       <a class="nav-link" href="#">
-                        <i class="fas fa-edit"></i> Update Charges
+                        <i class="fas fa-edit"></i> Delivery Charges
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fas fa-edit"></i> Extra Charges
                       </a>
                     </li>
                   </ul>
                 </div>
             </li>
+
+            <li class="nav-item mt-2">
+              <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#couponMenu" aria-expanded="false" aria-controls="couponMenu">
+                <i class="fas fa-dollar-sign"></i> Coupons
+              </button>
+              <div class="collapse" id="couponMenu">
+                <ul class="nav flex-column ms-3">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('coupons.index')}}">
+                      <i class="fas fa-edit"></i> All Coupons
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('coupons.create')}}">
+                      <i class="fas fa-edit"></i> Add Coupons
+                    </a>
+                  </li>
+                </ul>
+              </div>
+          </li>
 
             <!-- Blogs Section -->
             <li class="nav-item mt-2">
@@ -187,6 +216,21 @@
                 </div>
             </li>
 
+             <!-- Social Media Section -->
+             <li class="nav-item mt-2">
+              <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#mediaMenu" aria-expanded="false" aria-controls="mediaMenu">
+                <i class="fas fa-share-alt"></i> Social Media
+              </button>
+              <div class="collapse" id="mediaMenu">
+                <ul class="nav flex-column ms-3">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('media.edit')}}">
+                      <i class="fas fa-sync-alt"></i> Update Media
+                    </a>
+                  </li>
+                </ul>
+              </div>
+          </li>
           </ul>
         </div>
       </nav>
@@ -227,5 +271,6 @@
             console.error(error);
         });
   </script>
+  @yield('scripts')
 </body>
 </html>

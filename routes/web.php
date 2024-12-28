@@ -5,6 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\CouponController;
 
 use App\Http\Middleware\CheckAdmin;
 
@@ -33,5 +36,36 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
     //products routes
     Route::get('/admin/product/add', [ProductController::class, 'add'])->name('products.create');
     Route::post('/admin/product/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('admin/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('admin/products/data', [ProductController::class, 'getData'])->name('products.data');
+    Route::delete('admin/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::get('admin/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('admin/products/{id}', [ProductController::class, 'update'])->name('products.update');
+
+    //Media Data
+// Route to update the Media (PUT/PATCH request)
+    Route::get('admin/media/edit', [MediaController::class, 'edit'])->name('media.edit');
+    Route::put('media/{id}', [MediaController::class, 'update'])->name('media.update');
+
+
+// Store index page (show all stores)
+Route::get('admin/stores', [StoreController::class, 'index'])->name('stores.index');
+Route::get('admin/stores/data', [StoreController::class, 'getStores'])->name('stores.data');
+Route::get('admin/stores/create', [StoreController::class, 'create'])->name('stores.create');
+Route::post('admin/stores', [StoreController::class, 'store'])->name('stores.store');
+Route::get('admin/stores/{store}/edit', [StoreController::class, 'edit'])->name('stores.edit');
+Route::put('admin/stores/{store}', [StoreController::class, 'update'])->name('stores.update');
+Route::delete('admin/stores/{store}', [StoreController::class, 'destroy'])->name('stores.destroy');
+
+
+Route::get('admin/coupons', [CouponController::class, 'index'])->name('coupons.index');
+Route::get('admin/coupons/data', [CouponController::class, 'getCoupons'])->name('coupons.data');
+Route::get('admin/coupons/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');
+Route::put('admin/coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
+Route::delete('admin/coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+Route::get('admin/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+Route::post('admin/coupons', [CouponController::class, 'store'])->name('coupons.store');
+
+
 
 });

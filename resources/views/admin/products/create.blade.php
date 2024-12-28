@@ -4,13 +4,7 @@
     <div class="row mt-3">
       <div class="col-12">
         <h4 class="d-inline">Create Product</h4>
-        <button class="btn btn-primary float-end">Back</button>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Products</a></li>
-            <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-          </ol>
-        </nav>
+        
       </div>
     </div>
     
@@ -51,16 +45,38 @@
               <!-- Populate dynamically from the database -->
             </select>
           </div>
-
+        
           <!-- Other Fields -->
           <div class="mb-3">
             <label class="form-label" for="description">Product Description</label>
             <textarea class="form-control" id="description" name="description" rows="5"></textarea>
           </div>
-          
+          <div class="mb-3">
+            <label class="form-label" for="price"> Price </label>
+            <input class="form-control" id="price" name="price" placeholder="price" type="number" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="metaTitle"> #Tags </label>
+            <input class="form-control" id="metaTitle" name="tags" placeholder="tags" type="text" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Attributes</label>
+            <div id="attributesContainer">
+            </div>
+            <button type="button" class="btn btn-secondary" id="addAttributeBtn">Add Attribute</button>
+          </div>
           <div class="mb-3">
             <label class="form-label" for="metaTitle">Meta Title</label>
             <input class="form-control" id="metaTitle" name="meta_title" placeholder="Meta Title" type="text" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="metaTitle">Meta Tags</label>
+            <input class="form-control" id="metaTitle" name="meta_tag" placeholder="Meta Tags" type="text" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="metaTitle">Meta Description</label>
+            <input class="form-control" id="metaTitle" name="meta_desc" placeholder="Meta Desc" type="text" />
           </div>
 
           <!-- Thumbnail Image (Hidden input to hold selected thumbnail image URL) -->
@@ -109,14 +125,14 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="addGalleryImages">Add Images</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+@endsection
   <!-- jQuery Script -->
+  @section('scripts')
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -137,49 +153,36 @@
         $('form #galleryImages').addClass('d-none');
       });
 
-    //   // Add selected images to the gallery preview
-    //   $('#addGalleryImages').click(function() {
-    //     const files = $('#galleryImages')[0].files;
-    //     $('#galleryPreview').empty(); // Clear previous preview
-    //     $('#thumbnailPreview').empty(); // Clear previous thumbnail preview
+    
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      let attributeIndex = 0; // To track the index of attributes
 
-    //     $.each(files, function(index, file) {
-    //       const imgPreview = $('<img>').attr('src', URL.createObjectURL(file)).addClass('img-thumbnail m-2').css({
-    //         'max-width': '100px',
-    //         'max-height': '100px'
-    //       });
+      // Add Attribute
+      $('#addAttributeBtn').click(function(e) {
+        e.preventDefault();
+        const attributeRow = `
+          <div class="row mb-2 attribute-row" data-index="${attributeIndex}">
+            <div class="col-md-5">
+              <input type="text" class="form-control" name="attributes[${attributeIndex}][name]" placeholder="Attribute Name" required/>
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" name="attributes[${attributeIndex}][value]" placeholder="Attribute Value" required/>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-danger remove-attribute">Remove</button>
+            </div>
+          </div>`;
+        $('#attributesContainer').append(attributeRow);
+        attributeIndex++;
+      });
 
-    //       // Add image to gallery preview
-    //       $('#galleryPreview').append(imgPreview);
-
-    //       // Add image to thumbnail option
-    //       const thumbnailOption = $('<div>').addClass('m-2');
-    //       const thumbnailImg = $('<img>').attr('src', URL.createObjectURL(file)).addClass('img-thumbnail').css({
-    //         'width': '50px',
-    //         'height': '50px'
-    //       });
-    //       thumbnailOption.append(thumbnailImg);
-
-    //       // Thumbnail click to show in thumbnail preview
-    //       thumbnailOption.click(function() {
-    //         $('#thumbnailPreview').empty(); // Clear previous preview
-    //         const thumbnailLarge = $('<img>').attr('src', URL.createObjectURL(file)).css({
-    //           'width': '150px',
-    //           'height': '150px'
-    //         });
-    //         $('#thumbnailPreview').append(thumbnailLarge);
-
-    //         // Set the hidden input to store the selected thumbnail image URL
-    //         $('#thumbnailImageInput').val(URL.createObjectURL(file));
-    //       });
-
-    //       // Add thumbnail option below the gallery
-    //       $('#galleryPreview').append(thumbnailOption);
-    //     });
-
-    //     // Close the modal after adding images
-    //     $('#galleryModal').modal('hide');
-    //   });
+      // Remove Attribute Row
+      $(document).on('click', '.remove-attribute', function() {
+        $(this).closest('.attribute-row').remove();
+      });
     });
   </script>
 @endsection

@@ -22,6 +22,13 @@ class Product extends Model
         'meta_title',
         'image',
         'slug',
+        'attributes',
+        'meta_description',
+        'meta_tags',
+        'tags',
+        'brand',
+        'health',
+        'price',
     ];
 
     // Define relationships, for example, a product has many product images

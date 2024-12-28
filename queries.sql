@@ -81,8 +81,11 @@ CREATE TABLE products (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Timestamp for updates
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL -- Foreign key to categories
 );
-ALTER TABLE `products` ADD `user_id` INT NULL DEFAULT NULL AFTER `id`;
+    ALTER TABLE `products` ADD `user_id` INT NULL DEFAULT NULL AFTER `id`;
+    ALTER TABLE `products` ADD `attributes` TEXT NULL DEFAULT NULL AFTER `tags`;
+    ALTER TABLE products AUTO_INCREMENT = 1;
 
+ALTER TABLE `products` ADD `price` TEXT NULL DEFAULT NULL AFTER `description`;
 
 
 CREATE TABLE product_images (
@@ -109,4 +112,37 @@ CREATE TABLE stores (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Foreign key to users table
 );
 
+
+CREATE TABLE media (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    logo VARCHAR(255) DEFAULT NULL,
+    address VARCHAR(255) DEFAULT NULL,
+    whatsapp VARCHAR(20) DEFAULT NULL,
+    facebook VARCHAR(255) DEFAULT NULL,
+    instagram VARCHAR(255) DEFAULT NULL,
+    twitter VARCHAR(255) DEFAULT NULL,
+    mobile VARCHAR(15) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) DEFAULT NULL,
+    code VARCHAR(100) NOT NULL,
+    slug VARCHAR(255) DEFAULT NULL,
+    status TINYINT(1) DEFAULT 0,  -- 0 or 1 for active/inactive
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    type ENUM('p', 'r') NOT NULL,  -- 'p' for percentage, 'r' for fixed amount
+    description TEXT DEFAULT NULL,
+    brands VARCHAR(255) DEFAULT NULL,  -- Comma-separated list of brands
+    products VARCHAR(255) DEFAULT NULL,  -- Comma-separated list of product IDs
+    users VARCHAR(255) DEFAULT NULL,  -- Comma-separated list of user IDs
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ALTER TABLE `coupons` ADD `value` BIGINT NOT NULL DEFAULT '0' AFTER `code`;
+ALTER TABLE `coupons` ADD `min_value` BIGINT NOT NULL DEFAULT '0' AFTER `value`;
 

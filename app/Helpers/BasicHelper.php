@@ -12,4 +12,13 @@ if (!function_exists('getLayout')) {
     {
         return Agent::isMobile() ? 'layouts.mobile' : 'layouts.front';
     }
+    function getDiscount($product) {
+        $discount = $product->mrp - $product->price;
+        if ($product->mrp > 0) {
+            $discountPercentage = ($discount / $product->mrp) * 100;
+            return round($discountPercentage); 
+        } else {
+            return 0; 
+        }
+    }
 }

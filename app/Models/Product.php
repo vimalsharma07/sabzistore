@@ -29,6 +29,7 @@ class Product extends Model
         'brand',
         'health',
         'price',
+        'mrp',
     ];
 
     // Define relationships, for example, a product has many product images

@@ -36,7 +36,7 @@ class ProductController extends Controller
         $thumbnailImage = $request->file('image');
         $thumbnailImageName = time() . '_' . $thumbnailImage->getClientOriginalName();
         // Move the file to public/assets/products/thumbnails
-        $thumbnailImagePath = 'assets/products/images/' . $thumbnailImageName;;
+        $thumbnailImagePath = 'assets/products/thumbnails/' . $thumbnailImageName;;
         $thumbnailImage->move(public_path('assets/products/thumbnails'), $thumbnailImageName);
     }
     $slug = Str::slug($request->name);
@@ -65,6 +65,7 @@ class ProductController extends Controller
         'slug'=> $slug,
         'attributes'=> json_encode($attributes),
         'price'=>$request->price,
+        'mrp'=>$request->mrp,
     ]);
 
     // Handle gallery images (if any)
@@ -162,7 +163,7 @@ public function index()
         $product->meta_title = $request->meta_title;
         $product->meta_tags = $request->meta_tags;
         $product->meta_description = $request->meta_desc;
-
+        $product->mrp = $request->mrp;
         // Handle attributes
         if ($request->has('attributes')) {
             $attributes = [];

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -8,8 +8,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Front\HomepageController;
+use App\Http\Controllers\Front\CartController;
 
-use App\Http\Middleware\CheckAdmin;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -17,9 +18,18 @@ Route::post('/send-otp', [AuthController::class, 'sendOtp'])->name('send.otp');
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verify.otp');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+Route::get('/', [HomepageController::class, 'index'])->name('home');
+Route::get('/search', [HomepageController::class, 'search'])->name('search');
+Route::get('/about', [HomepageController::class, 'about'])->name('about');
+
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart']);
+Route::get('/getcart/{productId}', [CartController::class, 'getCart']);
+Route::post('/cart/remove/{productId}', [CartController::class, 'removeFromCart']);
+Route::get('/cart/check/{id}', [CartController::class, 'check'])->name('cart.check');
+Route::get('/cart', [CartController::class, 'Cart']);
+Route::get('/clearcart', [CartController::class, 'clearCart']);
+
+
 
 
 Route::middleware(['auth', CheckAdmin::class])->group(function () {

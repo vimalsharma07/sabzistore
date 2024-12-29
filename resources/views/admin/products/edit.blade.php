@@ -58,6 +58,11 @@
             <input class="form-control" id="price" name="price" value="{{ $product->price }}" placeholder="Price" type="number" />
           </div>
 
+          <div class="mb-3">
+            <label class="form-label" for="mrp">Mrp</label>
+            <input class="form-control" id="mrp" name=",rp" value="{{ $product->mrp }}" placeholder="mrp" type="number" />
+          </div>
+
           <!-- Tags -->
           <div class="mb-3">
             <label class="form-label" for="tags">Tags</label>

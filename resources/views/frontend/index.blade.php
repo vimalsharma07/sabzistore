@@ -2,14 +2,17 @@
 
 @section('content')
 <div class="row">
-    @for($i = 0; $i < 6; $i++)
-    <div class="col-6 col-md-4 col-lg-3 mb-3">
-        @include('frontend.components.products.productcard')
-
+    <div class="slider">
+        @foreach($products as $product)
+        <div>
+            @include('frontend.components.products.productcard', ['product' => $product])
+        </div>
+        @endforeach
     </div>
-    @endfor
-    >
-    
 </div>
-
+@endsection
+@section('scripts')
+<script>
+    const products = @json($products);
+</script>
 @endsection

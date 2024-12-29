@@ -86,6 +86,7 @@ CREATE TABLE products (
     ALTER TABLE products AUTO_INCREMENT = 1;
 
 ALTER TABLE `products` ADD `price` TEXT NULL DEFAULT NULL AFTER `description`;
+ALTER TABLE `products` ADD `mrp` BIGINT NOT NULL DEFAULT '0' AFTER `price`;
 
 
 CREATE TABLE product_images (
@@ -125,6 +126,7 @@ CREATE TABLE media (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+ALTER TABLE `media` ADD `linkedin` TEXT NULL DEFAULT NULL AFTER `twitter`;
 
 
 CREATE TABLE coupons (

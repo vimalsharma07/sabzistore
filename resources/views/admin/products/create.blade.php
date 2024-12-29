@@ -56,6 +56,10 @@
             <input class="form-control" id="price" name="price" placeholder="price" type="number" />
           </div>
           <div class="mb-3">
+            <label class="form-label" for="mrp"> Mrp </label>
+            <input class="form-control" id="mrp" name="mrp" placeholder="mrp" type="number" />
+          </div>
+          <div class="mb-3">
             <label class="form-label" for="metaTitle"> #Tags </label>
             <input class="form-control" id="metaTitle" name="tags" placeholder="tags" type="text" />
           </div>

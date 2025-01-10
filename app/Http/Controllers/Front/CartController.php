@@ -63,9 +63,7 @@ class CartController extends Controller
 
     public function Cart(){
         $cart = session()->get('cart', []);
-        return response()->json([
-            'cart' => $cart,
-        ]);
+        return view ('frontend.components.cart.mobilecartview',['cart'=>$cart]);
     }
 
     // Remove a product from the cart
@@ -111,4 +109,13 @@ class CartController extends Controller
     {
         return $productId . '-' . md5(json_encode($attributes));
     }
+
+public function addTip(Request $request)
+{
+    $tip = $request->input('tip', 0); // Get tip value from the form
+    session(['selected_tip' => $tip]); // Store tip in session
+
+    return redirect()->back()->with('success', 'Tip updated successfully!');
+}
+
 }

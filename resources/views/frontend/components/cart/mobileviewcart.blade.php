@@ -1,4 +1,5 @@
 
+  
   <style>
    .cart-container {
             position: fixed;
@@ -40,7 +41,7 @@
   </style>
  </head>
  <body>
-  <div class="cart-container">
+  <a class="cart-container" href="{{url('/cart')}}">
    <div class="cart-images">
     <img alt="Product 1 image" height="30" src="https://storage.googleapis.com/a1aa/image/DmfcQ0M8OetwzE7vCsHe8BX0N8cKPIhsreJ7i9ekqAg8z6zfE.jpg" width="30"/>
     <img alt="Product 2 image" height="30" src="https://storage.googleapis.com/a1aa/image/U8Q9OlDLYSaoGp3W9z7GFm4XOxs1ReH3sIeyiS8rCATaWf8nA.jpg" width="30"/>
@@ -59,5 +60,5 @@
     <i class="fas fa-chevron-right">
     </i>
    </div>
-  </div>
+  </a>
  

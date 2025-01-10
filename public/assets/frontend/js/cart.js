@@ -206,4 +206,16 @@ $(document).ready(function () {
 
     // Initialize cart status
     checkproduct();
+
+
+    function openCart() {
+        const cart = document.getElementById('cart');
+        cart.classList.add('show-cart');
+    }
+  
+    // Function to hide the cart
+    function closeCart() {
+        const cart = document.getElementById('cart');
+        cart.classList.remove('show-cart');
+    }
 });

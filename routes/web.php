@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\AddressController;
+
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -28,6 +30,16 @@ Route::post('/cart/remove/{productId}', [CartController::class, 'removeFromCart'
 Route::get('/cart/check/{id}', [CartController::class, 'check'])->name('cart.check');
 Route::get('/cart', [CartController::class, 'Cart']);
 Route::get('/clearcart', [CartController::class, 'clearCart']);
+Route::post('/add-tip', [CartController::class, 'addTip'])->name('addTip');
+
+
+Route::get('/addaddress', function () {
+    return view('frontend/user/addaddress'); 
+});
+
+Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
+Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
+
 
 
 

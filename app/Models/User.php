@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return ucfirst($this->role);
     }
+    
+     public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

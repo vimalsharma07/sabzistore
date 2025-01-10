@@ -211,162 +211,18 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Initialize Slick Slider
-            $('.slider').slick({
-                dots: false,                // Show dots for navigation
-                infinite: false,            // Infinite loop
-                speed: 500,                // Transition speed
-                slidesToShow: 4,           // Show 4 products at once on larger screens
-                slidesToScroll: 1,         // Scroll 1 product at a time
-                autoplay: true,            // Enable autoplay
-                autoplaySpeed: 3000,       // Autoplay interval in milliseconds
-                arrows: true,              // Show arrows for navigation
-                responsive: [              // Define breakpoints for responsiveness
-                    {
-                        breakpoint: 1024,  // Tablet (below 1024px)
-                        settings: {
-                            slidesToShow: 3,   // Show 3 products
-                            slidesToScroll: 1,
-                        }
-                    },
-                    {
-                        breakpoint: 768,   // Mobile (below 768px)
-                        settings: {
-                            slidesToShow: 2,   // Show 2 products
-                            slidesToScroll: 1,
-                        }
-                    },
-                    {
-                        breakpoint: 576,   // Mobile (below 576px)
-                        settings: {
-                            slidesToShow: 1,   // Show 1 product
-                            slidesToScroll: 1,
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
-    <script>
-        // Function to show the cart
-        function openCart() {
-            const cart = document.getElementById('cart');
-            cart.classList.add('show-cart');
-        }
-      
-        // Function to hide the cart
-        function closeCart() {
-            const cart = document.getElementById('cart');
-            cart.classList.remove('show-cart');
-        }
-      
-        // Optionally, you can add a button or event to trigger `openCart()`
-        // Example: openCart(); to show the cart when needed.
-      </script>
+    
+    
       
       <script src="{{asset('assets/frontend/js/cart.js')}}"></script>
+      <script src="{{asset('assets/frontend/js/slider.js')}}"></script>
+      <script src="{{asset('assets/frontend/js/currentlocation.js')}}"></script>
+      <script src="{{asset('assets/frontend/js/placeholder.js')}}"></script>
+
 <script>
-    let userLat, userLng;
+   
 
-function getUserLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showLocation, handleError);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-
-function showLocation(position) {
-    // Capture user latitude and longitude
-    const userLat = position.coords.latitude;
-    const userLng = position.coords.longitude;
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLng}&format=json`;
-
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            const locationName = data.display_name; 
-           $('.delivery-address').text(locationName);
-        })
-        .catch((error) => {
-            console.error("Error fetching location:", error);
-        });
-}
-
-
-function handleError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
-        }
-getUserLocation();
-showLocation();
-</script>
-<script>
-     const searchInput = document.getElementById("searchInput");
-
-// Suggestions for the placeholder animation
-const suggestions = [
-    "carrot",
-    "potato",
-    "tomato",
-    "onion",
-    "spinach",
-    "broccoli",
-    "cucumber",
-    "cauliflower",
-    "peas",
-    "zucchini",
-    "bell pepper",
-    "cabbage",
-    "lettuce",
-    "garlic",
-    "ginger",
-    "eggplant",
-    "mushroom",
-    "pumpkin",
-    "radish",
-    "beetroot",
-    "sweet corn",
-    "chili",
-    "okra",
-    "celery",
-    "parsley",
-    "kale",
-    "asparagus",
-    "turnip",
-    "brussels sprouts",
-    "leek",
-    "fennel",
-    "artichoke",
-    "bok choy",
-    "arugula",
-    "watercress"
-];
-
-
-let currentIndex = 0;
-
-function animatePlaceholder() {
-    searchInput.placeholder = `Search "${suggestions[currentIndex]}"`;
-    currentIndex = (currentIndex + 1) % suggestions.length; // Loop back to the first suggestion
-}
-
-// Change placeholder every 2 seconds
-setInterval(animatePlaceholder, 2000);
+     
 </script>
     @yield('scripts')
 </body>

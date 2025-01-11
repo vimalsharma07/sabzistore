@@ -45,10 +45,9 @@ if (!function_exists('getAllFees')) {
         $deliveryCharge = getDeliveryCharge($orderTotal);
         $handlingCharge = getHandlingCharge($orderTotal);
         $smallOrderCharge = getSmallOrderCharge($orderTotal);
-        
+        $tip = session('selected_tip', 0);  // Default to 0 if no tip is set
         // Example logic for a 10% discount
         $discountedFee = 0; // Example: 10% discount
-        
         // Return all fees and totals
         return [
             'itemTotal' => $orderTotal,
@@ -56,8 +55,8 @@ if (!function_exists('getAllFees')) {
             'handlingCharge' => $handlingCharge,
             'smallOrderCharge' => $smallOrderCharge,
             'discountedFee' => $discountedFee,
-            'grandTotal' => $orderTotal + $deliveryCharge->fee + $handlingCharge->fee + $smallOrderCharge->fee,
-            'discountedGrandTotal' =>$orderTotal + $deliveryCharge->discounted_fee + $handlingCharge->discounted_fee + $smallOrderCharge->discounted_fee
+            'grandTotal' => $orderTotal + $deliveryCharge->fee + $handlingCharge->fee + $smallOrderCharge->fee +$tip,
+            'discountedGrandTotal' =>$orderTotal + $deliveryCharge->discounted_fee + $handlingCharge->discounted_fee + $smallOrderCharge->discounted_fee + $tip
         ];
     }
 }
@@ -76,7 +75,13 @@ if (!function_exists('getDeliveryCharge')) {
             ->where('min_order_value_start', '<=', $orderTotal)
             ->where('max_order_value_end', '>=', $orderTotal)
             ->first();
-
+            if (!isset($deliveryFee)) {
+                // Initialize $deliveryCharge as an object
+                $deliveryFee = new stdClass();
+                $deliveryFee->fee = 50;
+                $deliveryFee->discounted_fee = 0;
+            }
+            
         return $deliveryFee ? $deliveryFee : 50; // Default to ₹50 if not found
     }
 }
@@ -95,6 +100,15 @@ if (!function_exists('getHandlingCharge')) {
             ->where('min_order_value_start', '<=', $orderTotal)
             ->where('max_order_value_end', '>=', $orderTotal)
             ->first();
+
+            
+            
+            if (!isset($handlingFee)) {
+                // Initialize $deliveryCharge as an object
+                $handlingFee = new stdClass();
+                $handlingFee->fee = 50;
+                $handlingFee->discounted_fee = 0;
+            }
 
         return $handlingFee ? $handlingFee : 20; // Default to ₹20 if not found
     }
@@ -115,6 +129,12 @@ if (!function_exists('getSmallOrderCharge')) {
             ->where('max_order_value_end', '>=', $orderTotal)
             ->first();
 
+            if (!isset($smallCartFee)) {
+                // Initialize $deliveryCharge as an object
+                $smallCartFee = new stdClass();
+                $smallCartFee->fee = 50;
+                $smallCartFee->discounted_fee = 0;
+            }
         return $smallCartFee ? $smallCartFee : 0; // Default to ₹0 if not found
     }
 }

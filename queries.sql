@@ -164,3 +164,34 @@ CREATE TABLE address (
 );
 
 
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    cart JSON NOT NULL,
+    products JSON NOT NULL,
+    order_products JSON NOT NULL,
+    quantity INT NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    tip DECIMAL(10, 2) DEFAULT 0.00,
+    delivery_fee DECIMAL(10, 2) DEFAULT 0.00,
+    discounted_delivery_fee DECIMAL(10, 2) DEFAULT 0.00,
+    handling_fee DECIMAL(10, 2) DEFAULT 0.00,
+    discounted_handling_fee DECIMAL(10, 2) DEFAULT 0.00,
+    small_cart_fee DECIMAL(10, 2) DEFAULT 0.00,
+    discounted_small_cart_fee DECIMAL(10, 2) DEFAULT 0.00,
+    savings DECIMAL(10, 2) DEFAULT 0.00,
+    coupon VARCHAR(100) DEFAULT NULL,
+    coupon_discounted DECIMAL(10, 2) DEFAULT 0.00,
+    grand_total DECIMAL(10, 2) NOT NULL,
+    total_pay DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE `address` ADD `default` INT NOT NULL DEFAULT '0' AFTER `address`;
+ALTER TABLE `address` ADD `order_number` TEXT NOT NULL AFTER `id`;
+
+
+
+

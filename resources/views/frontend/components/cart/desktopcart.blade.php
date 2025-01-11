@@ -1,203 +1,100 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-    }
-    
-    /* Animation for cart sliding in from the right */
-    @keyframes slideInFromRight {
-        0% {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        100% {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-  
-    .cart-container {
-        overflow: scroll;
-        max-width: 400px;
-        height: 90vh;
-        margin: 20px auto;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        position: fixed;
-        top: 10px;
-        right: -450px; /* Initially hidden off-screen */
-        animation: slideInFromRight 0.5s ease-out forwards; /* Applying animation */
-    }
-    
-    .cart-container.show-cart {
-        right: 20px; /* Final position when animation completes */
-    }
-  
-    .cart-header {
-        font-size: 1.25rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-    .cart-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #f1f3f5;
-        border-radius: 8px;
-    }
-    .cart-item img {
-        width: 60px;
-        height: 40px;
-        margin-right: 10px;
-    }
-    .cart-item-details {
-        flex-grow: 1;
-    }
-    .cart-item-price {
-        font-weight: bold;
-    }
-    .cart-item-quantity {
-        display: flex;
-        align-items: center;
-    }
-    .cart-item-quantity button {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-    }
-    .bill-details {
-        margin-bottom: 20px;
-    }
-    .bill-details .row {
-        margin-bottom: 10px;
-    }
-    .bill-details .row:last-child {
-        font-weight: bold;
-    }
-    .cancellation-policy {
-        margin-bottom: 20px;
-    }
-    .total-container {
-        position: fixed;
-        bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #28a745;
-        color: #fff;
-        padding: 10px;
-        border-radius: 8px;
-    }
-    .total-container button {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-    }
-  </style>
-  
-  <div class="cart-container" id="cart">
-    <div class="cart-header">
-      My Cart
-      <button aria-label="Close" class="btn-close float-end" type="button" onclick="closeCart()"></button>
+<div class="cart-layout" id="cart">
+    <div class="delivery-time">
+        <i class="fas fa-clock"></i>
+        <span>Delivery in 8 minutes</span>   <span id="overlay" class="btn btn-close">  </span>
     </div>
-  
-    <!-- Cart Item 1 -->
-    <div class="cart-item">
-      <div class="me-3">
-        <i class="fas fa-clock fa-2x"></i>
-      </div>
-      <div class="cart-item-details">
-        <div class="fw-bold">
-          Delivery in 9 minutes
-        </div>
-        <div>
-          Shipment of 1 item
-        </div>
-      </div>
-    </div>
-  
-    <!-- Cart Item 2 -->
-    <div class="cart-item">
-      <img alt="Image of Ultimate Rolling Paper with Filter" height="40" src="https://storage.googleapis.com/a1aa/image/V0g5ytrwbCIrNNpaZP71kH8TVFesNrPDujtU8cfbdo6Vgf8nA.jpg" width="60"/>
-      <div class="cart-item-details">
-        <div>
-          Ultimate Rolling Paper with Filter...
-        </div>
-        <div>
-          1 pack (32 Leaves + 32 Filters)
-        </div>
-        <div class="cart-item-price">
-          ₹80
-        </div>
-      </div>
-      <div class="cart-item-quantity">
-        <button>-</button>
-        <span class="mx-2">1</span>
-        <button>+</button>
-      </div>
-    </div>
-  
-    <!-- Bill Details -->
+
+    @if(!empty($cart) && is_array($cart))
+        @foreach($cart as $key => $item)
+            <div class="product">
+                @php
+                    $product = \App\Models\Product::find($item['product_id']);
+                @endphp
+
+                @if($product)
+                    <div class="product-left">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                        <div class="product-details">
+                            <div class="product-name">{{ $product->name }}</div>
+                            <div class="product-attribute">{{ array_key_first($item['attributes']) }}</div>
+                            <div class="product-price">
+                                <span class="normal-price">₹{{ array_values($item['attributes'])[0] }}</span>
+                                <span class="strike-price">₹{{ $product->mrp }}</span>
+                                <span class="delivery-free">Delivery Free</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-quantity">
+                            <span class="decreaseqty">-</span>
+                            <span class="qty">{{ $item['quantity'] }}</span>
+                            <span class="increaseqty">+</span>
+                        </div>
+                    </div>
+                @else
+                    <div>Product not found</div>
+                @endif
+            </div>
+        @endforeach
+    @else
+        <p>Your cart is empty.</p>
+    @endif
+
     <div class="bill-details">
-      <div class="row">
-        <div class="col">
-          Items total
-        </div>
-        <div class="col text-end">
-          ₹80
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Delivery charge
-          <i class="fas fa-info-circle"></i>
-        </div>
-        <div class="col text-end">
-          ₹25
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Handling charge
-          <i class="fas fa-info-circle"></i>
-        </div>
-        <div class="col text-end">
-          ₹5
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Grand total
-        </div>
-        <div class="col text-end">
-          ₹110
-        </div>
-      </div>
+        <h5 class="bold">Bill Details</h5>
+        <ul>
+            @php
+                $itemTotal = 0;
+                $totalqty=0;
+                foreach ($cart as $item) {
+                    $price = array_values($item['attributes'])[0] * $item['quantity'];
+                    $itemTotal += $price;
+                    $totalqty++;
+                }
+                
+
+                $fees = getAllFees($itemTotal);
+            @endphp
+
+            <li><span>Item total</span><span>₹{{ $fees['itemTotal'] }}</span></li>
+            <li><span> Delivery Charge</span><span><del>₹{{ $fees['deliveryCharge']->fee }}</del>₹{{ $fees['deliveryCharge']->discounted_fee }}</span></li>
+            <li><span> Handling Charge</span><span><del>₹{{ $fees['handlingCharge']->fee }}</del>₹{{ $fees['handlingCharge']->discounted_fee }}</span></li>
+            <li><span>Small Order Charge</span><span><del>₹{{ $fees['smallOrderCharge']->fee }}</del>₹{{ $fees['smallOrderCharge']->discounted_fee }}</span></li>
+          @if(isset($tip))
+            <li><span>Tip</span><span>₹{{ $tip }}</span></li>
+            @endif
+
+            <li><strong> Grand total</strong><strong> <del>₹{{ $fees['grandTotal'] }}</del></strong></li>
+            <li><strong>Payable Amount  </strong><strong>₹{{ $fees['discountedGrandTotal'] }}</strong></li>
+        </ul>
     </div>
-  
-    <!-- Cancellation Policy -->
+
+    <div class="tip">
+        <h5>Tip Your Delivery Partner</h5>
+        <p>Your kindness means a lot! 100% of your tip will go directly to your delivery partner.</p>
+        
+        <div class="tip-buttons">
+            <button id="tip20" class="tip-btn" onclick="selectTip(20)">₹20</button>
+            <button id="tip30" class="tip-btn" onclick="selectTip(30)">₹30</button>
+            <button id="tip50" class="tip-btn" onclick="selectTip(50)">₹50</button>
+            <button id="customTipBtn" class="tip-btn" onclick="showCustomTipInput()">Custom Tip</button>
+        </div>
+
+        <div id="customTipBox" style="display:none;">
+            <input type="number" id="customTip" placeholder="Enter Custom Tip" class="tip-input" oninput="updateCustomTip()" />
+            <button id="addCustomTip" class="add-tip-btn" onclick="addCustomTip()">Add</button>
+        </div>
+    </div>
+
     <div class="cancellation-policy">
-      <div class="fw-bold">
-        Cancellation Policy
-      </div>
-      <div>
-        Orders cannot be cancelled once packed for delivery. In case of unexpected delays, a refund will be provided, if applicable.
-      </div>
+        <h5>Cancellation Policy</h5>
+        <ul>
+            <li>Order can be cancelled once placed for delivery. In case of unexpected delays, a refund will be provided, if applicable.</li>
+        </ul>
     </div>
-  
-    <!-- Total Container -->
-    <div class="total-container">
-      <div>₹110 TOTAL</div>
-      <button>
-        Login to Proceed <i class="fas fa-arrow-right"></i>
-      </button>
+
+    <div class="address-selection"> 
+        <a href="{{ url('/addaddress') }}">Please select an address</a>
     </div>
-  </div>
-  
+</div>
+

@@ -29,54 +29,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/frontend/css/desktopcart.css') }}">
+    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/mobilecart.css') }}">
+    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/home.css') }}">
+
+
     <!-- Additional CSS -->
     @stack('styles')
      
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <style>
-        
-        .brand-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #f9c900; /* Yellow for Sabzi */
-        }
-
-        .brand-logo span {
-            color: #28a745; /* Green for Mart */
-        }
-
-        .delivery-time {
-            font-weight: bold;
-            color: #000; /* Black */
-        }
-
-        .delivery-address {
-            font-size: 0.9rem;
-            color: #6c757d; 
-            width: 60%;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .cart-button {
-            background-color: #28a745; /* Green */
-            color: #fff;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .cart-button i {
-            margin-right: 5px;
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -126,8 +90,9 @@
                         <li><a class="dropdown-item" href="#">Logout</a></li>
                     </ul>
                 </div>
-                <a href="#" class="btn cart-button" onclick="openCart()">
-                    <i class="fas fa-shopping-cart"></i> 1 items ₹90
+                <a href="#" class="btn cart-button" id="openCartBtn">
+                    <i class="fas fa-shopping-cart"></i> 
+                    <span id="carttopright"> </span>
                 </a>
             </div>
         </div>
@@ -142,7 +107,9 @@
         <main>
             @yield('content')
         </main>
-
+        @if(request()->segment(1)!='cart')   
+        @include('frontend/components/cart/desktopcart');
+        @endif
         <!-- Footer Section -->
         @section('footer')
         <footer class="bg-white text-dark py-4 w-100 d-none d-md-block">
@@ -200,6 +167,19 @@
             </div>
         </footer>
     
+        @php
+            $cart = session('cart', []); 
+
+        $itemTotal = 0;
+        $totalqty=0;
+        foreach ($cart as $item) {
+            $price = array_values($item['attributes'])[0] * $item['quantity'];
+            $itemTotal += $price;
+            $totalqty++;
+        }
+        
+
+    @endphp
         @show
     </div>
     @include('frontend.components.login.desktoplogin')
@@ -219,8 +199,35 @@
       <script src="{{asset('assets/frontend/js/currentlocation.js')}}"></script>
       <script src="{{asset('assets/frontend/js/placeholder.js')}}"></script>
 
+
+
 <script>
-   
+  $(document).ready(function() {
+    $('#openCartBtn').click(function() {
+        var cart = $('#cart');
+        var overlay = $('#overlay');
+
+        // Toggle the open class for sliding the cart
+        cart.toggleClass('open');
+        overlay.toggleClass('active');
+    });
+
+    // Close the cart when overlay is clicked
+    $('#overlay').click(function() {
+        var cart = $('#cart');
+        var overlay = $('#overlay');
+
+        cart.removeClass('open');
+        overlay.removeClass('active');
+    });
+
+
+  var totalQty =  @json($totalqty);
+  var itemTotal =  @json($itemTotal);
+
+  console.log(totalQty, itemTotal);
+  $('#carttopright').text(totalQty + " items ₹" + itemTotal);
+});
 
      
 </script>

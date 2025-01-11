@@ -27,7 +27,7 @@ $(document).ready(function () {
             {
                 breakpoint: 576,   // Mobile (below 576px)
                 settings: {
-                    slidesToShow: 1,   // Show 1 product
+                    slidesToShow: 2,   // Show 1 product
                     slidesToScroll: 1,
                 }
             }

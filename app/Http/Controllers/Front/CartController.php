@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Address;
+use Auth;
 
 class CartController extends Controller
 {
@@ -63,7 +65,16 @@ class CartController extends Controller
 
     public function Cart(){
         $cart = session()->get('cart', []);
-        return view ('frontend.components.cart.mobilecartview',['cart'=>$cart]);
+        $tip = session('selected_tip', 0);  
+        $user= Auth::user();
+        if($user){
+            $address=   Address::where('user_id', $user->id)->where('default',0)->first();
+
+        }else{
+            $address= '';
+        }
+
+        return view ('frontend.components.cart.mobilecartview',['cart'=>$cart, 'tip'=>$tip, 'address'=> $address]);
     }
 
     // Remove a product from the cart
@@ -72,22 +83,24 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $attributes = $request->input('attributes', []);
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
-
+    
         if (isset($cart[$uniqueKey])) {
             if ($cart[$uniqueKey]['quantity'] > 1) {
                 $cart[$uniqueKey]['quantity'] -= 1;
             } else {
                 unset($cart[$uniqueKey]);
             }
-
-            session()->put('cart', $cart);
+            session()->put('cart', $cart);  // Save updated cart
+        } else {
+            return response()->json(['message' => 'Product not found in cart']);
         }
-
+    
         return response()->json([
             'message' => 'Product updated successfully',
             'cart' => $cart,
         ]);
     }
+    
 
     // Check if a product exists in the cart
     public function check(Request $request, $productId)
@@ -110,12 +123,18 @@ class CartController extends Controller
         return $productId . '-' . md5(json_encode($attributes));
     }
 
-public function addTip(Request $request)
-{
-    $tip = $request->input('tip', 0); // Get tip value from the form
-    session(['selected_tip' => $tip]); // Store tip in session
-
-    return redirect()->back()->with('success', 'Tip updated successfully!');
-}
+    public function saveTip(Request $request)
+    {
+        $request->validate(['tip' => 'required|numeric']);
+        session(['selected_tip' => $request->tip]);
+        return response()->json(['message' => 'Tip saved successfully']);
+    }
+    
+    public function getTip()
+    {
+        $tip = session('selected_tip', 0);  // Default to 0 if no tip is set
+        return response()->json(['tip' => $tip]);
+    }
+    
 
 }

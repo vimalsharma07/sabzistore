@@ -21,7 +21,6 @@ $(document).ready(function () {
                         const [keydata, value] = Object.entries(product.attributes)[0];
                         // Assuming `keydata` and `dataId` are variables holding the dynamic values
                         const element = document.querySelector(`.attribute-box[data-id="${product_id}"][data-key="${keydata}"]`);
-                        console.log(element);
                         if (element) {
                             var selectedattr = $attributeBoxes.filter(`[data-id="${product_id}"]`).filter('.selected');
                             selectedattr.removeClass('selected'); // Remove 'selected' class from previous elements
@@ -47,8 +46,8 @@ $(document).ready(function () {
             }
         });
     }
-
-    products.forEach(function(product, index) {
+    if (typeof products !== 'undefined' && products.length > 0) {
+        products.forEach(function(product, index) {
         try {
             const attributes = JSON.parse(product.attributes);
             const productId= product.id;
@@ -66,7 +65,7 @@ $(document).ready(function () {
             console.error(`Error parsing attributes for product ${index + 1}:`, product.attributes, error);
         }
     });
-    
+}
     // Check if product is in the cart on page load
     function checkproductincart(productId,attributes) {
         $.ajax({
@@ -93,6 +92,7 @@ $(document).ready(function () {
     }
 
     function addtoCart(productId,attributes){
+        console.log(attributes);
         $.ajax({
             url: `/cart/add/${productId}`,
             method: 'POST',
@@ -107,6 +107,7 @@ $(document).ready(function () {
     }
 
     function removetoCart(productId,attributes){
+        
         $.ajax({
             url: `/cart/remove/${productId}`,
             method: 'POST',
@@ -153,7 +154,14 @@ $(document).ready(function () {
         const currentQty = parseInt((qele).text());
         const newQty = currentQty + 1;
         qele.text(newQty);
-        var attr = $attributeBoxes.filter(`[data-id="${productId}"]`).filter('.selected');
+        var currentPath = window.location.pathname;
+        if(currentPath=='/cart'){
+            var attr= $(this);
+        }else{
+            var attr = $attributeBoxes.filter(`[data-id="${productId}"]`).filter('.selected');
+
+        }
+        
         var attrKey = $(attr).data('key');
         var attrVal = $(attr).data('value');
 
@@ -175,7 +183,13 @@ $(document).ready(function () {
         const currentQty = parseInt((qele).text());
         const newQty = currentQty -1;
         qele.text(newQty);
-        var attr = $attributeBoxes.filter(`[data-id="${productId}"]`).hasClass('selected');
+        var currentPath = window.location.pathname;
+        if(currentPath=='/cart'){
+            var attr = $(this);
+        }else{
+            var attr = $(`.attribute-box[data-id="${productId}"].selected`);
+        }
+        console.log(attr);
         var attrKey = $(attr).data('key');
         var attrVal = $(attr).data('value');
 
@@ -199,7 +213,7 @@ $(document).ready(function () {
        var attribute = { [attrkey]: attrval }; // Use square brackets for dynamic key
        $('#productPrice'+dataid).text(attrval);
        $('#mrp'+dataid).hide();
-       console.log(attribute);
+       
        checkproductincart(dataid, attribute);
 
     });
@@ -218,4 +232,81 @@ $(document).ready(function () {
         const cart = document.getElementById('cart');
         cart.classList.remove('show-cart');
     }
+
+
+    let selectedTip = 0; // Default selected tip value
+
+    // Save tip to server using AJAX
+    function saveTipToServer(tipAmount) {
+        $.ajax({
+            url: '/save-tip',  // URL to handle tip saving
+            type: 'POST',
+            data: {
+                tip: tipAmount
+            },
+            success: function(response) {
+                console.log('Tip saved successfully:', response.message);
+            },
+            error: function(xhr) {
+                console.log('Error saving tip:', xhr.responseText);
+            }
+        });
+    }
+    $('.tip-btn').click(function() {
+        
+        const tipAmount = parseInt($(this).attr('id').replace('tip', ''));
+        alert(tipAmount);
+        if (!isNaN(tipAmount)) {
+            selectTip(tipAmount);
+        } else {
+            showCustomTipInput();
+        }
+    });
+     // Event for dynamically added custom tip
+     $(document).on('click', '#customTipBtn', function () {
+        const customTip = $('#customTip').val();
+        addCustomTip(customTip);
+    });
+    
+    function selectTip(amount) {
+        selectedTip = amount;
+        $('.tip-btn').css('background-color', '');
+        $('#tip' + amount).css('background-color', 'green');
+        $('#customTipBox').hide();
+        $('#customTip').val('');
+        saveTipToServer(selectedTip);  
+    }
+
+    function showCustomTipInput() {
+        $('#customTipBox').removeClass('d-none');
+        $('.tip-btn').css('background-color', ''); // Reset button colors
+    }
+
+    function addCustomTip() {
+        selectedTip = $('#customTip').val();
+        $('#customTipBtn').css('background-color', 'green');
+        $('#customTipBox').hide();
+        saveTipToServer(selectedTip);  // Save tip to server
+    }
+
+        // Fetch saved tip amount from the server using AJAX or session
+        $.ajax({
+            url: '/get-tip',  // URL to retrieve the saved tip
+            type: 'GET',
+            success: function(response) {
+                selectedTip = response.tip;  // Assume the server returns { tip: 20 }
+                if (selectedTip > 0) {
+                    if (selectedTip == 20 || selectedTip == 30 || selectedTip == 50) {
+                        $('#tip' + selectedTip).css('background-color', 'green');
+                    } else {
+                        $('#customTipBtn').css('background-color', 'green');
+                        $('#customTip').val(selectedTip);  // Pre-fill custom tip
+                    }
+                }
+            },
+            error: function(xhr) {
+                console.log('Error fetching tip:', xhr.responseText);
+            }
+        });
+    
 });

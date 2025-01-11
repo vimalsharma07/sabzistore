@@ -33,6 +33,6 @@ class AddressController extends Controller
             'lang' => $validated['lang'],
         ]);
 
-        return redirect()->route('address.create')->with('success', 'Address added successfully!');
+        return redirect()->route('order.create');
     }
 }

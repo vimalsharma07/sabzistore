@@ -1,0 +1,46 @@
+        
+.brand-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f9c900; 
+}
+
+.brand-logo span {
+    color: #28a745; 
+}
+
+.delivery-time {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #000;
+}
+#overlay{
+    float: right;
+    width: 10px;
+    height: 10px;
+}
+.delivery-address {
+    font-size: 0.9rem;
+    color: #6c757d; 
+    width: 60%;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cart-button {
+    background-color: #28a745; /* Green */
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.cart-button i {
+    margin-right: 5px;
+}

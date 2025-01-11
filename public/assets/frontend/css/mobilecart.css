@@ -1,0 +1,293 @@
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cart-layout {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px auto;
+        border-radius: 12px;
+        max-width: 600px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .cart-layout .delivery-time, 
+    .cart-layout .product, 
+    .cart-layout .bill-details, 
+    .cart-layout .donation, 
+    .cart-layout .tip, 
+    .cart-layout .cancellation-policy {
+        margin-bottom: 20px;
+    }
+
+    .cart-layout .delivery-time i {
+        color: #00b300;
+        margin-right: 10px;
+        font-size: 20px;
+    }
+
+    .cart-layout .product {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .cart-layout .product img {
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .cart-layout .product-details div {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .cart-layout .product-quantity {
+        background-color: #00b300;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .cart-layout .bill-details h5, 
+    .cart-layout .donation h5, 
+    .cart-layout, 
+    .cart-layout .cancellation-policy h5 {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .cart-layout .bill-details ul, 
+    .cart-layout .donation ul, 
+    .cart-layout .tip ul, 
+    .cart-layout .cancellation-policy ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .cart-layout .bill-details li, 
+    .cart-layout .donation li, 
+    .cart-layout .tip li, 
+    .cart-layout .cancellation-policy li {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .cart-layout .donation {
+        background-color: #fff3cd;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    .cart-layout .tip button {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        /*padding: 8px 15px;*/
+        border-radius: 5px;
+        font-size: 14px;
+        margin-right: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .cart-layout .tip button:hover {
+        background-color: #e9ecef;
+        border-color: #ccc;
+    }
+
+    .cart-layout .address-selection {
+        background-color: #00b300;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom:40px;
+    }
+    
+    .product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.product-left img {
+    height: 60px;
+    border-radius: 5px;
+}
+
+.product-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.product-details .product-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.product-details .product-attribute {
+    margin-bottom: 5px;
+}
+
+.product-details .product-price {
+    color: #007b00;
+    font-weight: bold;
+}
+
+.product-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.product-quantity span {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+.product-quantity span.qty {
+    margin: 0 8px;
+    font-weight: bold;
+}
+
+
+.delivery-info {
+    background-color: #f0f8ff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.delivery-info img {
+    width: 24px;
+    height: 24px;
+}
+.delivery-info .address {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+.delivery-info .address p {
+    margin: 0;
+}
+.delivery-info .address .title {
+    font-weight: bold;
+}
+.delivery-info .change {
+    color: #28a745;
+    font-weight: bold;
+}
+.select-payment {
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+    /* Strikethrough for normal price */
+    .strike-price {
+        text-decoration: line-through;
+        color: #888;
+        margin-left: 10px;
+    }
+
+    .delivery-free {
+        color: green;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    /* Add some styling for the tip buttons and custom tip input */
+    .tip-btn {
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .tip-input {
+        padding: 10px;
+        margin-top: 5px;
+    }
+
+    .add-tip-btn {
+        padding: 10px 20px;
+        margin-top: 5px;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .tip-buttons {
+        margin-top: 10px;
+    }
+
+
+    @media (max-width: 768px) {
+        .cart-layout {
+            padding: 15px;
+            margin: 10px;
+        }
+
+        .cart-layout .product img {
+            height: 40px;
+        }
+
+        .cart-layout .product-details div {
+            font-size: 12px;
+        }
+
+        .cart-layout .product-quantity {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+        .cart-layout .bill-details li,
+        .cart-layout .donation li,
+        .cart-layout .tip li,
+        .cart-layout .cancellation-policy li {
+            font-size: 12px;
+        }
+
+        .cart-layout .tip button {
+            /*padding: 6px 12px;*/
+            font-size: 12px;
+        }
+
+        .cart-layout .address-selection {
+            font-size: 12px;
+            padding: 10px;
+        }
+        
+    }

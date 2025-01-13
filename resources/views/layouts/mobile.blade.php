@@ -20,7 +20,7 @@
 
 <body>
     <!-- Top Navbar -->
-<div class="navbar @if(url()->current() == url('cart')) d-none @endif">
+<div class="navbar">
         {{-- <h1>SabziStore</h1> --}}
         <div class="search-bar">
             <input type="text" class="form-control" placeholder='Search "disposables"' id="searchInput">
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Bottom Navigation Bar -->
-    <div class="bottom-bar  @if(url()->current() == url('cart')) d-none @endif">
+    <div class="bottom-bar">
         <a href="{{url('/')}}" class="active">
             <i class="fas fa-home"></i>
             <p>Home</p>

@@ -52,8 +52,8 @@ foreach ($cart as $item) {
     $totalqty++;
 }
 
-
 @endphp
+@if($totalqty!=0)
   <a class="cart-container" href="{{url('/cart')}}">
    <div class="cart-images">
     @foreach ($cart as $item) 
@@ -62,9 +62,7 @@ foreach ($cart as $item) {
     ?>
     <img alt="Product 1 image" height="30" src="{{ asset($product->image) }}" width="30"/>
     @endforeach
-    {{-- <img alt="Product 2 image" height="30" src="https://storage.googleapis.com/a1aa/image/U8Q9OlDLYSaoGp3W9z7GFm4XOxs1ReH3sIeyiS8rCATaWf8nA.jpg" width="30"/>
-    <img alt="Product 3 image" height="30" src="https://storage.googleapis.com/a1aa/image/oypZiJQuf6VcASDI7DMwPY3aB0o44q6lG5knEmegDQncWf8nA.jpg" width="30"/>
-    <img alt="Product 4 image" height="30" src="https://storage.googleapis.com/a1aa/image/QW5Xke9fSlqRdUjilCKinfbtXAU2h3Xe9CtHG8Jb3er1z6zfE.jpg" width="30"/> --}}
+   
    </div>
    <div class="cart-text">
     <h5>
@@ -79,4 +77,5 @@ foreach ($cart as $item) {
     </i>
    </div>
   </a>
+  @endif
  

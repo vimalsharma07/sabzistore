@@ -79,17 +79,27 @@
 
             <!-- Account and Cart -->
             <div class="d-flex align-items-center">
+                @if(Auth::check())
                 <div class="dropdown me-3">
                     <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                    data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                    data-bs-toggle="dropdown" aria-expanded="false">
                         Account <i class="fas fa-chevron-down ms-1"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                        <li><a class="dropdown-item" href="{{url('/profile')}}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{url('orders/all')}}">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Logout</a></li>
                     </ul>
                 </div>
+                  @else                
+                <div class="dropdown me-3">
+                    <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
+                    data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                        Log In <i class="fas fa-chevron-down ms-1"></i>
+                    </a>
+                    
+                </div>
+                @endif
                 <a href="#" class="btn cart-button" id="openCartBtn">
                     <i class="fas fa-shopping-cart"></i> 
                     <span id="carttopright"> </span>

@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Address;
+use App\Models\Product;
+
 use Auth;
+use Agent;
 
 class CartController extends Controller
 {
@@ -15,7 +18,8 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
         $attributes = $request->input('attributes', []);
-
+        $product=   Product::where('id',$productId)->first();
+        $product->attributes= $attributes;
         // Generate unique key for product + attributes combination
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
 
@@ -26,6 +30,7 @@ class CartController extends Controller
                 'product_id' => $productId,
                 'quantity' => $quantity,
                 'attributes' => $attributes,
+                'product'=>$product,
             ];
         }
 
@@ -63,7 +68,8 @@ class CartController extends Controller
 }
 
 
-    public function Cart(){
+    public function Cart(Request $request){
+       
         $cart = session()->get('cart', []);
         $tip = session('selected_tip', 0);  
         $user= Auth::user();
@@ -74,6 +80,25 @@ class CartController extends Controller
             $address= '';
         }
 
+        if ($request->ajax()) { 
+            $cart = session()->get('cart', []); 
+            $itemTotal = 0;
+            foreach ($cart as $item) {
+                $price = array_values($item['attributes'])[0] * $item['quantity'];
+                $itemTotal += $price;
+            }
+
+            $fees = getAllFees($itemTotal); 
+            return response()->json([
+                'cart' => $cart,
+                 'fees' => $fees,
+                'tip'=> session('selected_tip', 0),
+
+            ]);
+        }
+        if(!Agent::isMobile()){
+            return redirect()->back();
+        }
         return view ('frontend.components.cart.mobilecartview',['cart'=>$cart, 'tip'=>$tip, 'address'=> $address]);
     }
 

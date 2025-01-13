@@ -5,7 +5,10 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
+    
+    
+    
+    
     const $addToCartBtn = $('.addToCartButton');
     const $attributeBoxes = $('.attribute-box');
     function checkproduct(){
@@ -13,18 +16,19 @@ $(document).ready(function () {
             url: `cart`,
             method: 'GET',
             success: function (response) {
+
                 var cart= response.cart;
                 Object.entries(cart).forEach(([key, product]) => {
                     const product_id = product.product_id;
 
                     if (Object.keys(product.attributes).length) { // Check if attributes exist
                         const [keydata, value] = Object.entries(product.attributes)[0];
-                        // Assuming `keydata` and `dataId` are variables holding the dynamic values
                         const element = document.querySelector(`.attribute-box[data-id="${product_id}"][data-key="${keydata}"]`);
                         if (element) {
                             var selectedattr = $attributeBoxes.filter(`[data-id="${product_id}"]`).filter('.selected');
-                            selectedattr.removeClass('selected'); // Remove 'selected' class from previous elements
-                            $(element).addClass('selected'); // Add 'selected' class to the new element
+                            selectedattr.removeClass('selected'); 
+                            $(element).addClass('selected'); 
+                            $('#productPrice'+product_id).text(value);
                         } else {
                             console.log(`No element found with data-key="${keydata}".`);
                         }
@@ -66,6 +70,295 @@ $(document).ready(function () {
         }
     });
 }
+
+function cartfesstip() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `cart`,
+            method: 'GET',
+            success: function (response) {
+                resolve(response);  // Resolve with the response data
+            },
+            error: function (xhr) {
+                reject(xhr.responseText);  // Reject on error
+            }
+        });
+    });
+}
+    var cart= '';
+    var fees= '';
+    var tip = '';
+    cartfesstip()
+        .then(response => {
+            cart= response.cart;
+            fees= response.fees;
+            tip= response.tip;
+
+        })
+        .catch(error => {
+            console.log(error);  
+        });
+
+        function updateDesktopCart() {
+            cartfesstip()
+                .then(response => {
+                    cart = response.cart;
+                    fees = response.fees;
+                    tip = response.tip;
+        
+                    let cartHtml = `
+                    <div class="delivery-time">
+                        <i class="fas fa-clock"></i>
+                        <span>Delivery in 8 minutes</span>
+                        <span id="overlay" class="btn btn-close"></span>
+                    </div>`;
+        
+                    if (cart && typeof cart === 'object' && Object.keys(cart).length > 0) {
+                        Object.keys(cart).forEach(key => {
+                            const item = cart[key];
+                            const product = item.product;
+                            const attributeKey = Object.keys(item.attributes)[0];
+                            const attributeValue = item.attributes[attributeKey];
+        
+                            cartHtml += `
+                            <div class="product">
+                                <div class="product-left">
+                                    <img src="${product.image}" alt="${product.name}">
+                                    <div class="product-details">
+                                        <div class="product-name">${product.name}</div>
+                                        <div class="product-attribute">${attributeKey}</div>
+                                        <div class="product-price">
+                                            <span class="normal-price">₹${attributeValue}</span>
+                                            <span class="strike-price">₹${product.mrp}</span>
+                                            <span class="delivery-free">Delivery Free</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-right">
+                                    <div class="product-quantity">
+                                        <span class="decreaseQtyCart" data-id="${item.product_id}" data-key="${attributeKey}" data-value="${attributeValue}">-</span>
+                                        <span class="quantity-value">${item.quantity}</span>
+                                        <span class="increaseQtyCart selected" data-id="${item.product_id}" data-key="${attributeKey}" data-value="${attributeValue}">+</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                    } else {
+                        cartHtml += `<p>Your cart is empty.</p>`;
+                    }
+        
+                    cartHtml += `
+                    <div class="bill-details">
+                        <h5 class="bold">Bill Details</h5>
+                        <ul>
+                            <li><span>Item total</span><span>₹${fees.itemTotal}</span></li>
+                            <li><span>Delivery Charge</span><span><del>₹${fees.deliveryCharge.fee}</del> ₹${fees.deliveryCharge.discounted_fee}</span></li>
+                            <li><span>Handling Charge</span><span><del>₹${fees.handlingCharge.fee}</del> ₹${fees.handlingCharge.discounted_fee}</span></li>
+                            <li><span>Small Order Charge</span><span><del>₹${fees.smallOrderCharge.fee}</del> ₹${fees.smallOrderCharge.discounted_fee}</span></li>
+                            <li><span>Tip</span><span>₹${tip}</span></li>
+                            <li><strong>Grand total</strong><strong><del>₹${fees.grandTotal}</del></strong></li>
+                            <li><strong>Payable Amount</strong><strong>₹${fees.discountedGrandTotal}</strong></li>
+                        </ul>
+                    </div>`;
+        
+                    cartHtml += `
+                    <div class="tip">
+                        <h5>Tip Your Delivery Partner</h5>
+                        <p>Your kindness means a lot! 100% of your tip will go directly to your delivery partner.</p>
+                        <div class="tip-buttons">
+                            <button id="tip20" class="tip-btn ${tip=='20'?'selected':''}" onclick="selectTip(20)">₹20</button>
+                            <button id="tip30" class="tip-btn ${tip=='30'?'selected':''}" onclick="selectTip(30)">₹30</button>
+                            <button id="tip50" class="tip-btn ${tip=='50'?'selected':''}" onclick="selectTip(50)">₹50</button>
+                            <button id="customTipBtn" class="tip-btn" onclick="showCustomTipInput()">Custom Tip</button>
+                        </div>
+                        <div id="customTipBox" style="display:none;">
+                            <input type="number" id="customTip" placeholder="Enter Custom Tip" class="tip-input" oninput="updateCustomTip()" />
+                            <button id="addCustomTip" class="add-tip-btn" onclick="addCustomTip()">Add</button>
+                        </div>
+                    </div>`;
+
+                 cartHtml += `
+    <div class="address-selection">
+        ${userAddress ? `
+            <div class="container mt-3">
+                <div class="delivery-info">
+                    <img alt="House icon" src="https://placehold.co/24x24" />
+                    <div class="address">
+                        <p>
+                            Delivering to
+                            <span class="title">
+                                Home
+                            </span>
+                        </p>
+                        <p>
+                            ${userAddress.houseno} ${userAddress.address}
+                        </p>
+                    </div>
+                    <div class="change">
+                        Change
+                    </div>
+                </div>
+                <div class="select-payment">
+                    <a href="/order/create">
+                        Place Order
+                    </a>
+                </div>
+            </div>
+        ` : `
+            <div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#otpModal">
+                    Log In To Proceed
+                </button>
+            </div>
+        `}
+    </div>
+`;
+
+        
+                    // Update the desktop cart layout with new HTML
+                    $('#cart').html(cartHtml);
+        
+                    // Event delegation for increase and decrease buttons
+                    $('#cart').off('click', '.increaseQtyCart');
+                    $('#cart').on('click', '.increaseQtyCart', function() {
+                        const productId = $(this).data('id');
+                        const attributeKey = $(this).data('key');
+                        const attributeValue = $(this).data('value');
+                        const attribute = { [attributeKey]: attributeValue };
+                        addtoCart(productId, attribute);
+                    });
+        
+                    $('#cart').off('click', '.decreaseQtyCart');
+                    $('#cart').on('click', '.decreaseQtyCart', function() {
+                        const productId = $(this).data('id');
+                        const attributeKey = $(this).data('key');
+                        const attributeValue = $(this).data('value');
+                        const attribute = { [attributeKey]: attributeValue };
+                        removetoCart(productId, attribute);
+                    });
+        
+                })
+                .catch(error => {
+                    console.log(error);  
+                });
+        }
+        
+
+   
+function updateMobileCart() {
+    cartfesstip()
+        .then(response => {
+            cart = response.cart;
+            fees = response.fees;
+            tip = response.tip;
+
+            let cartHtml = `
+            <div class="delivery-time">
+                <i class="fas fa-clock"></i>
+                <span>Delivery in 8 minutes</span>
+            </div>`;
+
+            if (cart && typeof cart === 'object' && Object.keys(cart).length > 0) {
+                Object.keys(cart).forEach(key => {
+                    const item = cart[key];
+                    const product = item.product;
+                    const attributeKey = Object.keys(item.attributes)[0];
+                    const attributeValue = item.attributes[attributeKey];
+
+                    cartHtml += `
+                    <div class="product">
+                        <div class="product-left">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="product-details">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-attribute">${attributeKey}</div>
+                                <div class="product-price">
+                                    <span class="normal-price">₹${attributeValue}</span>
+                                    <span class="strike-price">₹${product.mrp}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-right">
+                            <div class="product-quantity">
+                                <span class="decreaseQtyCart" data-id="${item.product_id}" data-key="${attributeKey}" data-value="${attributeValue}">-</span>
+                                <span class="quantity-value">${item.quantity}</span>
+                                <span class="increaseQtyCart selected" data-id="${item.product_id}" data-key="${attributeKey}" data-value="${attributeValue}">+</span>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            } else {
+                cartHtml += `<p>Your cart is empty.</p>`;
+            }
+
+            cartHtml += `
+            <div class="bill-details">
+                <h5 class="bold">Bill Details</h5>
+                <ul>
+                    <li><span>Item total</span><span>₹${fees.itemTotal}</span></li>
+                    <li><span>Delivery Charge</span><span><del>₹${fees.deliveryCharge.fee}</del> ₹${fees.deliveryCharge.discounted_fee}</span></li>
+                    <li><span>Handling Charge</span><span><del>₹${fees.handlingCharge.fee}</del> ₹${fees.handlingCharge.discounted_fee}</span></li>
+                    <li><span>Small Order Charge</span><span><del>₹${fees.smallOrderCharge.fee}</del> ₹${fees.smallOrderCharge.discounted_fee}</span></li>
+                    <li><span>Tip</span><span>₹${tip}</span></li>
+                    <li><strong>Grand total</strong><strong><del>₹${fees.grandTotal}</del></strong></li>
+                    <li><strong>Payable Amount</strong><strong>₹${fees.discountedGrandTotal}</strong></li>
+                </ul>
+            </div>`;
+
+            cartHtml += `
+            <div class="tip">
+                <h5>Tip Your Delivery Partner</h5>
+                <p>Your kindness means a lot! 100% of your tip will go directly to your delivery partner.</p>
+                <div class="tip-buttons">
+                    <button id="tip20" class="tip-btn ${tip=='20'?'selected':''}" onclick="selectTip(20)">₹20</button>
+                    <button id="tip30" class="tip-btn" onclick="selectTip(30)">₹30</button>
+                    <button id="tip50" class="tip-btn" onclick="selectTip(50)">₹50</button>
+                    <button id="customTipBtn" class="tip-btn" onclick="showCustomTipInput()">Custom Tip</button>
+                </div>
+                <div id="customTipBox" style="display:none;">
+                    <input type="number" id="customTip" placeholder="Enter Custom Tip" class="tip-input" oninput="updateCustomTip()" />
+                    <button id="addCustomTip" class="add-tip-btn" onclick="addCustomTip()">Add</button>
+                </div>
+            </div>`;
+
+            // Update the cart layout with new HTML
+            $('.cart-layout').html(cartHtml);
+
+            // Using jQuery for event delegation
+            $('.cart-layout').off('click', '.increaseQtyCart');
+
+            $('.cart-layout').on('click', '.increaseQtyCart', function() {
+                console.log("coming");
+                const productId = $(this).data('id');
+                const attributeKey = $(this).data('key');
+                const attributeValue = $(this).data('value');
+                 const   attribute = {
+                    [attributeKey]: attributeValue
+                };
+                  addtoCart(productId,attribute);
+                
+            });
+            $('.cart-layout').off('click', '.decreaseQtyCart');
+
+            $('.cart-layout').on('click', '.decreaseQtyCart', function() {
+
+                const productId = $(this).data('id');
+                const attributeKey = $(this).data('key');
+                const attributeValue = $(this).data('value');
+                const   attribute = {
+                   [attributeKey]: attributeValue
+               };
+                removetoCart(productId, attribute);               
+            });
+
+        })
+        .catch(error => {
+            console.log(error);  
+        });
+}
+
+
+
     // Check if product is in the cart on page load
     function checkproductincart(productId,attributes) {
         $.ajax({
@@ -92,7 +385,6 @@ $(document).ready(function () {
     }
 
     function addtoCart(productId,attributes){
-        console.log(attributes);
         $.ajax({
             url: `/cart/add/${productId}`,
             method: 'POST',
@@ -104,6 +396,8 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             }
         });
+         updateDesktopCart();
+        // updateMobileCart();
     }
 
     function removetoCart(productId,attributes){
@@ -119,6 +413,9 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             }
         });
+
+        // updateDesktopCart();
+        updateMobileCart();
     }
     // Add to Cart
     $addToCartBtn.on('click', function () {
@@ -189,7 +486,6 @@ $(document).ready(function () {
         }else{
             var attr = $(`.attribute-box[data-id="${productId}"].selected`);
         }
-        console.log(attr);
         var attrKey = $(attr).data('key');
         var attrVal = $(attr).data('value');
 

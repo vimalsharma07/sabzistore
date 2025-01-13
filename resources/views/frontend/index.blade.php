@@ -2,8 +2,22 @@
 
 @section('content')
 <div class="row">
+    <h4>Popular Products</h4>
+
     <div class="slider">
-        @foreach($products as $product)
+        @foreach($popular_products as $product)
+        <div>
+            @include('frontend.components.products.productcard', ['product' => $product])
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="row">
+    <h4>Trending Products</h4>
+
+    <div class="slider">
+        @foreach($trending_products as $product)
         <div>
             @include('frontend.components.products.productcard', ['product' => $product])
         </div>

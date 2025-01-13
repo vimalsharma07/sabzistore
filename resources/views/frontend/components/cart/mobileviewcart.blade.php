@@ -53,8 +53,9 @@ foreach ($cart as $item) {
 }
 
 @endphp
+<div id="mobilesmallcartview">
 @if($totalqty!=0)
-  <a class="cart-container" href="{{url('/cart')}}">
+  <a class="cart-container " href="{{url('/cart')}}" >
    <div class="cart-images">
     @foreach ($cart as $item) 
     <?php  
@@ -78,4 +79,5 @@ foreach ($cart as $item) {
    </div>
   </a>
   @endif
+</div>
  

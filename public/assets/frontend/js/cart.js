@@ -6,6 +6,7 @@ $(document).ready(function () {
         }
     });
     
+
     
     
     
@@ -130,7 +131,6 @@ function cartfesstip() {
                                         <div class="product-price">
                                             <span class="normal-price">₹${attributeValue}</span>
                                             <span class="strike-price">₹${product.mrp}</span>
-                                            <span class="delivery-free">Delivery Free</span>
                                         </div>
                                     </div>
                                 </div>
@@ -160,6 +160,7 @@ function cartfesstip() {
                             <li><strong>Payable Amount</strong><strong>₹${fees.discountedGrandTotal}</strong></li>
                         </ul>
                     </div>`;
+                    $('#carttopright').text(Object.keys(cart).length+' Items'+' ₹'+fees.discountedGrandTotal);
         
                     cartHtml += `
                     <div class="tip">
@@ -257,13 +258,14 @@ function updateMobileCart() {
                 <i class="fas fa-clock"></i>
                 <span>Delivery in 8 minutes</span>
             </div>`;
-
+             var cartImagesHtml= '';
             if (cart && typeof cart === 'object' && Object.keys(cart).length > 0) {
                 Object.keys(cart).forEach(key => {
                     const item = cart[key];
                     const product = item.product;
                     const attributeKey = Object.keys(item.attributes)[0];
                     const attributeValue = item.attributes[attributeKey];
+                    cartImagesHtml += '<img alt="Product image" height="30" src="' + product.image + '" width="30"/>';
 
                     cartHtml += `
                     <div class="product">
@@ -320,6 +322,22 @@ function updateMobileCart() {
                     <button id="addCustomTip" class="add-tip-btn" onclick="addCustomTip()">Add</button>
                 </div>
             </div>`;
+
+
+           var smallcart=   ` <a class="cart-container" href="{{ url('/cart') }}">
+                            <div class="cart-images">
+                                ${cartImagesHtml}
+                            </div>
+                            <div class="cart-text">
+                                <h5>View cart</h5>
+                                <p>${Object.keys(cart).length} ITEMS</p>
+                            </div>
+                            <div class="cart-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    `;
+                    $('#mobilesmallcartview').html(smallcart);
 
             // Update the cart layout with new HTML
             $('.cart-layout').html(cartHtml);
@@ -396,8 +414,13 @@ function updateMobileCart() {
                 console.log(xhr.responseText);
             }
         });
-         updateDesktopCart();
-        updateMobileCart();
+        if(isMobile){
+            updateMobileCart();
+
+        }else{
+            updateDesktopCart();
+
+        }
     }
 
     function removetoCart(productId,attributes){
@@ -414,8 +437,13 @@ function updateMobileCart() {
             }
         });
 
-        // updateDesktopCart();
-        updateMobileCart();
+        if(isMobile){
+            updateMobileCart();
+
+        }else{
+            updateDesktopCart();
+
+        }
     }
     // Add to Cart
     $addToCartBtn.on('click', function () {

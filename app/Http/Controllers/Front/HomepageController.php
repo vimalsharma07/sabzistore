@@ -9,8 +9,12 @@ use App\Models\Product;
 class HomepageController extends Controller
 {
     public function index(Request $request){
-     $products = Product::where('status',1)->get();
-     return view('frontend.index',['products'=>$products]);
+    $products = Product::where('status',1)->get();
+
+     $popular_products = Product::where('status',1)->where('popular',1)->get();
+     $trending_products = Product::where('status',1)->where('trending',1)->get();
+
+     return view('frontend.index',['products'=>$products,'popular_products'=>$popular_products,'trending_products'=>$trending_products]);
     }
 
     public function about(){

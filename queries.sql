@@ -193,6 +193,9 @@ ALTER TABLE `address` ADD `default` INT NOT NULL DEFAULT '0' AFTER `address`;
 ALTER TABLE `orders` ADD `order_number` TEXT NOT NULL AFTER `id`;
 ALTER TABLE `orders` ADD `order_status` VARCHAR(200) NOT NULL DEFAULT 'pending' AFTER `total_pay`;
 ALTER TABLE `users` ADD `photo` VARCHAR(200) NULL DEFAULT NULL AFTER `role`;
+ALTER TABLE `products` 
+ADD `popular` TINYINT(1) DEFAULT 0 AFTER `status`, 
+ADD `trending` TINYINT(1) DEFAULT 0 AFTER `popular`;
 
 
 

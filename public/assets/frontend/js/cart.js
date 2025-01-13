@@ -8,7 +8,31 @@ $(document).ready(function () {
      
 
     
-    
+    $('#openCartBtn').click(function() {
+        var cart = $('#cart');
+        var overlay = $('#overlay');
+
+        // Toggle the open class for sliding the cart
+        cart.toggleClass('open');
+        overlay.toggleClass('active');
+    });
+
+    // Close the cart when overlay is clicked
+    function closedesktopcart(){
+        var cart = $('#cart');
+        var overlay = $('#overlay');
+
+        cart.removeClass('open');
+        overlay.removeClass('active');
+    }
+    $('#overlay').click(function() {
+        closedesktopcart();
+    });
+
+
+  
+
+
     
     const $addToCartBtn = $('.addToCartButton');
     const $attributeBoxes = $('.attribute-box');
@@ -167,9 +191,9 @@ function cartfesstip() {
                         <h5>Tip Your Delivery Partner</h5>
                         <p>Your kindness means a lot! 100% of your tip will go directly to your delivery partner.</p>
                         <div class="tip-buttons">
-                            <button id="tip20" class="tip-btn ${tip=='20'?'selected':''}" onclick="selectTip(20)">₹20</button>
-                            <button id="tip30" class="tip-btn ${tip=='30'?'selected':''}" onclick="selectTip(30)">₹30</button>
-                            <button id="tip50" class="tip-btn ${tip=='50'?'selected':''}" onclick="selectTip(50)">₹50</button>
+                            <button id="tip20" data-value="20" class="tip-btn ${tip=='20'?'selected':''}" onclick="selectTip(20)">₹20</button>
+                            <button id="tip30" data-value="30" class="tip-btn ${tip=='30'?'selected':''}" onclick="selectTip(30)">₹30</button>
+                            <button id="tip50"  data-value="50" class="tip-btn ${tip=='50'?'selected':''}" onclick="selectTip(50)">₹50</button>
                             <button id="customTipBtn" class="tip-btn" onclick="showCustomTipInput()">Custom Tip</button>
                         </div>
                         <div id="customTipBox" style="display:none;">
@@ -228,7 +252,7 @@ function cartfesstip() {
                         const attribute = { [attributeKey]: attributeValue };
                         addtoCart(productId, attribute);
                     });
-        
+                   
                     $('#cart').off('click', '.decreaseQtyCart');
                     $('#cart').on('click', '.decreaseQtyCart', function() {
                         const productId = $(this).data('id');
@@ -237,7 +261,18 @@ function cartfesstip() {
                         const attribute = { [attributeKey]: attributeValue };
                         removetoCart(productId, attribute);
                     });
-        
+                    
+
+                    $('#cart').off('click', '.tip-btn');
+                    $('#cart').on('click', '.tip-btn', function() { 
+                    var tip = $(this).data('value');
+                    selectTip(tip);
+                    });   
+                    
+                    $('#cart').off('click', '#overlay');
+                    $('#cart').on('click', '#overlay', function() { 
+                        closedesktopcart();
+                    }); 
                 })
                 .catch(error => {
                     console.log(error);  
@@ -368,6 +403,12 @@ function updateMobileCart() {
                };
                 removetoCart(productId, attribute);               
             });
+
+            $('#cart').off('click', '.tip-btn');
+                    $('#cart').on('click', '.tip-btn', function() { 
+                    var tip = $(this).data('value');
+                    selectTip(tip);
+                    }); 
 
         })
         .catch(error => {
@@ -579,7 +620,6 @@ function updateMobileCart() {
     $('.tip-btn').click(function() {
         
         const tipAmount = parseInt($(this).attr('id').replace('tip', ''));
-        alert(tipAmount);
         if (!isNaN(tipAmount)) {
             selectTip(tipAmount);
         } else {
@@ -599,6 +639,11 @@ function updateMobileCart() {
         $('#customTipBox').hide();
         $('#customTip').val('');
         saveTipToServer(selectedTip);  
+        if(isMobile){
+            updateMobileCart();
+        }else{
+            updateDesktopCart();
+        }
     }
 
     function showCustomTipInput() {

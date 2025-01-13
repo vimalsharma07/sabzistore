@@ -220,23 +220,7 @@
 
 <script>
   $(document).ready(function() {
-    $('#openCartBtn').click(function() {
-        var cart = $('#cart');
-        var overlay = $('#overlay');
-
-        // Toggle the open class for sliding the cart
-        cart.toggleClass('open');
-        overlay.toggleClass('active');
-    });
-
-    // Close the cart when overlay is clicked
-    $('#overlay').click(function() {
-        var cart = $('#cart');
-        var overlay = $('#overlay');
-
-        cart.removeClass('open');
-        overlay.removeClass('active');
-    });
+   
 
 
   var totalQty =  @json($totalqty);

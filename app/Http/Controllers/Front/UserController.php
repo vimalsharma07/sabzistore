@@ -18,6 +18,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'mobile' => 'required|string|max:15',
@@ -34,6 +35,15 @@ class UserController extends Controller
         
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
+        }
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = 'profile_' . $user->id . '_' . time() . '.' . $photo->getClientOriginalExtension();
+            $destinationPath = public_path('assets/profile');
+            $photo->move($destinationPath, $photoName);
+            $user->photo = 'assets/profile/' . $photoName;
+
         }
 
         $user->save();

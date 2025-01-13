@@ -8,7 +8,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('profile.update') }}" method="POST">
+    <form action="{{ route('profile.update') }}" method="POST"  enctype="multipart/form-data" >
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
@@ -34,7 +34,10 @@
                 <option value="other" {{ $user->gender == 'other' ? 'selected' : '' }}>Other</option>
             </select>
         </div>
-
+        <div class="mb-3">
+            <label for="photo" class="form-label">Profile Photo (optional)</label>
+            <input type="file" name="photo" id="photo" class="form-control">
+        </div>
         <div class="mb-3">
             <label for="password" class="form-label">New Password</label>
             <input type="password" name="password" id="password" class="form-control">

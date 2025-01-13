@@ -76,7 +76,7 @@
  @endphp
   <div class="container">
    <div class="profile-header">
-    <img alt="Profile picture of a person" src="https://placehold.co/100x100"/>
+    <img alt="Profile picture of a person" src="{{ asset($user->photo) }}"/>
     <h2>
      {{$user->name?$user->name:'Customer'}}
     </h2>
@@ -137,7 +137,7 @@
     </a>
   
    <div class="logout-section">
-    <a href="#">
+    <a href="{{url('/logout')}}">
      <i class="fas fa-sign-out-alt">
      </i>
      Logout

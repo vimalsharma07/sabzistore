@@ -141,6 +141,4 @@
   
 </div>
 
-<script>
-  const userAddress = @json($address);  
-</script>
+

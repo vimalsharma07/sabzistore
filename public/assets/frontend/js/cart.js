@@ -5,7 +5,7 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
+     
 
     
     
@@ -160,7 +160,7 @@ function cartfesstip() {
                             <li><strong>Payable Amount</strong><strong>₹${fees.discountedGrandTotal}</strong></li>
                         </ul>
                     </div>`;
-                    $('#carttopright').text(Object.keys(cart).length+' Items'+' ₹'+fees.discountedGrandTotal);
+                    $('#carttopright').text(Object.keys(cart).length+' Items'+' ₹'+fees.itemTotal);
         
                     cartHtml += `
                     <div class="tip">

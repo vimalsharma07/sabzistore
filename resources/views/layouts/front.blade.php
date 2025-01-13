@@ -46,7 +46,10 @@
 <body>
     @php
     $cart = session()->get('cart', []);
-    // dd($cart);
+    $user= Auth::user();
+    $address= DB::table('address')->where('user_id',$user->id)->where('default',1)->first();
+    
+
 @endphp
 
     <nav class="navbar navbar-expand-lg bg-white py-3">
@@ -204,6 +207,7 @@
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());
+        var userAddress= @json($address);
     </script>
     
       

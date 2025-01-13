@@ -25,7 +25,9 @@
     color: #6c757d; 
     width: 60%;
 }
-
+ .tip-buttons .selected{
+    background-color: green  !important;
+ }
 .search-bar {
     width: 100%;
     padding: 10px;

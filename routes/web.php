@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\Front\OrderController;
+use App\Http\Controllers\Front\UserController;
 
 
 
@@ -47,13 +48,20 @@ Route::get('/profile', function () {
 
 Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
 Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
+Route::get('/address', [AddressController::class, 'index'])->name('addresses.index');
+Route::get('/addresses/edit/{id}', [AddressController::class, 'edit'])->name('addresses.edit');
+Route::post('/addresses/update/{id}', [AddressController::class, 'update'])->name('addresses.update');
+Route::post('/addresses/delete/{id}', [AddressController::class, 'destroy'])->name('addresses.delete');
+Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/update', [UserController::class, 'update'])->name('profile.update');
 
 Route::get('/order/create', [OrderController::class, 'saveorder'])->name('order-create');
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/reorder/{order_number}', [OrderController::class, 'reorder']);
-Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
 Route::get('/order/{order_number}', [OrderController::class, 'orderView']);
 Route::get('/orders/{id}/invoice', [OrderController::class, 'downloadInvoice'])->name('orders.invoice');
+Route::get('/orders/{order_status}', [OrderController::class, 'getOrders'])->name('getOrders');
+Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
 
 
 

@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Address;
+use Auth;
 
 class AddressController extends Controller
 {
+    public function index(){
+      $addressess=   Address::where('user_id', Auth::user()->id)->get();
+      return view ('frontend.user.alladdress',['addresses'=>$addressess]);
+
+    }
     public function create(){
         return view ('frontend.user.addaddress');
     }
@@ -34,5 +40,26 @@ class AddressController extends Controller
         ]);
 
         return redirect()->route('order.create');
+    }
+
+
+    public function edit($id)
+    {
+        $address = Address::findOrFail($id);
+        return view('frontend.user.editaddress', compact('address'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $address = Address::findOrFail($id);
+        $address->update($request->all());
+        return redirect()->route('addresses.index')->with('success', 'Address updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $address = Address::findOrFail($id);
+        $address->delete();
+        return redirect()->route('addresses.index')->with('success', 'Address deleted successfully.');
     }
 }

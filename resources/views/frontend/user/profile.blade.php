@@ -81,77 +81,61 @@
      {{$user->name?$user->name:'Customer'}}
     </h2>
     <p>
-     We are here 
+     SabziFarm
     </p>
    </div>
    <div class="orders-section row text-center">
-    <div class="col-4 order-item">
+    <a  href="{{url('/orders/all')}}" class="col-4 order-item">
      <i class="fas fa-clock text-primary">
      </i>
      <p>
-      Pending Payment
+       Orders
      </p>
-    </div>
-    <div class="col-4 order-item">
+    </a>
+    <a  href="{{url('/address')}}" class="col-4 order-item">
      <i class="fas fa-truck text-warning">
      </i>
      <p>
-      Delivered
+       Address Book
      </p>
-    </div>
-    <div class="col-4 order-item">
+    </a>
+    <a   href="{{url('/orders/pending')}}" class="col-4 order-item">
      <i class="fas fa-sync-alt text-danger">
      </i>
      <p>
       Processing
      </p>
-    </div>
-    <div class="col-4 order-item">
-     <i class="fas fa-times-circle text-success">
+    </a>
+    <a   href="{{url('/orders/cancel')}}" class="col-4 order-item">
+        <i class="fas fa-times-circle text-success">
      </i>
      <p>
       Cancelled
      </p>
-    </div>
-    <div class="col-4 order-item">
-     <i class="fas fa-heart text-danger">
+    </a>
+    <a   href="{{url('/wishlist')}}" class="col-4 order-item">
+        <i class="fas fa-heart text-danger">
      </i>
      <p>
       Wishlist
      </p>
-    </div>
-    <div class="col-4 order-item">
-     <i class="fas fa-headset text-primary">
+    </a>
+    <a href="tel:+919368311855" class="col-4 order-item">
+        <i class="fas fa-headset text-primary">
      </i>
      <p>
-      Customer Care
+      Support
      </p>
-    </div>
-   </div>
-   <div class="settings-section">
-    <div class="settings-item">
-     <div>
-      <i class="fas fa-user">
-      </i>
-      <p>
-       Edit Profile
-      </p>
-     </div>
-     <i class="fas fa-chevron-right">
+    </a>
+
+    <a href="{{url('/profile/edit')}}" class="col-4 order-item">
+        <i class="fas fa-user text-primary">
      </i>
-    </div>
-    <div class="settings-item">
-     <div>
-      <i class="fas fa-map-marker-alt">
-      </i>
-      <p>
-       Shipping Address
-      </p>
-     </div>
-     <i class="fas fa-chevron-right">
-     </i>
-    </div>
-   </div>
+     <p>
+      Update Profile
+     </p>
+    </a>
+  
    <div class="logout-section">
     <a href="#">
      <i class="fas fa-sign-out-alt">

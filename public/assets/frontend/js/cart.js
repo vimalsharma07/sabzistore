@@ -397,7 +397,7 @@ function updateMobileCart() {
             }
         });
          updateDesktopCart();
-        // updateMobileCart();
+        updateMobileCart();
     }
 
     function removetoCart(productId,attributes){

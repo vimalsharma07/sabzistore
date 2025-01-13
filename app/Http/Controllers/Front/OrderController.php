@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use PDF;
 use Illuminate\Support\Str;
+use Auth;
 
 
 class OrderController extends Controller
@@ -158,7 +159,11 @@ class OrderController extends Controller
         return view  ( 'frontend.user.orderplaced' , ['order_number'=>$order->order_number]);
     }
     
-   
+    public function getOrders(Request $request, $order_status){
+     $orders=    Order::where('user_id',Auth::user()->id)->where('order_status',$order_status)->get();
+     return view('frontend.user.orders',['orders'=>$orders]);
+
+    }
 
 
 }

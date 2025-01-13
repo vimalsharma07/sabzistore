@@ -32,19 +32,44 @@
 <div class="container mt-4">
     <h1 class="mb-4">My Orders</h1>
     <div id="ordersContainer">
-        <!-- Dynamic orders will be injected here -->
+        @if(isset($orders) && count($orders) > 0)
+            @foreach($orders as $order)
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="status {{ $order->order_status === 'cancelled' ? 'text-danger' : 'text-success' }}">
+                            <i class="fas {{ $order->order_status === 'cancelled' ? 'fa-times-circle' : 'fa-check-circle' }}"></i>
+                            <span>{{ $order->order_status }}</span>
+                        </div>
+                        <div class="order-time text-muted">
+                            #{{ $order->order_number }} - {{ $order->created_at }}
+                        </div>
+                    </div>
+                    <div class="order-images mt-2">
+                        @foreach(array_slice(json_decode($order->products, true), 0, 4) as $product)
+                            <img src="{{ url('/') }}/{{ $product['image'] ?? 'https://placehold.co/50x50' }}" alt="Product image" class="img-fluid mb-3">
+                        @endforeach
+                    </div>
+                    <div class="order-actions mt-3 d-flex justify-content-between">
+                        <a href="{{ url('/reorder/' . $order->order_number) }}" class="btn btn-primary btn-sm">Reorder</a>
+                        <a href="{{ url('/order/' . $order->order_number) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <!-- If no orders are passed, AJAX will fetch them -->
+        @endif
     </div>
 </div>
 @endsection
 
 @section('scripts')
+@if(!isset($orders) || count($orders) === 0)
 <script>
     function fetchOrders() {
         $.ajax({
-            url: '/orders/', // Replace with your route URL
+            url: '/orders/',
             method: 'GET',
             success: function(orders) {
-                console.log(orders);
                 const ordersContainer = $('#ordersContainer');
                 ordersContainer.empty();
 
@@ -69,10 +94,9 @@
                                 ${formattedImages}
                             </div>
                            <div class="order-actions mt-3 d-flex justify-content-between">
-                                <a href="{{url('/reorder/${order.order_number}')}}" class="btn btn-primary btn-sm">Reorder</a>
-                                <a href="{{url('/order/${order.order_number}')}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
+                                <a href="{{ url('/reorder/${order.order_number}') }}" class="btn btn-primary btn-sm">Reorder</a>
+                                <a href="{{ url('/order/${order.order_number}') }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
                             </div>
-
                         </div>
                     `;
                     ordersContainer.append(row);
@@ -86,4 +110,5 @@
 
     $(document).ready(fetchOrders);
 </script>
+@endif
 @endsection

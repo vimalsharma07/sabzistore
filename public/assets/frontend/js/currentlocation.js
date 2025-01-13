@@ -12,7 +12,6 @@ function showLocation(position) {
     // Capture user latitude and longitude from position.coords
     userLat = position.coords.latitude;
     userLng = position.coords.longitude;
-
     // Call the OpenStreetMap API to get the location name
     const url = `https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLng}&format=json`;
 
@@ -20,6 +19,7 @@ function showLocation(position) {
         .then((response) => response.json())
         .then((data) => {
             const locationName = data.display_name; 
+            console.log(locationName);
             $('.delivery-address').text(locationName);
             $('.address').val(locationName);
         })
@@ -43,6 +43,11 @@ function handleError(error) {
             alert("An unknown error occurred.");
             break;
     }
+}
+
+function redirectonmap(destinationLat, destinationLng) {
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${destinationLat},${destinationLng}&travelmode=driving`;
+    window.location.href = googleMapsUrl;
 }
 
 // Call the function to fetch the location

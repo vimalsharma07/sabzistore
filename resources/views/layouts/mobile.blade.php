@@ -40,7 +40,7 @@
             <i class="fas fa-home"></i>
             <p>Home</p>
         </a>
-        <a href="{{url('/orders')}}">
+        <a href="{{url('/orders/all')}}">
             <i class="fas fa-box"></i>
             <p>Orders</p>
         </a>

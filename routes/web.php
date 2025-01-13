@@ -41,12 +41,19 @@ Route::get('/get-tip', [CartController::class, 'getTip'])->name('get.tip');
 Route::get('/addaddress', function () {
     return view('frontend/user/addaddress'); 
 });
+Route::get('/profile', function () {
+    return view('frontend/user/profile'); 
+});
 
 Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
 Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
 
 Route::get('/order/create', [OrderController::class, 'saveorder'])->name('order-create');
-
+Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/reorder/{order_number}', [OrderController::class, 'reorder']);
+Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
+Route::get('/order/{order_number}', [OrderController::class, 'orderView']);
+Route::get('/orders/{id}/invoice', [OrderController::class, 'downloadInvoice'])->name('orders.invoice');
 
 
 

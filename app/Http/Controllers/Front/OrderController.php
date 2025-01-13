@@ -6,11 +6,82 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use PDF;
 use Illuminate\Support\Str;
 
 
 class OrderController extends Controller
 {
+
+    public function allorders(){
+        return view('frontend.user.orders');
+    }
+    public function index()
+    {
+        $orders = Order::with('address')->get(); // Assuming 'address' is a relation
+        return response()->json($orders); // Return orders as JSON
+    }
+
+    public function reorder(Request $request, $order_number)
+    {
+        
+        
+        // Example placeholder for reorder logic
+        $order = Order::where('order_number', $order_number)->first();
+        if ($order) {
+            // Copy order and save as new (customize this as per business logic)
+            $newOrder = $order->replicate();
+            $newOrder->created_at = now();
+            $newOrder->order_status = 'Pending';
+            $newOrder->save();
+
+        }
+        session()->forget('cart');  // or session()->flush(); to clear all session data
+
+        return view  ( 'frontend.user.orderplaced' , ['order_number'=>$newOrder->order_number]);
+    }
+
+    public function downloadInvoice($id)
+    {
+        $order = Order::findOrFail($id);
+    
+        // Set the directory where the file will be saved
+        $directory = public_path('assets/orders');
+        
+        // Check if directory exists, if not, create it
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);  // Ensure it is writable
+        }
+    
+        // Define a unique file name to avoid overwriting
+        $fileName = 'invoice_' . $order->order_number . '_' . time() . '.pdf';
+        $filePath = $directory . '/' . $fileName;
+    
+        try {
+            // Load the HTML view and generate PDF
+            $pdf = \PDF::loadView('frontend.user.invoice', ['order' => $order])
+                ->setPaper('A4', 'portrait')
+                ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true, 'isUtf8Enabled' => true]);
+    
+            // Save the generated PDF file
+            $pdf->save($filePath);
+    
+            // Return the file as a download response
+            return response()->download($filePath);
+    
+        } catch (\Exception $e) {
+            // Handle any errors
+            return response()->json(['error' => 'Failed to generate invoice. Please try again.'], 500);
+        }
+    }
+    
+    
+    public function orderView(Request $request, $order_number){
+     $order=  Order::with('address')->where('order_number',$order_number)->first();
+     return view  ( 'frontend.user.order' , ['order'=>$order]);
+    }
+
     public function saveOrder(Request $request)
     {
         // Retrieve cart data from session or request
@@ -31,18 +102,20 @@ class OrderController extends Controller
     
         foreach ($cart as $key => $item) {
             $productId = $item['product_id'];
+            $product=  Product::where('id',$productId)->first();
             $quantity = $item['quantity'];
             $attributes = $item['attributes'];
-    
+            $product->attributes= $attributes;
+            $product->quantity= $quantity;
             // Extract product price (assuming first attribute is price)
             $price = array_values($attributes)[0];
-    
+            $product->price= $price;
             // Calculate item total
             $total = $price * $quantity;
             $itemTotal += $total;
             $totalQuantity += $quantity;
     
-            $products[] = $productId;
+            $products[] = $product;
             $orderProducts[$productId] = [
                 'quantity' => $quantity,
                 'attributes' => $attributes,
@@ -80,7 +153,8 @@ class OrderController extends Controller
         // Save order
         $order = Order::create($orderData);
     
-    
+        session()->forget('cart');  // or session()->flush(); to clear all session data
+
         return view  ( 'frontend.user.orderplaced' , ['order_number'=>$order->order_number]);
     }
     

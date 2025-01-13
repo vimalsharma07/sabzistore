@@ -18,7 +18,7 @@
                 <strong style="color: #2E7D32;">Estimated Delivery:</strong> <span style="color: #FFEB3B;">20 minutes</span>
             </div>
             <div style="margin-top: 20px;">
-                <a href="{{ url('orders.view', $order_number) }}" class="btn btn-success" style="background-color: #388E3C; color: white; padding: 10px 20px; border: none; border-radius: 4px; text-decoration: none;">
+                <a href="{{ url('order/'.$order_number) }}" class="btn btn-success" style="background-color: #388E3C; color: white; padding: 10px 20px; border: none; border-radius: 4px; text-decoration: none;">
                     View Order Details
                 </a>
             </div>

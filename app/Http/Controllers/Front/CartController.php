@@ -20,7 +20,7 @@ class CartController extends Controller
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
 
         if (isset($cart[$uniqueKey])) {
-            $cart[$uniqueKey]['quantity'] += $quantity; // Increment quantity
+            $cart[$uniqueKey]['quantity'] += $quantity; 
         } else {
             $cart[$uniqueKey] = [
                 'product_id' => $productId,

@@ -26,5 +26,14 @@ class Order extends Model
         'coupon_discounted',
         'grand_total',
         'total_pay',
+        'order_number',
+        'status',
+
     ];
+
+    public function address()
+{
+    return $this->belongsTo(Address::class, 'address');
+}
+
 }

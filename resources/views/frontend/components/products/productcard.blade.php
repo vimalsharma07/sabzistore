@@ -9,11 +9,13 @@
         background-color: #fff;
         position: relative;
         font-family: Arial, sans-serif;
+        height: 320px; /* Fixed height */
     }
 
     .product-card img {
         max-height: 150px;
-        object-fit: contain;
+        height: 180px; /* Fixed height for uniform size */
+        object-fit: cover;
         display: block;
         margin: 0 auto 10px;
     }

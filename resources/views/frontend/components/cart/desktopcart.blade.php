@@ -1,7 +1,9 @@
 @php
   $user= Auth::user();
   $address='';
+  if($user){
  $address=  DB::table('address')->where('default',1)->where('user_id',$user->id)->first();
+ }
 @endphp
 <div class="cart-layout" id="cart">
   <div class="delivery-time">

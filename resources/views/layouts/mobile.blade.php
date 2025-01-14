@@ -40,6 +40,7 @@
             <i class="fas fa-home"></i>
             <p>Home</p>
         </a>
+        @if(Auth::check())
         <a href="{{url('/orders/all')}}">
             <i class="fas fa-box"></i>
             <p>Orders</p>
@@ -48,6 +49,16 @@
             <i class="fas fa-user"></i>
             <p>Profile</p>
         </a>
+        @else
+        {{-- <a href="{{url('/products/popular')}}">
+            <i class="fas fa-box"></i>
+            <p>Popular</p>
+        </a> --}}
+        <a href="#"  data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+            <i class="fas fa-user"></i>
+            <p>Login</p>
+        </a>
+        @endif
         <a href="{{url('/cart')}}">
             <i class="fas fa-shopping-cart"></i>
             <p>Cart</p>

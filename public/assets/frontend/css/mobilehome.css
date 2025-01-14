@@ -42,7 +42,8 @@ body {
 }
 
 .bottom-bar {
-    position: fixed;
+    margin-top: 80px;  /* Adjust the value as needed */
+    position: fixed;   /* Ensure it's still fixed at the bottom */
     bottom: 0;
     width: 100%;
     background-color: #004d40;

@@ -47,9 +47,15 @@
     @php
     $cart = session()->get('cart', []);
     $user= Auth::user();
+    if($user){
+    
     $address= DB::table('address')->where('user_id',$user->id)->where('default',1)->first();
     
+}
+else{
+$address='';
 
+}
 @endphp
 
     <nav class="navbar navbar-expand-lg bg-white py-3">

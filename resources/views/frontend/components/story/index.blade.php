@@ -1,35 +1,68 @@
 
   <style>
   
-        .story {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid;
-            padding: 2px;
-            margin: 5px;
+  .story {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid;
+        padding: 2px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .story img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+    .story .username {
+        color: white;
+        font-size: 12px;
+        text-align: center;
+        margin-top: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 80px;
+    }
+    .story-modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .story-modal img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .progress-bar-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .progress-bar {
+        height: 100%;
+        background-color: #ff3366;
+        animation: progress 30s linear forwards;
+    }
+    @keyframes progress {
+        from {
+            width: 0%;
         }
-        .story img {
+        to {
             width: 100%;
-            height: 100%;
-            border-radius: 50%;
         }
-        .story .username {
-            color: white;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 80px;
-        }
+    }
        
   </style>
  </head>
  <body>
   <div class="d-flex justify-content-center">
-   <div class="story story-border">
+   <div class="story story-border"  onclick="openStory(this)">
     <img alt="Profile picture of khushbu_r..." height="80" src="https://storage.googleapis.com/a1aa/image/E3wTSM8qdQzoSDm4vKnDgPwCkiZDIp_CJIQ0y_gi74g.jpg" width="80"/>
     <div class="username">
      khushbu_r...
@@ -78,4 +111,37 @@
     </div>
    </div>
   </div>
+
+  <div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        <div class="modal-header">
+          <h5 class="modal-title" id="storyModalLabel">Story</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" class="modal-img" src="" alt="Story image">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+
+  <script>
+    function openStory(element) {
+      const imageUrl = element.querySelector('img').src;
+      document.getElementById('modalImage').src = imageUrl;
+      const storyModal = new bootstrap.Modal(document.getElementById('storyModal'));
+      storyModal.show();
+      
+      // Automatically close modal after 30 seconds
+      setTimeout(() => {
+        storyModal.hide();
+      }, 30000);
+    }
+  </script>
 

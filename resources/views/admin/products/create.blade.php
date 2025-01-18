@@ -9,7 +9,7 @@
     </div>
     
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-12">
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" id="productform">
           @csrf
           <div class="mb-3">
@@ -169,13 +169,16 @@
         e.preventDefault();
         const attributeRow = `
           <div class="row mb-2 attribute-row" data-index="${attributeIndex}">
-            <div class="col-md-5">
+            <div class="col-md-3">
               <input type="text" class="form-control" name="attributes[${attributeIndex}][name]" placeholder="Attribute Name" required/>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <input type="text" class="form-control" name="attributes[${attributeIndex}][value]" placeholder="Attribute Value" required/>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
+            <input type="number" class="form-control" name="mrps[${attributeIndex}]" placeholder="MRP" required/>
+          </div>
+            <div class="col-md-3">
               <button type="button" class="btn btn-danger remove-attribute">Remove</button>
             </div>
           </div>`;

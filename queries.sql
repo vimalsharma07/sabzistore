@@ -196,7 +196,6 @@ ALTER TABLE `users` ADD `photo` VARCHAR(200) NULL DEFAULT NULL AFTER `role`;
 ALTER TABLE `products` 
 ADD `popular` TINYINT(1) DEFAULT 0 AFTER `status`, 
 ADD `trending` TINYINT(1) DEFAULT 0 AFTER `popular`;
-
-
+ALTER TABLE `products` ADD `attributes_mrp` TEXT NULL DEFAULT NULL AFTER `attributes`;
 
 

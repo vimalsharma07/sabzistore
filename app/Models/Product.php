@@ -30,6 +30,7 @@ class Product extends Model
         'health',
         'price',
         'mrp',
+        'attributes_mrp',
     ];
 
     // Define relationships, for example, a product has many product images

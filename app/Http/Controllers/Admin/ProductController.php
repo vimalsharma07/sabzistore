@@ -21,6 +21,8 @@ class ProductController extends Controller
 
     public function store(Request $request)
 {
+    // dd($request->all());
+
     // Validate the incoming data
     $validated = $request->validate([
         'name' => 'required|string|max:255',
@@ -66,6 +68,7 @@ class ProductController extends Controller
         'attributes'=> json_encode($attributes),
         'price'=>$request->price,
         'mrp'=>$request->mrp,
+        'attributes_mrp'=> json_encode($request->mrps),
     ]);
 
     // Handle gallery images (if any)

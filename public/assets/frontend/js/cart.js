@@ -446,10 +446,11 @@ function updateMobileCart() {
     }
 
     function addtoCart(productId,attributes){
+        var mrp = $('#mrp'+productId).text();
         $.ajax({
             url: `/cart/add/${productId}`,
             method: 'POST',
-            data: {attributes },
+            data: {attributes,mrp},
             success: function (response) {
                 console.log(response);
             },
@@ -577,9 +578,10 @@ function updateMobileCart() {
         $(this).addClass('selected');
        var attrval=   $(this).data('value');
        var attrkey=   $(this).data('key');
+       var mrp=   $(this).data('mrp');
        var attribute = { [attrkey]: attrval }; // Use square brackets for dynamic key
        $('#productPrice'+dataid).text(attrval);
-       $('#mrp'+dataid).hide();
+       $('#mrp'+dataid).text(mrp);
        
        checkproductincart(dataid, attribute);
 

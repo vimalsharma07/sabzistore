@@ -18,8 +18,11 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
         $attributes = $request->input('attributes', []);
+        $mrp = $request->input('mrp', 0);
         $product=   Product::where('id',$productId)->first();
         $product->attributes= $attributes;
+        $product->mrp= $mrp;
+
         // Generate unique key for product + attributes combination
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
 

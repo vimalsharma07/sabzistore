@@ -157,8 +157,11 @@
 
         <!-- Product Attributes -->
         <div class="product-attributes">
+            @php
+                $mrp= json_decode($product->attributes_mrp);
+            @endphp
             @foreach(json_decode($product->attributes) as $key => $value)
-                <div class="attribute-box" data-id="{{$product->id}}" data-value="{{ $value }}" data-key="{{$key}}">{{ $key }}</div>
+                <div class="attribute-box" data-id="{{$product->id}}" data-value="{{ $value }}" data-key="{{$key}}" data-mrp="{{$mrp[$loop->index]}}">{{ $key }}</div>
             @endforeach
         </div>
 

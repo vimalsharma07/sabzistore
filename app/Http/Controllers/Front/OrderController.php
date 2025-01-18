@@ -87,7 +87,6 @@ class OrderController extends Controller
     {
         // Retrieve cart data from session or request
         $cart = Session::get('cart', []); // Assuming cart data is stored in session
-    
         if (empty($cart)) {
             return response()->json(['message' => 'Cart is empty.'], 400);
         }
@@ -103,7 +102,7 @@ class OrderController extends Controller
     
         foreach ($cart as $key => $item) {
             $productId = $item['product_id'];
-            $product=  Product::where('id',$productId)->first();
+            $product=  $item['product'];
             $quantity = $item['quantity'];
             $attributes = $item['attributes'];
             $product->attributes= $attributes;

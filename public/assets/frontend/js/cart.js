@@ -144,7 +144,8 @@ function cartfesstip() {
                             const product = item.product;
                             const attributeKey = Object.keys(item.attributes)[0];
                             const attributeValue = item.attributes[attributeKey];
-        
+                             console.log(product);
+                             if(product){
                             cartHtml += `
                             <div class="product">
                                 <div class="product-left">
@@ -166,6 +167,7 @@ function cartfesstip() {
                                     </div>
                                 </div>
                             </div>`;
+                             }
                         });
                     } else {
                         cartHtml += `<p>Your cart is empty.</p>`;

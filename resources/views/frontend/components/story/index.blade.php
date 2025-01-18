@@ -46,11 +46,16 @@
     }
     .story-modal img {
         width: 100%;
-        height: auto;
+        height: 100%;
         max-height: 90%;
         object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    #modalImage{
+        width: 90%;
+        height: 90%;
+
     }
     .progress-bar-container {
         position: absolute;
@@ -60,6 +65,7 @@
         height: 5px;
         background-color: rgba(255, 255, 255, 0.5);
     }
+   
     .progress-bar {
         height: 100%;
         background-color: #ff3366;

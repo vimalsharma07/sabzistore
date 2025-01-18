@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrdersController;
+use App\Http\Controllers\Admin\UsersController;
+
 use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\AddressController;
@@ -109,6 +112,15 @@ Route::delete('admin/coupons/{coupon}', [CouponController::class, 'destroy'])->n
 Route::get('admin/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
 Route::post('admin/coupons', [CouponController::class, 'store'])->name('coupons.store');
 
+// orders data for admin 
+Route::post('/update-order-status', [OrdersController::class, 'updateStatus'])->name('updateOrderStatus');
+Route::get('admin/orders', [OrdersController::class, 'index'])->name('adminorders');
+Route::get('admin/order/{order_id}', [OrdersController::class, 'order'])->name('adminorder');
+Route::get('admin/orders/{order_status}', [OrdersController::class, 'orderByStatus'])->name('adminorderStatus');
+
+// users datat for admin 
+Route::post('/update-user', [UsersController::class, 'update'])->name('updateUser');
+Route::get('admin/users', [UsersController::class, 'index'])->name('adminusers');
 
 
 });

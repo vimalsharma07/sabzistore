@@ -21,7 +21,6 @@ class ProductController extends Controller
 
     public function store(Request $request)
 {
-    // dd($request->all());
 
     // Validate the incoming data
     $validated = $request->validate([
@@ -176,6 +175,8 @@ public function index()
                 }
             }
             $product->attributes = json_encode($attributes);
+            $product->attributes_mrp = json_encode($request->mrps);
+
         }
 
         // Handle image upload

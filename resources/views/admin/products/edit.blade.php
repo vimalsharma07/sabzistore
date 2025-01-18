@@ -8,7 +8,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-12">
         <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data" id="productform">
           @csrf
           @method('PUT')
@@ -60,7 +60,7 @@
 
           <div class="mb-3">
             <label class="form-label" for="mrp">Mrp</label>
-            <input class="form-control" id="mrp" name=",rp" value="{{ $product->mrp }}" placeholder="mrp" type="number" />
+            <input class="form-control" id="mrp" name="mrp" value="{{ $product->mrp }}" placeholder="mrp" type="number" />
           </div>
 
           <!-- Tags -->
@@ -69,27 +69,36 @@
             <input class="form-control" id="tags" name="tags" value="{{ $product->tags }}" placeholder="Tags" type="text" />
           </div>
 
-          <!-- Attributes -->
-          <div class="mb-3">
+         
+
+          @php
+          $attributes = json_decode($product->attributes, true);
+          $mrps = json_decode($product->attributes_mrp, true);
+          @endphp
+       <div class="mb-3">
             <label class="form-label">Attributes</label>
             <div id="attributesContainer">
-              @foreach(json_decode($product->attributes, true) as $key => $value)
-              <div class="row mb-2 attribute-row">
-                <div class="col-md-5">
-                  <input type="text" class="form-control" name="attributes[{{ $key }}][name]" value="{{ $key }}" placeholder="Attribute Name" required/>
-                </div>
-                <div class="col-md-5">
-                  <input type="text" class="form-control" name="attributes[{{ $key }}][value]" value="{{ $value }}" placeholder="Attribute Value" required/>
-                </div>
-                <div class="col-md-2">
-                  <button type="button" class="btn btn-danger remove-attribute">Remove</button>
-                </div>
+          @foreach($attributes as $key => $value)
+          <div class="row mb-2 attribute-row">
+              <div class="col-md-3">
+                  <input type="text" class="form-control" name="attributes[{{ $loop->index }}][name]" value="{{ $key }}" placeholder="Attribute Name" required/>
               </div>
-              @endforeach
-            </div>
-            <button type="button" class="btn btn-secondary" id="addAttributeBtn">Add Attribute</button>
+              <div class="col-md-3">
+                  <input type="text" class="form-control" name="attributes[{{ $loop->index }}][value]" value="{{ $value }}" placeholder="Attribute Value" required/>
+              </div>
+              <div class="col-md-3">
+                  <input type="number" class="form-control" name="mrps[{{ $loop->index }}]" value="{{ $mrps[$loop->index] ?? '' }}" placeholder="MRP" required/>
+              </div>
+              <div class="col-md-3">
+                  <button type="button" class="btn btn-danger remove-attribute">Remove</button>
+              </div>
           </div>
+          @endforeach
 
+          
+          <button type="button" class="btn btn-secondary" id="addAttributeBtn">Add Attribute</button>
+            </div>
+       </div>
           <!-- Meta Details -->
           <div class="mb-3">
             <label class="form-label" for="metaTitle">Meta Title</label>
@@ -132,13 +141,16 @@
       e.preventDefault();
       const attributeRow = `
         <div class="row mb-2 attribute-row">
-          <div class="col-md-5">
+          <div class="col-md-3">
             <input type="text" class="form-control" name="attributes[${attributeIndex}][name]" placeholder="Attribute Name" required/>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-3">
             <input type="text" class="form-control" name="attributes[${attributeIndex}][value]" placeholder="Attribute Value" required/>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
+            <input type="number" class="form-control" name="mrps[${attributeIndex}]" placeholder="MRP" required/>
+          </div>
+          <div class="col-md-3">
             <button type="button" class="btn btn-danger remove-attribute">Remove</button>
           </div>
         </div>`;

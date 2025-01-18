@@ -88,7 +88,7 @@
                 <div class="collapse" id="userMenu">
                   <ul class="nav flex-column ms-3">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url('admin\users')}}">
                         <i class="fas fa-plus"></i> All Users
                       </a>
                     </li>
@@ -107,22 +107,22 @@
                 <div class="collapse" id="orderMenu">
                   <ul class="nav flex-column ms-3">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url('admin/orders')}}">
                         <i class="fas fa-plus"></i> All Orders
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url('admin/orders/pending')}}">
                         <i class="fas fa-hourglass-start"></i> Pending
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url('admin/orders/completed')}}">
                         <i class="fas fa-check-circle"></i> Completed
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url('admin/orders/cancelled')}}">
                         <i class="fas fa-times-circle"></i> Cancelled
                       </a>
                     </li>

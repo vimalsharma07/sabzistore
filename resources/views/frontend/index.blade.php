@@ -1,6 +1,8 @@
 @extends(getLayout())
 
 @section('content')
+@include('frontend.components.story.index')
+
 <div class="row">
     <h4>Popular Products</h4>
 

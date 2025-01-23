@@ -198,4 +198,19 @@ ADD `popular` TINYINT(1) DEFAULT 0 AFTER `status`,
 ADD `trending` TINYINT(1) DEFAULT 0 AFTER `popular`;
 ALTER TABLE `products` ADD `attributes_mrp` TEXT NULL DEFAULT NULL AFTER `attributes`;
 
+CREATE TABLE stories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME NOT NULL,
+    type ENUM('video', 'image') NOT NULL,
+    priority INT DEFAULT 0,
+    status TINYINT(1) DEFAULT 1,  -- 1 for active, 0 for inactive
+    files TEXT NOT NULL,          -- To store file paths or URLs
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
 

@@ -77,10 +77,10 @@
                     <p>We have sent a verification code to</p>
                     <h5 id="displayedMobileNumber">+91-9999999999</h5>
                     <div class="d-flex justify-content-center my-4">
-                        <input type="text" class="otp-input" maxlength="1">
-                        <input type="text" class="otp-input" maxlength="1">
-                        <input type="text" class="otp-input" maxlength="1">
-                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
                     </div>
                     <p class="resend-code" id="resendCode">Resend Code (in <span id="timer">90</span> secs)</p>
                 </div>

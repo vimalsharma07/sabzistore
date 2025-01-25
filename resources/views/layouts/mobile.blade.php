@@ -54,14 +54,16 @@
             </div>
     </div>
     <div class="px-4 py-3 shadow-sm bg-danger">
+        <form action="{{url('/search')}}" method="GET">
         <div class="p-1 mb-5 overflow-hidden bg-white border-0 input-group rounded-pill">
             <span class="bg-white border-0 input-group-text border-end pe-0"><i
                     class="fa-solid fa-magnifying-glass text-danger"></i></span>
             <input type="text" class="border-0 shadow-none form-control" placeholder='Search "disposables"'
-                id="searchInput">
-            <a href="#" class="bg-white border-0 input-group-text text-decoration-none"><i
-                    class="fa-solid fa-microphone text-success"></i></a>
+                id="searchInput" name="q">
+            <button type="submit" class="bg-white border-0 input-group-text text-decoration-none"><i
+                    class="fa-solid fa-microphone text-success"></i></button>
         </div>
+    </form>
     </div>
 
 
@@ -84,27 +86,43 @@
                 </a>
             </div>
             <div class="col osahan-nav-bottom-link p-0 text-center">
-                <a href="javascript:void();">
+                <a href="{{url('/categories')}}">
                     <span><i class="bi bi-shop h1"></i></span>
                     <p class="m-0">Categories</p>
                 </a>
             </div>
-           
+           @if(Auth::check())
             <div class="col osahan-nav-bottom-link osahan-nav-bottom-link-center">
-                <a class="osahan-nav-bottom-home" href="javascript:void();">
+                <a class="osahan-nav-bottom-home" href="{{url('/profile')}}">
                     <span><i class="bi bi-person h1"></i></span>
                 </a>
             </div>
-            <div class="col osahan-nav-bottom-link p-0 text-center">
-                <a href="javascript:void();">
-                    <span><i class="bi bi-basket h1"></i></span>
-                    <p class="m-0">Cart</p>
+            @else
+            <div   data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false"  class="col osahan-nav-bottom-link osahan-nav-bottom-link-center">
+                <a class="osahan-nav-bottom-home" href="javascript:void(0)">
+                    <span><i class="bi bi-person h1"></i></span>
                 </a>
             </div>
+            @endif
+           @if(Auth::check())
             <div class="col osahan-nav-bottom-link p-0 text-center">
-                <a href="javascript:void();">
+                <a href="{{url('/orders/all')}}">
                     <span><i class="bi bi-receipt h1"></i></span>
-                    <p class="m-0">History</p>
+                    <p class="m-0">Orders</p>
+                </a>
+            </div>
+            @else
+            <div class="col osahan-nav-bottom-link p-0 text-center"> 
+                <a href="{{url('/search/?q="green"')}}">
+                    <span><i class="bi bi-receipt h1"></i></span>
+                    <p class="m-0" style="color: green">GreenVeg</p>
+                </a>
+            </div>
+            @endif
+            <div class="col osahan-nav-bottom-link p-0 text-center">
+                <a href="{{url('/cart')}}">
+                    <span><i class="bi bi-basket h1"></i></span>
+                    <p class="m-0">Cart</p>
                 </a>
             </div>
         </div>
@@ -121,6 +139,7 @@
     <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
      <script src="{{asset('assets/frontend/js/rating.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/loginmodal.js')}}"></script>
 
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());

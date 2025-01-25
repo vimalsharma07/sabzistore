@@ -645,6 +645,7 @@ $(document).ready(function () {
         tip: tipAmount,
       },
       success: function (response) {
+        location.reload();
         console.log("Tip saved successfully:", response.message);
       },
       error: function (xhr) {

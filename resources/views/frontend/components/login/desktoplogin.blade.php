@@ -27,7 +27,9 @@
                 <div id="otpInputSection" style="display: none;">
                     <p>We have sent a verification code to</p>
                     <h5 id="displayedMobileNumber">+91-9999999999</h5>
-                    <div class="my-4 d-flex justify-content-center">
+  
+                    <div class="d-flex justify-content-center my-4">
+ 
                         <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
                         <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
                         <input type="text" class="otp-input" maxlength="1" inputmode="numeric">

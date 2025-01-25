@@ -66,7 +66,7 @@
     <!-- Download Invoice Button -->
     <div class="row md-4">
         <!-- First button: Download Invoice -->
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-4 mb-3">
             <form action="{{ route('orders.invoice', ['id' => $order->id]) }}" method="get">
                 <button type="submit" class="btn btn-primary w-100">Download Invoice</button>
             </form>
@@ -74,12 +74,23 @@
     
         <!-- Second button: See Address on Map -->
         @if($address->lat && $address->lang && $user->role=='admin')
-            <div class="col-12 col-md-6 mb-3">
+            <div class="col-12 col-md-4 mb-3">
                 <button onclick="redirectonmap({{ $address->lat }}, {{ $address->lang }})" class="btn btn-primary w-100">
                     See Address on map
                 </button>
             </div>
         @endif
+       @include('frontend.components.orders.rating', ['order' => $order])
+<div class="col-12 col-md-4 mb-3">
+    <button 
+        class="btn btn-primary w-100" 
+        data-bs-toggle="modal" 
+        data-bs-target="#rateOrderModal-{{ $order->id }}">
+        Rate This Order
+    </button>
+</div>
+
+    
     </div>
     
 </div>

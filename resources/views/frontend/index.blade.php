@@ -26,7 +26,12 @@
 
         </div>
     </div>
+ 
     <div class="pt-4 pb-5"></div>
+ 
+</div>
+
+ 
 @endsection
 @section('scripts')
     <script>

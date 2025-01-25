@@ -149,6 +149,25 @@
                     </li>
                   </ul>
                 </div>
+            </li> 
+            <li class="nav-item mt-2">
+                <button class="btn btn-dark w-100" data-bs-toggle="collapse" data-bs-target="#storiesMenu" aria-expanded="false" aria-controls="storesMenu">
+                  <i class="fas fa-store"></i> Stories
+                </button>
+                <div class="collapse" id="storiesMenu">
+                  <ul class="nav flex-column ms-3">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('stories.create')}}">
+                        <i class="fas fa-plus"></i> Add Story
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('stories.index')}}">
+                        <i class="fas fa-list"></i> Stories
+                      </a>
+                    </li>
+                  </ul>
+                </div>
             </li>
 
            

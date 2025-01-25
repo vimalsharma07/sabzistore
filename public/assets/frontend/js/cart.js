@@ -652,6 +652,12 @@ $(document).ready(function () {
       },
     });
   }
+
+  $('#customtipbtn').click(function(){
+    var tipAmount = $('#customtipvalue').val();
+    selectTip(tipAmount);
+
+  });
   $(".tip-btn").click(function () {
     const tipAmount = parseInt($(this).attr("id").replace("tip", ""));
     if (!isNaN(tipAmount)) {
@@ -678,6 +684,7 @@ $(document).ready(function () {
     } else {
       updateDesktopCart();
     }
+    location.reload();
   }
 
   function showCustomTipInput() {

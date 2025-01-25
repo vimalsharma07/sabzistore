@@ -136,17 +136,29 @@
             </div>
             <div class="d-flex gap-2">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio1">
+                <button class="btn btn-outline-success btn-sm rounded-pill tip-btn" for="btnradio1" id="tip20">
                     <i class="bi bi-wallet me-1"></i>&nbsp;₹20
-                </label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio2">
+                </button>
+                <div>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" >
+                <buttton class="btn btn-outline-success btn-sm rounded-pill  tip-btn" for="btnradio2" id="tip30">
                     <i class="bi bi-wallet me-1"></i>&nbsp;₹30
-                </label>
+                </button>
+            </div>
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio4">
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio4">
+                <label class="btn btn-outline-success btn-sm rounded-pill tip-btn" for="btnradio4" id="customtip">
                     <i class="bi bi-wallet me-1"></i>&nbsp;Custom Tip
                 </label>
+
+                
+
+            </div>
+
+            <div class="container mt-5 d-none" id="customTipBox">
+                <div class="customtip-section" >
+                    <input type="number" class="form-control" id="customtipvalue" placeholder="Enter tip" min="0">
+                    <button class="btn px-3" id="customtipbtn">ADD</button>
+                </div>
             </div>
 
             {{-- <div class="tip-buttons">

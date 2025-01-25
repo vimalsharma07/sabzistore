@@ -138,7 +138,7 @@
     <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
-     <script src="{{asset('assets/frontend/js/rating.js')}}"></script>
+     {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
      <script src="{{asset('assets/frontend/js/loginmodal.js')}}"></script>
 
     <script>

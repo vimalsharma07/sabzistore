@@ -1,5 +1,8 @@
 @extends(getLayout())
 @section('content')
+@php
+    $emptycart = empty($cart);
+@endphp
     <div class="osahan-header-main py-3 px-4">
         <div class="d-flex align-items-center">
             <div class="gap-3 d-flex align-items-center">
@@ -9,6 +12,7 @@
 
         </div>
     </div>
+    @if(!$emptycart)
     <div class="mx-4 mb-4 bg-white rounded-4 shadow overflow-hidden">
         <!-- body -->
         <div class="bg-white p-4 border-bottom">
@@ -228,7 +232,20 @@
         @endif
 
     </div>
-
+@else
+<div class="container text-center my-5">
+    <div class="card shadow-sm p-5">
+      <div class="card-body">
+        <i class="fas fa-shopping-cart text-secondary mb-4" style="font-size: 3rem;"></i>
+        <h3 class="text-secondary mb-3">Your Cart is Empty</h3>
+        <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+        <a href="/" class="btn btn-primary mt-3">
+          <i class="fas fa-shopping-bag me-2"></i> Start Shopping
+        </a>
+      </div>
+    </div>
+  </div>
+@endif
 
     <!-- Fixed bottom -->
 

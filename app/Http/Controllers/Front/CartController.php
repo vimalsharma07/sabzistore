@@ -165,7 +165,7 @@ class CartController extends Controller
     // Generate a unique key for a product and attributes
     private function generateUniqueKey($productId, $attributes)
     {
-        return $productId . '-' . md5(json_encode($attributes));
+        return $productId . '-' .(json_encode($attributes));
     }
 
     public function saveTip(Request $request)

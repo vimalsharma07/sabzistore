@@ -492,7 +492,12 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes, mrp },
       success: function (response) {
-        console.log(response);
+        var product= response.product;
+        $('#quantity'+product.id).text(product.quantity);
+        const fullUrl = window.location.pathname;
+         if(fullUrl=='/cart'){
+          location.reload();
+         }
       },
       error: function (xhr) {
         console.log(xhr.responseText);
@@ -504,6 +509,7 @@ $(document).ready(function () {
       updateDesktopCart();
     }
   }
+
 
   function removetoCart(productId, attributes) {
     $.ajax({
@@ -511,19 +517,19 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes },
       success: function (response) {
-        console.log(response);
+
       },
       error: function (xhr) {
         console.log(xhr.responseText);
       },
     });
-
     if (isMobile) {
       updateMobileCart();
     } else {
       updateDesktopCart();
-    }
-  }
+    }}
+ 
+ 
   // Add to Cart
   $addToCartBtn.on("click", function () {
     const productId = $(this).data("id");
@@ -556,7 +562,7 @@ $(document).ready(function () {
     var qele = $("#quantity" + productId);
     const currentQty = parseInt(qele.text());
     const newQty = currentQty + 1;
-    qele.text(newQty);
+    // qele.text(newQty);
     var currentPath = window.location.pathname;
     if (currentPath == "/cart") {
       var attr = $(this);
@@ -585,7 +591,7 @@ $(document).ready(function () {
     var qele = $("#quantity" + productId);
     const currentQty = parseInt(qele.text());
     const newQty = currentQty - 1;
-    qele.text(newQty);
+    // qele.text(newQty);
     var currentPath = window.location.pathname;
     if (currentPath == "/cart") {
       var attr = $(this);
@@ -645,6 +651,7 @@ $(document).ready(function () {
         tip: tipAmount,
       },
       success: function (response) {
+        location.reload();
         console.log("Tip saved successfully:", response.message);
       },
       error: function (xhr) {
@@ -652,6 +659,12 @@ $(document).ready(function () {
       },
     });
   }
+
+  $('#customtipbtn').click(function(){
+    var tipAmount = $('#customtipvalue').val();
+    selectTip(tipAmount);
+
+  });
   $(".tip-btn").click(function () {
     const tipAmount = parseInt($(this).attr("id").replace("tip", ""));
     if (!isNaN(tipAmount)) {
@@ -678,6 +691,7 @@ $(document).ready(function () {
     } else {
       updateDesktopCart();
     }
+    location.reload();
   }
 
   function showCustomTipInput() {

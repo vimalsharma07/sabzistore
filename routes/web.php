@@ -10,12 +10,15 @@ use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\StoryController;
+
 
 use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\UserController;
+use App\Http\Controllers\Front\OrderReviewController;
 
 
 
@@ -48,6 +51,8 @@ Route::get('/addaddress', function () {
 Route::get('/profile', function () {
     return view('frontend/user/profile'); 
 });
+
+Route::post('/order-review', [OrderReviewController::class, 'store']);
 
 Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
 Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
@@ -121,6 +126,16 @@ Route::get('admin/orders/{order_status}', [OrdersController::class, 'orderByStat
 // users datat for admin 
 Route::post('/update-user', [UsersController::class, 'update'])->name('updateUser');
 Route::get('admin/users', [UsersController::class, 'index'])->name('adminusers');
+
+Route::get('admin/stories/', [StoryController::class, 'index'])->name('stories.index');  // Display list of stories
+Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');  // Show form to create story
+Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');  // Store new story
+Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');  // Show a specific story
+Route::get('/stories/{story}/edit', [StoryController::class, 'edit'])->name('stories.edit');  // Show form to edit story
+Route::put('/stories/{story}', [StoryController::class, 'update'])->name('stories.update');  // Update specific story
+Route::delete('/stories/{story}', [StoryController::class, 'destroy'])->name('stories.destroy');  // Delete story
+
+
 
 
 });

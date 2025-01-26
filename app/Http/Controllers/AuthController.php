@@ -86,7 +86,7 @@ class AuthController extends Controller
             Auth::login($user);
 
           }else{
-            $user =   User::create([
+            $user =   User::updateOrCreate([
                 'mobile' => $mobile,   
                 'status' => 1,              
             ]);

@@ -34,7 +34,7 @@ class HomepageController extends Controller
             ->orWhere('health', 'LIKE', "%{$searchQuery}%")
             ->get();
     
-            return view('frontend.index',['products'=>$products]);
+            return view('frontend.products',['products'=>$products, 'heading'=>$searchQuery.' Products' ]);
         }
     
 }

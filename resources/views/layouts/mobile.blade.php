@@ -54,15 +54,20 @@
             </div>
     </div>
     <div class="px-4 py-3 shadow-sm bg-danger">
+        <form action="{{url('/search')}}" method="GET">
         <div class="p-1 mb-5 overflow-hidden bg-white border-0 input-group rounded-pill">
             <span class="bg-white border-0 input-group-text border-end pe-0"><i
                     class="fa-solid fa-magnifying-glass text-danger"></i></span>
             <input type="text" class="border-0 shadow-none form-control" placeholder='Search "disposables"'
-                id="searchInput">
-            <a href="#" class="bg-white border-0 input-group-text text-decoration-none"><i
-                    class="fa-solid fa-microphone text-success"></i></a>
+                id="searchInput" name="q">
+            <button type="submit" class="bg-white border-0 input-group-text text-decoration-none"><i
+                    class="fa-solid fa-microphone text-success"></i></button>
         </div>
+    </form>
     </div>
+
+
+
 
 
 
@@ -155,6 +160,9 @@
     <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
+     {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
+     <script src="{{asset('assets/frontend/js/loginmodal.js')}}"></script>
+
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());
@@ -163,7 +171,6 @@
 
     {{-- new --}}
     <!-- Bootstrap core JavaScript -->
-
     <script src="{{ asset('assets/frontend/vender/bootstrap/js/bootstrap.bundle.min.js') }}" type="text/javascript">
     </script>
     <!-- slick Slider JS-->

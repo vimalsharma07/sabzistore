@@ -22,18 +22,19 @@ class CartController extends Controller
         $product=   Product::where('id',$productId)->first();
         $product->attributes= $attributes;
         $product->mrp= $mrp;
-
         // Generate unique key for product + attributes combination
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
 
         if (isset($cart[$uniqueKey])) {
-            $cart[$uniqueKey]['quantity'] += $quantity; 
+            $cart[$uniqueKey]['quantity'] += $quantity;
+            $product->quantity = $cart[$uniqueKey]['quantity']; 
+
         } else {
             $cart[$uniqueKey] = [
                 'product_id' => $productId,
-                'quantity' => $quantity,
                 'attributes' => $attributes,
                 'product'=>$product,
+                'quantity'=>1,
             ];
         }
 
@@ -42,6 +43,7 @@ class CartController extends Controller
         return response()->json([
             'message' => 'Product added/updated successfully',
             'cart' => $cart,
+            "product"=>$product,
         ]);
     }
 

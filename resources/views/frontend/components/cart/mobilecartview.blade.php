@@ -1,5 +1,8 @@
 @extends(getLayout())
 @section('content')
+@php
+    $emptycart = empty($cart);
+@endphp
     <div class="osahan-header-main py-3 px-4">
         <div class="d-flex align-items-center">
             <div class="gap-3 d-flex align-items-center">
@@ -9,6 +12,7 @@
 
         </div>
     </div>
+    @if(!$emptycart)
     <div class="mx-4 mb-4 bg-white rounded-4 shadow overflow-hidden">
         <!-- body -->
         <div class="bg-white p-4 border-bottom">
@@ -38,9 +42,9 @@
                                                 data-key="{{ array_key_first($item['attributes']) }}"
                                                 data-value="{{ array_values($item['attributes'])[0] }}"><i
                                                     class="fa-solid fa-minus text-success"></i></div>
-                                            <input class="shadow-none form-control text-center border-0 p-0 box"
+                                            <span class="shadow-none form-control text-center border-0 p-0 box"
                                                 id="quantity{{ $product->id }}" data-id="{{ $product->id }}"
-                                                value="{{ $item['quantity'] }}">
+                                                value="{{ $item['quantity'] }}" disabled>{{ $item['quantity'] }} </span>
                                             <div class="plus increaseQty selected" id="increaseQty{{ $product->id }}"
                                                 data-id="{{ $product->id }}"
                                                 data-key="{{ array_key_first($item['attributes']) }}"
@@ -136,17 +140,29 @@
             </div>
             <div class="d-flex gap-2">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio1">
+                <button class="btn btn-outline-success btn-sm rounded-pill tip-btn" for="btnradio1" id="tip20">
                     <i class="bi bi-wallet me-1"></i>&nbsp;₹20
-                </label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio2">
+                </button>
+                <div>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" >
+                <buttton class="btn btn-outline-success btn-sm rounded-pill  tip-btn" for="btnradio2" id="tip30">
                     <i class="bi bi-wallet me-1"></i>&nbsp;₹30
-                </label>
+                </button>
+            </div>
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio4">
-                <label class="btn btn-outline-success btn-sm rounded-pill" for="btnradio4">
+                <label class="btn btn-outline-success btn-sm rounded-pill tip-btn" for="btnradio4" id="customtip">
                     <i class="bi bi-wallet me-1"></i>&nbsp;Custom Tip
                 </label>
+
+                
+
+            </div>
+
+            <div class="container mt-5 d-none" id="customTipBox">
+                <div class="customtip-section" >
+                    <input type="number" class="form-control" id="customtipvalue" placeholder="Enter tip" min="0">
+                    <button class="btn px-3" id="customtipbtn">ADD</button>
+                </div>
             </div>
 
             {{-- <div class="tip-buttons">
@@ -216,7 +232,20 @@
         @endif
 
     </div>
-
+@else
+<div class="container text-center my-5">
+    <div class="card shadow-sm p-5">
+      <div class="card-body">
+        <i class="fas fa-shopping-cart text-secondary mb-4" style="font-size: 3rem;"></i>
+        <h3 class="text-secondary mb-3">Your Cart is Empty</h3>
+        <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+        <a href="/" class="btn btn-primary mt-3">
+          <i class="fas fa-shopping-bag me-2"></i> Start Shopping
+        </a>
+      </div>
+    </div>
+  </div>
+@endif
 
     <!-- Fixed bottom -->
 

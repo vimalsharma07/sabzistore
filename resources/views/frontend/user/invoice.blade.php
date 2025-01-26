@@ -9,7 +9,7 @@
 <body style="font-family: 'Noto Sans', Arial, sans-serif; margin: 0; padding: 0;">
     @php
       $user = Auth::user();
-      $address = DB::table('address')->where('id', $order->address)->fiRs t();
+      $address = DB::table('address')->where('id', $order->address)->fiRst();
     @endphp
     <div style="margin: 20px;">
         <div style="background-color: #228B22; color: white; padding: 20px; border-top-left-radius: 15px; border-top-right-radius: 15px;">

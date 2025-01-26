@@ -23,7 +23,7 @@ class CartController extends Controller
         if (!$product) {
             return response()->json(
               [
-                "message" => 'Product added/updated successfully',
+                "message" => 'Product  Not Found',
                 'cart' => $cart,
                 "product"=>"not found",
               ]);

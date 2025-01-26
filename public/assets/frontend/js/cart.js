@@ -492,13 +492,18 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes, mrp },
       success: function (response) {
-        var product= response.product;
-        console.log(product.quantity);
-        $('#quantity'+product.id).text(product.quantity);
-        const fullUrl = window.location.pathname;
-         if(fullUrl=='/cart'){
-          location.reload();
-         }
+        if(response.status){
+          console.log(response.cart);
+          var product= response.product;
+          $('#quantity'+product.id).text(product.quantity);
+          const fullUrl = window.location.pathname;
+           if(fullUrl=='/cart'){
+            location.reload();
+           }else{
+            console.log("product not found");
+           }
+        }
+       
       },
       error: function (xhr) {
         console.log(xhr.responseText);

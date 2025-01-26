@@ -25,7 +25,8 @@ class CartController extends Controller
               [
                 "message" => 'Product  Not Found',
                 'cart' => $cart,
-                "product"=>"not found",
+                'status'=>false,
+
               ]);
         }
         $product->attributes= $attributes;
@@ -43,6 +44,7 @@ class CartController extends Controller
                 'attributes' => $attributes,
                 'product'=>$product,
                 'quantity'=>1,
+                'status'=>true,
             ];
             $product->quantity = 1; 
 
@@ -127,6 +129,7 @@ class CartController extends Controller
         if (isset($cart[$uniqueKey])) {
             if ($cart[$uniqueKey]['quantity'] > 1) {
                 $cart[$uniqueKey]['quantity'] -= 1;
+
             } else {
                 unset($cart[$uniqueKey]);
             }

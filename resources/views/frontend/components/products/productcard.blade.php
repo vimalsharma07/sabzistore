@@ -93,7 +93,7 @@
 
 <!-- 1st product -->
 <div class="col-6 col-md-4">
-    <a href="javascript:void();" class="text-decoration-none link-dark">
+    <a href="javascript:void(0)" class="text-decoration-none link-dark">
         <div class="card rounded-4 shadow border-0 overflow-hidden search-list-item">
             <div class="position-relative">
                 <div class="product-back"><img src="{{ asset($product->image) }}" alt=""

@@ -499,10 +499,11 @@ $(document).ready(function () {
           const fullUrl = window.location.pathname;
            if(fullUrl=='/cart'){
             location.reload();
-           }else{
-            console.log("product not found");
            }
-        }
+        } 
+        else{
+          console.log("product not found");
+         }
        
       },
       error: function (xhr) {

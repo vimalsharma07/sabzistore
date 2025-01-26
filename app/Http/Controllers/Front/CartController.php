@@ -36,6 +36,8 @@ class CartController extends Controller
                 'product'=>$product,
                 'quantity'=>1,
             ];
+            $product->quantity = 1; 
+
         }
 
         session()->put('cart', $cart);

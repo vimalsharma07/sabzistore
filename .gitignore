@@ -21,3 +21,12 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Ignore session and cache files
+/storage/framework/sessions/*
+/storage/framework/cache/*
+/storage/framework/views/*
+/public/assets/orders/
+
+# Ignore compressed files
+*.zip

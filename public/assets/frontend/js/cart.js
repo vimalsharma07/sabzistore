@@ -494,6 +494,10 @@ $(document).ready(function () {
       success: function (response) {
         var product= response.product;
         $('#quantity'+product.id).text(product.quantity);
+        const fullUrl = window.location.pathname;
+         if(fullUrl=='/cart'){
+          location.reload();
+         }
       },
       error: function (xhr) {
         console.log(xhr.responseText);
@@ -512,8 +516,10 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes },
       success: function (response) {
-        console.log(response);
-      },
+        const fullUrl = window.location.pathname;
+        if(fullUrl=='/cart'){
+         location.reload();
+        }      },
       error: function (xhr) {
         console.log(xhr.responseText);
       },

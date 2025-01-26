@@ -56,6 +56,8 @@ class CartController extends Controller
             'message' => 'Product added/updated successfully',
             'cart' => $cart,
             "product"=>$product,
+            'status'=>true,
+
         ]);
     }
 

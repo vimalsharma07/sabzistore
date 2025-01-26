@@ -20,6 +20,14 @@ class CartController extends Controller
         $attributes = $request->input('attributes', []);
         $mrp = $request->input('mrp', 0);
         $product=   Product::where('id',$productId)->first();
+        if (!$product) {
+            return response()->json(
+              [
+                "message" => 'Product added/updated successfully',
+                'cart' => $cart,
+                "product"=>"not found",
+              ]);
+        }
         $product->attributes= $attributes;
         $product->mrp= $mrp;
         // Generate unique key for product + attributes combination

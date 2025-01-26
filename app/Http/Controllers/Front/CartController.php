@@ -19,47 +19,46 @@ class CartController extends Controller
         $quantity = $request->input('quantity', 1);
         $attributes = $request->input('attributes', []);
         $mrp = $request->input('mrp', 0);
-        $product=   Product::where('id',$productId)->first();
+    
+        // Fetch the product from the database
+        $product = Product::find($productId);
+    
         if (!$product) {
-            return response()->json(
-              [
-                "message" => 'Product  Not Found',
+            return response()->json([
+                'message' => 'Product Not Found',
                 'cart' => $cart,
-                'status'=>false,
-
-              ]);
+                'status' => false,
+            ]);
         }
-        $product->attributes= $attributes;
-        $product->mrp= $mrp;
+    
+        $product->attributes = $attributes;
+        $product->mrp = $mrp;
+    
         // Generate unique key for product + attributes combination
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
-
+    
         if (isset($cart[$uniqueKey])) {
             $cart[$uniqueKey]['quantity'] += $quantity;
-            $product->quantity = $cart[$uniqueKey]['quantity']; 
-
         } else {
             $cart[$uniqueKey] = [
                 'product_id' => $productId,
                 'attributes' => $attributes,
-                'product'=>$product,
-                'quantity'=>1,
-                'status'=>true,
+                'product' => $product,
+                'quantity' => $quantity,  // Use the provided quantity
+                'status' => true,
             ];
-            $product->quantity = 1; 
-
         }
-
+    
         session()->put('cart', $cart);
-
+    
         return response()->json([
             'message' => 'Product added/updated successfully',
             'cart' => $cart,
-            "product"=>$product,
-            'status'=>true,
-
+            'product' => $product,
+            'status' => true,
         ]);
     }
+    
 
     // Get cart details for a specific product and attributes
     public function getCart(Request $request, $productId)

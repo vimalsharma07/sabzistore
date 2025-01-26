@@ -63,7 +63,7 @@ Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/reorder/{order_number}', [OrderController::class, 'reorder']);
 Route::get('/order/{order_number}', [OrderController::class, 'orderView']);
 Route::get('/orders/{id}/invoice', [OrderController::class, 'downloadInvoice'])->name('orders.invoice');
-Route::get('/orders/{order_status}', [OrderController::class, 'getOrders'])->name('getOrders');
+// Route::get('/orders/{order_status}', [OrderController::class, 'getOrders'])->name('getOrders');
 Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
 
 

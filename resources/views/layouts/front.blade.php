@@ -26,12 +26,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome 6 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/frontend/css/desktopcart.css') }}">
-    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/mobilecart.css') }}">
-    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/home.css') }}">
+    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/mobilecart.css') }}"> --}}
+    {{-- <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/home.css') }}"> --}}
 
 
     <!-- Additional CSS -->
@@ -58,7 +58,7 @@ $address='';
 }
 @endphp
 
-    <nav class="navbar navbar-expand-lg bg-white py-3">
+    <nav class="py-3 bg-white navbar navbar-expand-lg">
         <div class="container">
             <!-- Brand Logo -->
             <a class="navbar-brand brand-logo" href="{{url('/')}}">
@@ -75,7 +75,7 @@ $address='';
             </div>
 
             <!-- Search Bar -->
-            <form class="d-flex mx-auto w-50"  action="{{url('/search')}}" method="GET">
+            <form class="mx-auto d-flex w-50"  action="{{url('/search')}}" method="GET">
                 <div style="max-width: 400px; margin: 50px auto;">
                     <input 
                         class="form-control search-bar" 
@@ -131,12 +131,12 @@ $address='';
         @endif
         <!-- Footer Section -->
         @section('footer')
-        <footer class="bg-white text-dark py-4 w-100 d-none d-md-block">
+        <footer class="py-4 bg-white text-dark w-100 d-none d-md-block">
             <div class="container">
                 <div class="row">
                     <!-- Useful Links -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Useful Links</h5>
+                        <h5 class="mb-3 text-uppercase">Useful Links</h5>
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
                             <li><a href="{{url('/about')}}" class="text-dark text-decoration-none">About Us</a></li>
@@ -147,7 +147,7 @@ $address='';
         
                     <!-- Categories -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Categories</h5>
+                        <h5 class="mb-3 text-uppercase">Categories</h5>
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-dark text-decoration-none">Technology</a></li>
                             <li><a href="#" class="text-dark text-decoration-none">Business</a></li>
@@ -160,7 +160,7 @@ $address='';
           ?>
                     <!-- Social Media -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Follow Us</h5>
+                        <h5 class="mb-3 text-uppercase">Follow Us</h5>
                         <div>
                             <a href="{{$media->facebook}}" class="text-dark text-decoration-none me-3">
                                 <i class="fab fa-facebook-f"></i>
@@ -178,8 +178,8 @@ $address='';
                     </div>
                 </div>
         
-                <div class="row mt-4">
-                    <div class="col text-center">
+                <div class="mt-4 row">
+                    <div class="text-center col">
                         <p class="mb-0">&copy; 2024 @SabziStore All Rights Reserved.</p>
                     </div>
                 </div>
@@ -205,11 +205,8 @@ $address='';
     @include('frontend.components.cart.desktopcart')
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+   
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());

@@ -557,7 +557,7 @@ $(document).ready(function () {
     var qele = $("#quantity" + productId);
     const currentQty = parseInt(qele.text());
     const newQty = currentQty + 1;
-    qele.text(newQty);
+    // qele.text(newQty);
     var currentPath = window.location.pathname;
     if (currentPath == "/cart") {
       var attr = $(this);

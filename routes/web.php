@@ -21,6 +21,9 @@ use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\OrderReviewController;
 
 
+Route::get('/debug', function () {
+    dd(session()->all());  // Dumps all session data
+});
 
 Route::post('/send-otp', [AuthController::class, 'sendOtp'])->name('sendOtp');
 Route::post('/validate-otp', [AuthController::class, 'validateOtp'])->name('validateOtp');

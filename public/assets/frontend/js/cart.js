@@ -517,7 +517,11 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes },
       success: function (response) {
-
+       
+        const fullUrl = window.location.pathname;
+         if(fullUrl=='/cart'){
+          location.reload();
+         }
       },
       error: function (xhr) {
         console.log(xhr.responseText);

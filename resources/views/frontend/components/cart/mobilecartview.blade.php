@@ -42,9 +42,9 @@
                                                 data-key="{{ array_key_first($item['attributes']) }}"
                                                 data-value="{{ array_values($item['attributes'])[0] }}"><i
                                                     class="fa-solid fa-minus text-success"></i></div>
-                                            <input class="shadow-none form-control text-center border-0 p-0 box"
+                                            <span class="shadow-none form-control text-center border-0 p-0 box"
                                                 id="quantity{{ $product->id }}" data-id="{{ $product->id }}"
-                                                value="{{ $item['quantity'] }}">
+                                                value="{{ $item['quantity'] }}" disabled>{{ $item['quantity'] }} </span>
                                             <div class="plus increaseQty selected" id="increaseQty{{ $product->id }}"
                                                 data-id="{{ $product->id }}"
                                                 data-key="{{ array_key_first($item['attributes']) }}"

@@ -492,7 +492,8 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes, mrp },
       success: function (response) {
-        console.log(response);
+        var product= response.product;
+        $('#quantity'+product.id).text(product.quantity);
       },
       error: function (xhr) {
         console.log(xhr.responseText);

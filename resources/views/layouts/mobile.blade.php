@@ -54,16 +54,16 @@
             </div>
     </div>
     <div class="px-4 py-3 shadow-sm bg-danger">
-        <form action="{{url('/search')}}" method="GET">
-        <div class="p-1 mb-5 overflow-hidden bg-white border-0 input-group rounded-pill">
-            <span class="bg-white border-0 input-group-text border-end pe-0"><i
-                    class="fa-solid fa-magnifying-glass text-danger"></i></span>
-            <input type="text" class="border-0 shadow-none form-control" placeholder='Search "disposables"'
-                id="searchInput" name="q">
-            <button type="submit" class="bg-white border-0 input-group-text text-decoration-none"><i
-                    class="fa-solid fa-microphone text-success"></i></button>
-        </div>
-    </form>
+        <form action="{{ url('/search') }}" method="GET">
+            <div class="p-1 mb-5 overflow-hidden bg-white border-0 input-group rounded-pill">
+                <span class="bg-white border-0 input-group-text border-end pe-0"><i
+                        class="fa-solid fa-magnifying-glass text-danger"></i></span>
+                <input type="text" class="border-0 shadow-none form-control" placeholder='Search "disposables"'
+                    id="searchInput" name="q">
+                <button type="submit" class="bg-white border-0 input-group-text text-decoration-none"><i
+                        class="fa-solid fa-microphone text-success"></i></button>
+            </div>
+        </form>
     </div>
 
 
@@ -80,31 +80,31 @@
     </div>
 
     <!-- Bottom Navigation Bar -->
-    <div class="fixed-bottom bg-white shadow px-3 py-2 osahan-nav-bottom">
+    <div class="px-3 py-2 bg-white shadow fixed-bottom osahan-nav-bottom">
         <div class="row links">
-            <div class="col osahan-nav-bottom-link text-center">
+            <div class="text-center col osahan-nav-bottom-link">
                 <a href="{{ url('/') }}">
                     <span><i class="bi bi-house-fill h1"></i></span>
                     <p class="m-0">Home</p>
                 </a>
             </div>
 
-            <div class="col osahan-nav-bottom-link p-0 text-center">
+            {{-- <div class="p-0 text-center col osahan-nav-bottom-link">
                 <a href="{{ url('/orders/all') }}">
                     <span><i class="bi bi-shop h1"></i></span>
                     <p class="m-0">Orders</p>
                 </a>
             </div>
 
-            <div class="col osahan-nav-bottom-link p-0 text-center">
+            <div class="p-0 text-center col osahan-nav-bottom-link">
                 <a href="{{ url('/cart') }}">
                     <span><i class="bi bi-basket h1"></i></span>
                     <p class="m-0">Cart</p>
                 </a>
-            </div>
+            </div> --}}
 
-            {{-- @if (Auth::check())
-                <div class="col osahan-nav-bottom-link p-0 text-center">
+            @if (Auth::check())
+                <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="{{ url('/orders/all') }}">
                         <span><i class="bi bi-shop h1"></i></span>
                         <p class="m-0">Orders</p>
@@ -116,37 +116,44 @@
                         <span><i class="bi bi-person h1"></i></span>
                     </a>
                 </div>
-                <div class="col osahan-nav-bottom-link p-0 text-center">
-                    <a href="{{url('/cart')}}">
+                <div class="p-0 text-center col osahan-nav-bottom-link">
+                    <a href="{{ url('/cart') }}">
                         <span><i class="bi bi-basket h1"></i></span>
                         <p class="m-0">Cart</p>
                     </a>
                 </div>
+                <div class="p-0 text-center col osahan-nav-bottom-link">
+                    <a href="javascript:void();">
+                        <span><i class="bi bi-receipt h1"></i></span>
+                        <p class="m-0">Support</p>
+                    </a>
+                </div>
             @else
-                <div class="col osahan-nav-bottom-link p-0 text-center">
+                <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="javascript:void();">
                         <span><i class="bi bi-shop h1"></i></span>
                         <p class="m-0">Categories</p>
                     </a>
                 </div>
                 <div class="col osahan-nav-bottom-link osahan-nav-bottom-link-center">
-                    <a class="osahan-nav-bottom-home" href="" data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                    <a class="osahan-nav-bottom-home" href="" data-bs-toggle="modal" data-bs-target="#otpModal"
+                        aria-expanded="false">
                         <span><i class="bi bi-person h1"></i></span>
                     </a>
                 </div>
-                <div class="col osahan-nav-bottom-link p-0 text-center">
-                    <a href="{{url('/cart')}}">
+                <div class="p-0 text-center col osahan-nav-bottom-link">
+                    <a href="{{ url('/cart') }}">
                         <span><i class="bi bi-basket h1"></i></span>
                         <p class="m-0">Cart</p>
                     </a>
                 </div>
-                <div class="col osahan-nav-bottom-link p-0 text-center">
+                <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="javascript:void();">
                         <span><i class="bi bi-receipt h1"></i></span>
                         <p class="m-0">Support</p>
                     </a>
                 </div>
-            @endif --}}
+            @endif
         </div>
     </div>
 
@@ -160,8 +167,8 @@
     <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
-     {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
-     <script src="{{asset('assets/frontend/js/loginmodal.js')}}"></script>
+    {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
+    <script src="{{ asset('assets/frontend/js/loginmodal.js') }}"></script>
 
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());

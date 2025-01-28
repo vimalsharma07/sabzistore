@@ -34,31 +34,41 @@
     </style>
 
     <div class="container mt-4 bg-light">
+        <div class="pb-3 m osahan-header-main">
+            <div class="d-flex align-items-center">
+                <div class="gap-3 d-flex align-items-center">
+                    <a href="{{ url()->previous() }}"><i
+                            class="m-0 bi bi-arrow-left d-flex text-success h3 back-page"></i></a>
+                    <h3 class="m-0 fw-bold">Back</h3>
+                </div>
+
+            </div>
+        </div>
         <h1 class="mb-4">My Orders</h1>
         <div id="ordersContainer">
             @if (isset($orders) && count($orders) > 0)
-                @foreach ($orders as $order) 
-                    <div class="bg-white my-3">
-                        <div class="card rounded-4 border overflow-hidden">
-                            <div class="card-header p-3 border-bottom">
+                @foreach ($orders as $order)
+                    <div class="my-3 bg-white">
+                        <div class="overflow-hidden border card rounded-4">
+                            <div class="p-3 card-header border-bottom">
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex gap-2">
-                                        
+                                    <div class="gap-2 d-flex">
+
                                         <div>
                                             <h5 class="mb-1">#{{ $order->order_number }}</h5>
-                                            <p class="text-muted my-0">{{ $order->created_at }}</p>
+                                            <p class="my-0 text-muted">{{ $order->created_at }}</p>
                                         </div>
                                     </div>
                                     <div class="text-end">
                                         <div
                                             class="badge bg-light mb-3 rounded-pill {{ $order->order_status === 'cancelled' ? 'text-danger' : 'text-success' }}">
                                             {{ $order->order_status }}</div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
+                                <div class="gap-2 mb-3 d-flex align-items-center">
                                     @foreach (array_slice(json_decode($order->products, true), 0, 4) as $product)
                                         <div><img
                                                 src="{{ url('/') }}/{{ $product['image'] ?? 'https://placehold.co/50x50' }}"
@@ -115,19 +125,19 @@
                             const productImages = JSON.parse(order.products).slice(0, 4).map(product =>
                                 product.image || 'https://placehold.co/50x50');
                             const formattedImages = productImages.map(image =>
-                                `<img src="{{ url('/') }}/${image}" alt="Product image" class="img-fluid mb-3 ch-40"/>`
+                                `<img src="{{ url('/') }}/${image}" alt="Product image" class="mb-3 img-fluid ch-40"/>`
                             ).join('');
 
                             const row = `
-                        <div class="bg-white my-3">
-                        <div class="card rounded-4 border overflow-hidden">
-                            <div class="card-header p-3 border-bottom">
+                        <div class="my-3 bg-white">
+                        <div class="overflow-hidden border card rounded-4">
+                            <div class="p-3 card-header border-bottom">
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex gap-2">
+                                    <div class="gap-2 d-flex">
                                         
                                         <div>
                                             <h5 class="mb-1">#${order.order_number}</h5>
-                                            <p class="text-muted my-0">
+                                            <p class="my-0 text-muted">
                                               ${order.created_at}</p>
                                         </div>
                                     </div>
@@ -139,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
+                                <div class="gap-2 mb-3 d-flex align-items-center">
                                  ${formattedImages}
                                 </div>
                                 <hr>

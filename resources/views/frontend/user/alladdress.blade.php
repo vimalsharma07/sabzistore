@@ -2,12 +2,23 @@
 @section('content')
 
 <div class="container mt-4">
-    <h4 class="mb-3">My Addresses</h4>
+    <div class="pb-3 m osahan-header-main">
+        <div class="d-flex align-items-center">
+            <div class="gap-3 d-flex align-items-center">
+                <a href="{{ url()->previous() }}"><i
+                        class="m-0 bi bi-arrow-left d-flex text-success h3 back-page"></i></a>
+                <h3 class="m-0 fw-bold">Back</h3>
+            </div>
+
+        </div>
+    </div>
+    
+    <h4 class="mb-3">My Address</h4>
     
     @if($addresses->isNotEmpty())
         <div class="list-group">
             @foreach($addresses as $address)
-            <div class="address-item p-3 mb-3 border rounded">
+            <div class="p-3 mb-3 border rounded address-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="mb-1">{{ ucfirst($address->type ?? 'Address') }}</h5>

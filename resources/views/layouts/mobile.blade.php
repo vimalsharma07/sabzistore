@@ -148,7 +148,7 @@
                     </a>
                 </div>
                 <div class="p-0 text-center col osahan-nav-bottom-link">
-                    <a href="javascript:void();">
+                    <a href="tel:+919368311855">
                         <span><i class="bi bi-receipt h1"></i></span>
                         <p class="m-0">Support</p>
                     </a>

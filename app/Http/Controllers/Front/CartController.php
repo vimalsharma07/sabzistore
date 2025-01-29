@@ -44,7 +44,7 @@ class CartController extends Controller
                 'product_id' => $productId,
                 'attributes' => $attributes,
                 'product' => $product,
-                'quantity' => $quantity,  // Use the provided quantity
+                'quantity' => $quantity,  
                 'status' => true,
             ];
         }

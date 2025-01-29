@@ -2,7 +2,10 @@
 @section('content')
     @php
         $user = Auth::user();
-        $address = DB::table('address')->where('id', $order->address)->first();
+        if(isset($order->address)){
+            $address = DB::table('address')->where('id', $order->address)->first();
+
+        }
     @endphp
 
     <div class="px-4 py-3 osahan-header-main">
@@ -29,9 +32,13 @@
         @foreach ($products as $product)
             <div class="m-0">
                 <div class="gap-3 mb-3 d-flex align-items-center">
-                    <img src="img/veg.jpg" alt="" class="img-fluid ch-20">
+                    <img src="{{ asset($product['image']) }}" alt="Product Image" height="40px" width="40px" class="rounded float-end ml-4">
                     <div class="lh-sm">
-                        <h4 class="mb-1">{{ $product['name'] ?? 'Unknown Product' }}</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-1">{{ $product['name'] ?? 'Unknown Product' }}</h4>
+                        </div>
+                        
+                        
                         <div class="text-muted fw-normal">Quantity: {{ $product['quantity'] }}</div>
                     </div>
                 </div>
@@ -133,14 +140,26 @@
   
         <!-- First button: Download Invoice -->
         
-        <div class="pt-2 pb-4">
-            <div class="text-center d-grid">
+        <div class="pt-4 pb-5">
+            <!-- Download Invoice Button -->
+            <div class="text-center d-grid mb-4">
                 <form action="{{ route('orders.invoice', ['id' => $order->id]) }}" method="get">
                     <button type="submit" class="btn btn-success btn-lg rounded-pill">Download Invoice</button>
-
-                </form> 
+                </form>
             </div>
+        
+            <!-- Review Section -->
+            @if($order->review)
+                <div class="text-center d-grid">
+                    <a href="{{ url('/review/show/'.$order->review->id) }}" class="btn btn-info btn-lg rounded-pill">
+                        See Review
+                    </a>
+                </div>
+           
+               
+            @endif
         </div>
+        
 
         <!-- Second button: See Address on Map -->
         @if ($address->lat && $address->lang && $user->role == 'admin')
@@ -160,4 +179,60 @@
         <div class="pt-5 pb-5"></div>
 
     </div> 
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+    // Handle Star Rating
+    const stars = $(`#rateOrderModal-{{ $order->id }} .rating-stars i`);
+    const ratingInput = $(`#rating-{{ $order->id }}`);
+
+    stars.each(function() {
+        $(this).on('click', function() {
+            const ratingValue = $(this).data('value');
+            // Highlight stars based on the clicked one
+            stars.each(function() {
+                if ($(this).data('value') <= ratingValue) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
+            ratingInput.val(ratingValue); 
+            $('#ratinginput').val(ratingValue);
+        });
+    });
+
+    // Handle form submission (using jQuery AJAX)
+    $('.submitReview').on('click', function() {
+        const form = $(`#rateOrderForm-{{ $order->id }}`);
+        const formData = new FormData(form[0]); // Get the form data using FormData
+
+        $.ajax({
+            url: '{{ url("/order-review") }}',
+            method: 'POST',
+            data: formData,
+            contentType: false,  // Allow file uploads
+            processData: false,  // Don't process the data (this is important for file uploads)
+            success: function(response) {
+                $('.review-form').addClass('d-none');
+                $('.modal-footer').addClass('d-none');
+                $('#reviewsubmit').removeClass('d-none');
+
+                const modal = new bootstrap.Modal($('#rateOrderModal-{{ $order->id }}'));
+                modal.hide();
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error('Error:', error);
+                alert('An error occurred while submitting the review.');
+                console.error('Response:', xhr.responseText); // Log the raw response from the server
+            }
+        });
+    });
+});
+
+
+  </script>
+  
 @endsection

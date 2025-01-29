@@ -25,9 +25,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="rateOrderForm-{{ $order->id }}" enctype="multipart/form-data">
+
+        <form id="rateOrderForm-{{ $order->id }}"  action="{{url('/order-review')}}" enctype="multipart/form-data" class="review-form">
           <!-- Hidden Input for Order ID -->
           <input type="hidden" name="order_id" value="{{ $order->id }}">
+          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+          <input type="hidden" name="rating" value="0" id="ratinginput">
 
           <!-- Rating Section -->
           <div class="mb-3 text-center">
@@ -54,10 +57,24 @@
             <div class="photo-upload-preview mt-2 d-flex flex-wrap"></div>
           </div>
         </form>
+
+        {{-- after subbmit  --}}
+
+        <div class="card mb-3 d-none" style="max-width: 18rem;"  id="reviewsubmit">
+          <div class="card-header">
+            <input type="checkbox" class="form-check-input" id="reviewSubmittedCheckbox" checked disabled>
+            Review Submitted
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Your Review has been Submitted Successfully!</h5>
+            <p class="card-text">Thank you for sharing your feedback. Your review helps others make better decisions.</p>
+          </div>
+        </div>
+   {{-- section end gere          --}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary submitReview" data-order-id="{{ $order->id }}">Submit Review</button>
+        <button type="submit" class="btn btn-primary submitReview" data-order-id="{{ $order->id }}">Submit Review</button>
       </div>
     </div>
   </div>

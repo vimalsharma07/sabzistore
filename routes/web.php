@@ -18,7 +18,7 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\UserController;
-use App\Http\Controllers\Front\OrderReviewController;
+use App\Http\Controllers\Front\ReviewController;
 
 
 Route::get('/debug', function () {
@@ -55,7 +55,10 @@ Route::get('/profile', function () {
     return view('frontend/user/profile'); 
 });
 
-Route::post('/order-review', [OrderReviewController::class, 'store']);
+Route::get('/reviews', [ReviewController::class, 'showReviews'])->name('reviews.index');
+Route::post('/order-review', [ReviewController::class, 'store']);
+Route::get('/review/show/{id}', [ReviewController::class, 'reviewshow'])->name('reviews.delete');
+Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.delete');
 
 Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
 Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
@@ -68,11 +71,11 @@ Route::post('/profile/update', [UserController::class, 'update'])->name('profile
 
 Route::get('/order/create', [OrderController::class, 'saveorder'])->name('order-create');
 Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
 Route::get('/reorder/{order_number}', [OrderController::class, 'reorder']);
 Route::get('/order/{order_number}', [OrderController::class, 'orderView']);
 Route::get('/orders/{id}/invoice', [OrderController::class, 'downloadInvoice'])->name('orders.invoice');
-// Route::get('/orders/{order_status}', [OrderController::class, 'getOrders'])->name('getOrders');
-Route::get('/orders/all', [OrderController::class, 'allorders'])->name('orders');
+ Route::get('/orders/{order_status}', [OrderController::class, 'getOrders'])->name('getOrders');
 
 
 

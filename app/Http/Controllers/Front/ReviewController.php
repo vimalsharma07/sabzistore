@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Models\OrderReview;
+use App\Http\Controllers\Controller; // Import the base Controller class
 
-class OrderReviewController extends Controller
+
+class ReviewController extends Controller
 {
     /**
      * Store a new order review.
@@ -13,6 +15,19 @@ class OrderReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+
+     public function showReviews()
+     {
+         // Fetch all reviews with their associated order and user data (if necessary)
+         $reviews = OrderReview::with('order', 'user')->get();
+     
+         return view('frontend.components.orders.reviews', compact('reviews'));
+     }
+     public function reviewshow(Request $request , $id){
+        $review = OrderReview::find($id);
+        return view('frontend.components.orders.review', compact('review'));
+    
+    }
     public function store(Request $request)
     {
         // Validate the request data
@@ -49,4 +64,34 @@ class OrderReviewController extends Controller
             'data' => $review,
         ]);
     }
+
+    public function destroy($id)
+{
+    // Find the review by its ID
+    $review = OrderReview::find($id);
+    
+    // Check if the review exists
+    if ($review) {
+        // Delete associated photos from the server (optional)
+        if ($review->photos) {
+            foreach (json_decode($review->photos) as $photo) {
+                if (file_exists(public_path($photo))) {
+                    unlink(public_path($photo));
+                }
+            }
+        }
+
+        // Delete the review from the database
+        $review->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('reviews.index')->with('success', 'Review deleted successfully.');
+    }
+
+    // If the review doesn't exist, redirect with an error message
+    return redirect()->back()->with('error', 'Review not found.');
+}
+
+
+
 }

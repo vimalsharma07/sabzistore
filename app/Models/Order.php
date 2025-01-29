@@ -36,4 +36,9 @@ class Order extends Model
     return $this->belongsTo(Address::class, 'address');
 }
 
+public function review()
+    {
+        return $this->hasOne(OrderReview::class);
+    }
+
 }

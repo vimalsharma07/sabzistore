@@ -492,6 +492,7 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes, mrp },
       success: function (response) {
+        location.reload();
         if(response.status){
           var product= response.product;
           $('#quantity'+product.id).text(product.quantity);

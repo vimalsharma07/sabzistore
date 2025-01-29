@@ -496,11 +496,12 @@ $(document).ready(function () {
           var product= response.product;
           $('#quantity'+product.id).text(product.quantity);
           const fullUrl = window.location.pathname;
-           if(fullUrl=='/cart'){
+          if (fullUrl.includes('cart')) {
             location.reload();
            }
         } 
         else{
+          alert("not added");
           console.log("product not found");
          }
        

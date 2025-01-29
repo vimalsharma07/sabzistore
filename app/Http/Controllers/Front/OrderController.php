@@ -16,7 +16,8 @@ class OrderController extends Controller
 {
 
     public function allorders(){
-        return view('frontend.user.orders');
+      $orders=   Order::where('user_id',Auth::user()->id)->get();
+        return view('frontend.user.orders',['orders'=>$orders]);
     }
 
     

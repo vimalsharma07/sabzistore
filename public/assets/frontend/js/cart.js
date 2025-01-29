@@ -493,7 +493,6 @@ $(document).ready(function () {
       data: { attributes, mrp },
       success: function (response) {
         if(response.status){
-          console.log(response);
           var product= response.product;
           $('#quantity'+product.id).text(product.quantity);
           const fullUrl = window.location.pathname;

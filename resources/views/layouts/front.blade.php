@@ -21,47 +21,42 @@
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('/uploads/media/logo.png') }}" type="image/x-icon">
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome 6 -->
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/frontend/css/desktopcart.css') }}">
-    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/mobilecart.css') }}"> --}}
-    {{-- <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/home.css') }}"> --}}
-
-
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/bootstrap/css/bootstrap.min.css') }}">
+    <!-- Icofont -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/icofont.min.css') }}">
+    <!-- Slick SLider Css -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick-theme.css') }}">
+    <!-- Font Awesome Icon -->
+    <link href="{{ asset('assets/frontend/vender/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    <!-- Sidebar CSS -->
+    <link href="{{ asset('assets/frontend/vender/sidebar/demo.css') }}" rel="stylesheet">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
     <!-- Additional CSS -->
     @stack('styles')
-     
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-   
+
 </head>
 
 <body>
     @php
-    $cart = session()->get('cart', []);
-    $user= Auth::user();
-    if($user){
-    
-    $address= DB::table('address')->where('user_id',$user->id)->where('default',1)->first();
-    
-}
-else{
-$address='';
+        $cart = session()->get('cart', []);
+        $user = Auth::user();
+        if ($user) {
+            $address = DB::table('address')->where('user_id', $user->id)->where('default', 1)->first();
+        } else {
+            $address = '';
+        }
+    @endphp
 
-}
-@endphp
-
-    <nav class="py-3 bg-white navbar navbar-expand-lg">
+    <nav class="py-3 bg-danger navbar navbar-expand-lg">
         <div class="container">
             <!-- Brand Logo -->
-            <a class="navbar-brand brand-logo" href="{{url('/')}}">
+            <a class="navbar-brand brand-logo" href="{{ url('/') }}">
                 Sabzi<span>Store</span>
             </a>
 
@@ -75,42 +70,38 @@ $address='';
             </div>
 
             <!-- Search Bar -->
-            <form class="mx-auto d-flex w-50"  action="{{url('/search')}}" method="GET">
+            <form class="mx-auto d-flex w-50" action="{{ url('/search') }}" method="GET">
                 <div style="max-width: 400px; margin: 50px auto;">
-                    <input 
-                        class="form-control search-bar" 
-                        type="search" 
-                        id="searchInput" 
-                        placeholder='Search "Tomato"'
-                        aria-label="Search" 
-                        name="q">
-                </div>            </form>
+                    <input class="form-control search-bar" type="search" id="searchInput" placeholder='Search "Tomato"'
+                        aria-label="Search" name="q">
+                </div>
+            </form>
 
             <!-- Account and Cart -->
             <div class="d-flex align-items-center">
-                @if(Auth::check())
-                <div class="dropdown me-3">
-                    <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        Account <i class="fas fa-chevron-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="{{url('/profile')}}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{url('orders/all')}}">Orders</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </div>
-                  @else                
-                <div class="dropdown me-3">
-                    <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                    data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
-                        Log In <i class="fas fa-chevron-down ms-1"></i>
-                    </a>
-                    
-                </div>
+                @if (Auth::check())
+                    <div class="dropdown me-3">
+                        <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Account <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ url('orders/all') }}">Orders</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                @else
+                    <div class="dropdown me-3">
+                        <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
+                            data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                            Log In <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+
+                    </div>
                 @endif
                 <a href="#" class="btn cart-button" id="openCartBtn">
-                    <i class="fas fa-shopping-cart"></i> 
+                    <i class="fas fa-shopping-cart"></i>
                     <span id="carttopright"> </span>
                 </a>
             </div>
@@ -119,86 +110,85 @@ $address='';
     {{-- <button onclick="redirectToRoute()">Get Route on Google Maps</button> --}}
 
     <div class="container">
-       
-        
+
+
 
         <!-- Main Content Section -->
         <main>
             @yield('content')
         </main>
-        @if(request()->segment(1)!='cart')   
-        @include('frontend/components/cart/desktopcart');
+        @if (request()->segment(1) != 'cart')
+            @include('frontend/components/cart/desktopcart');
         @endif
         <!-- Footer Section -->
         @section('footer')
-        <footer class="py-4 bg-white text-dark w-100 d-none d-md-block">
-            <div class="container">
-                <div class="row">
-                    <!-- Useful Links -->
-                    <div class="col-md-4">
-                        <h5 class="mb-3 text-uppercase">Useful Links</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
-                            <li><a href="{{url('/about')}}" class="text-dark text-decoration-none">About Us</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Services</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Contact</a></li>
-                        </ul>
+            <footer class="py-4 bg-white text-dark w-100 d-none d-md-block">
+                <div class="container">
+                    <div class="row">
+                        <!-- Useful Links -->
+                        <div class="col-md-4">
+                            <h5 class="mb-3 text-uppercase">Useful Links</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
+                                <li><a href="{{ url('/about') }}" class="text-dark text-decoration-none">About Us</a></li>
+                                <li><a href="#" class="text-dark text-decoration-none">Services</a></li>
+                                <li><a href="#" class="text-dark text-decoration-none">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="col-md-4">
+                            <h5 class="mb-3 text-uppercase">Categories</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-dark text-decoration-none">Technology</a></li>
+                                <li><a href="#" class="text-dark text-decoration-none">Business</a></li>
+                                <li><a href="#" class="text-dark text-decoration-none">Travel</a></li>
+                                <li><a href="#" class="text-dark text-decoration-none">Health</a></li>
+                            </ul>
+                        </div>
+                        <?php
+                        $media = DB::table('media')->first();
+                        ?>
+                        <!-- Social Media -->
+                        <div class="col-md-4">
+                            <h5 class="mb-3 text-uppercase">Follow Us</h5>
+                            <div>
+                                <a href="{{ $media->facebook }}" class="text-dark text-decoration-none me-3">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="{{ $media->twitter }}" class="text-dark text-decoration-none me-3">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="{{ $media->instagram }}" class="text-dark text-decoration-none me-3">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="{{ $media->linkedin }}" class="text-dark text-decoration-none">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-        
-                    <!-- Categories -->
-                    <div class="col-md-4">
-                        <h5 class="mb-3 text-uppercase">Categories</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-dark text-decoration-none">Technology</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Business</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Travel</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Health</a></li>
-                        </ul>
-                    </div>
-        <?php 
-       $media=  DB::table('media')->first();
-          ?>
-                    <!-- Social Media -->
-                    <div class="col-md-4">
-                        <h5 class="mb-3 text-uppercase">Follow Us</h5>
-                        <div>
-                            <a href="{{$media->facebook}}" class="text-dark text-decoration-none me-3">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="{{$media->twitter}}" class="text-dark text-decoration-none me-3">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="{{$media->instagram}}" class="text-dark text-decoration-none me-3">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="{{$media->linkedin}}" class="text-dark text-decoration-none">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+
+                    <div class="mt-4 row">
+                        <div class="text-center col">
+                            <p class="mb-0">&copy; 2024 @SabziStore All Rights Reserved.</p>
                         </div>
                     </div>
                 </div>
-        
-                <div class="mt-4 row">
-                    <div class="text-center col">
-                        <p class="mb-0">&copy; 2024 @SabziStore All Rights Reserved.</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    
-        @php
-            $cart = session('cart', []); 
+            </footer>
 
-        $itemTotal = 0;
-        $totalqty=0;
-        foreach ($cart as $item) {
-            $price = array_values($item['attributes'])[0] * $item['quantity'];
-            $itemTotal += $price;
-            $totalqty++;
-        }
-        
+            @php
+                $cart = session('cart', []);
 
-    @endphp
+                $itemTotal = 0;
+                $totalqty = 0;
+                foreach ($cart as $item) {
+                    $price = array_values($item['attributes'])[0] * $item['quantity'];
+                    $itemTotal += $price;
+                    $totalqty++;
+                }
+
+            @endphp
         @show
     </div>
     @include('frontend.components.login.desktoplogin')
@@ -206,36 +196,45 @@ $address='';
 
     <!-- jQuery -->
 
-   
+
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());
-        var userAddress= @json($address);
+        var userAddress = @json($address);
     </script>
-    
-      
-      <script src="{{asset('assets/frontend/js/cart.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/slider.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/currentlocation.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/placeholder.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/rating.js')}}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{{ asset('assets/frontend/js/cart.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
+    {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
+    <script src="{{ asset('assets/frontend/js/loginmodal.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('assets/frontend/vender/bootstrap/js/bootstrap.bundle.min.js') }}" type="text/javascript">
+    </script>
+    <!-- slick Slider JS-->
+    <script src="{{ asset('assets/frontend/vender/slick/slick/slick.min.js') }}" type="text/javascript"></script>
+    <!-- Sidebar JS-->
+    <script src="{{ asset('assets/frontend/vender/sidebar/hc-offcanvas-nav.js') }}" type="text/javascript"></script>
+    <!-- Javascript -->
+    <script src="{{ asset('assets/frontend/js/custom.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/frontend/js/rocket-loader.min.js') }}" type="text/javascript"></script>
 
 
 
-<script>
-  $(document).ready(function() {
-   
+    <script>
+        $(document).ready(function() {
 
 
-  var totalQty =  @json($totalqty);
-  var itemTotal =  @json($itemTotal);
 
-  console.log(totalQty, itemTotal);
-  $('#carttopright').text(totalQty + " items ₹" + itemTotal);
-});
+            var totalQty = @json($totalqty);
+            var itemTotal = @json($itemTotal);
 
-     
-</script>
+            console.log(totalQty, itemTotal);
+            $('#carttopright').text(totalQty + " items ₹" + itemTotal);
+        });
+    </script>
     @yield('scripts')
 </body>
 

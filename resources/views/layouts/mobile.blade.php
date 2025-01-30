@@ -176,12 +176,7 @@
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());
     </script>
-<script>
-    window.addEventListener('load', function() {
-      // Hide the loader once the page is fully loaded
-      document.querySelector('.loader-container').style.display = 'none';
-    });
-  </script>
+
 
     {{-- new --}}
     <!-- Bootstrap core JavaScript -->

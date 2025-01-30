@@ -54,6 +54,7 @@
             $address = '';
         }
     @endphp
+    @include('layouts.loader')
 
     <nav class="pb-3 bg-light navbar navbar-expand-lg">
         <div class="container">
@@ -255,7 +256,7 @@
     <!-- Javascript -->
     <script src="{{ asset('assets/frontend/js/custom.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/frontend/js/rocket-loader.min.js') }}" type="text/javascript"></script>
-
+   
 
 
     <script>
@@ -270,6 +271,7 @@
             $('#carttopright').text(totalQty + " items ₹" + itemTotal);
         });
     </script>
+   
     @yield('scripts')
 </body>
 

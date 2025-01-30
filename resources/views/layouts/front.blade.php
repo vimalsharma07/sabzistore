@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
 
     <!-- Title -->
-    <title>@yield('title', 'SabziStore') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'BharatStore') | {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('/uploads/media/logo.png') }}" type="image/x-icon">
@@ -58,9 +58,12 @@
     <nav class="pb-3 bg-light navbar navbar-expand-lg">
         <div class="container">
             <!-- Brand Logo -->
-            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}">
-                Sabzi<span>Store</span>
-            </a>
+            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}" style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #FF9933;">Bharat</span> 
+                <span style="color: #138808;">Store</span> 
+              </a>
+              
+              
 
             <!-- Delivery Info -->
             <div class="gap-3 d-flex align-items-center">
@@ -203,7 +206,7 @@
 
                     <div class="mt-4 row">
                         <div class="text-center col">
-                            <p class="mb-0">&copy; 2024 @SabziStore All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 @BharatStore All Rights Reserved.</p>
                         </div>
                     </div>
                 </div>

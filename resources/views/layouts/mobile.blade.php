@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SabziStore') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'BharatStore') | {{ config('app.name', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap CSS -->
@@ -42,9 +42,10 @@
     <!-- Navbar -->
     <div class="px-4 pt-4 osahan-header-nav d-flex align-items-center bg-danger">
         <h2 class="mb-0 text-white font-weight-normal">
-            <a class="text-white navbar-brand brand-logo" href="{{ url('/') }}">
-                Sabzi<span>Store</span>
-            </a>
+            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}" style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                <span style="color:white;">Bharat</span> 
+                <span style="color: #138808;">Store</span> 
+              </a>
             </h5>
             <div class="gap-2 ms-auto d-flex align-items-center">
                 <a href="notifications.html" class="text-white"><i

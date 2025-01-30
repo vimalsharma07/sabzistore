@@ -140,7 +140,9 @@
 
         <!-- Main Content Section -->
         <main>
+            @if(Agent::isDesktop())
             @include('frontend.components.story.desktop')
+            @endif
 
             @yield('content')
 

@@ -1,7 +1,9 @@
 @extends(getLayout())
 
 @section('content')
+@if(Agent::isMobile())
     @include('frontend.components.story.index')
+@endif
 
     <div class="p-4">
         <h4 class="fw-bold mb-3">Popular Products</h4>

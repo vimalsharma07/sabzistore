@@ -33,6 +33,8 @@
     <link href="{{ asset('assets/frontend/vender/sidebar/demo.css') }}" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/desktopcart.css') }}">
     <!-- Additional CSS -->
     @stack('styles')
 
@@ -53,44 +55,57 @@
         }
     @endphp
 
-    <nav class="py-3 bg-danger navbar navbar-expand-lg">
+    <nav class="pb-3 bg-light navbar navbar-expand-lg">
         <div class="container">
             <!-- Brand Logo -->
-            <a class="navbar-brand brand-logo" href="{{ url('/') }}">
+            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}">
                 Sabzi<span>Store</span>
             </a>
 
             <!-- Delivery Info -->
-            <div class="ms-4">
-                <div class="delivery-time">Delivery in 8 minutes</div>
-                <div class="delivery-address">
-                    Select Address
-                    <i class="fas fa-chevron-down ms-1"></i>
+            <div class="gap-3 d-flex align-items-center">
+                <div><i class="text-denger fa-solid fa-location-dot h4"></i></div>
+                <div>
+                    <h4 class="mb-1 fw-bold">Delivery in 8 minutes</h4>
+                    <p class="m-0 text-muted delivery-address"> </p>
                 </div>
             </div>
 
+
+
             <!-- Search Bar -->
-            <form class="mx-auto d-flex w-50" action="{{ url('/search') }}" method="GET">
-                <div style="max-width: 400px; margin: 50px auto;">
+
+
+            <form class="mx-auto w-75 d-flex" action="{{ url('/search') }}" method="GET">
+                <div style="width: 400px; margin: 50px auto;" class="d-flex">
+
                     <input class="form-control search-bar" type="search" id="searchInput" placeholder='Search "Tomato"'
                         aria-label="Search" name="q">
+                    <a href="#" class="px-3 bg-danger header-search input-group-text rounded-0"><i
+                            class="icofont-search"></i></a>
                 </div>
             </form>
 
             <!-- Account and Cart -->
-            <div class="d-flex align-items-center">
+            <ul class="flex-shrink-0 m-0 list-inline d-flex align-items-center ms-auto">
                 @if (Auth::check())
-                    <div class="dropdown me-3">
-                        <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Account <i class="fas fa-chevron-down ms-1"></i>
+                    <li class="m-0 list-inline-item dropdown">
+                        <a href="#"
+                            class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"role="button"
+                            id="accountDropdown" data-bs-toggle="dropdown">
+                            <i class="p-2 text-white bi bi-person h4 bg-danger rounded-pill"></i>
+                            <div class="lh-sm d-none d-lg-block">
+                                <h6 class="mb-0 fw-bold">Hello, Sign in</h6>
+                                <small class="mb-0 align-bottom text-muted text-truncate d-inline-block small">My
+                                    Account</small>
+                            </div>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                             <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="{{ url('orders/all') }}">Orders</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                         </ul>
-                    </div>
+                    </li>
                 @else
                     <div class="dropdown me-3">
                         <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
@@ -100,11 +115,22 @@
 
                     </div>
                 @endif
-                <a href="#" class="btn cart-button" id="openCartBtn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="carttopright"> </span>
-                </a>
-            </div>
+
+
+                <li class="m-0 list-inline-item">
+                    <a href="#"
+                        class="gap-2 p-3 text-decoration-none d-flex align-items-center text-start btn btn-success btn-lg rounded-pill border-start"
+                        id="openCartBtn">
+                        <i class="fas fa-shopping-cart text-danger fs-3"></i>
+                        <div class="lh-sm d-none d-lg-block">
+                            <h6 class="mb-0 text-white fw-bold" id="carttopright">3 items</h6>
+                        </div>
+                    </a>
+
+
+                </li>
+            </ul>
+
         </div>
     </nav>
     {{-- <button onclick="redirectToRoute()">Get Route on Google Maps</button> --}}
@@ -112,10 +138,13 @@
     <div class="container">
 
 
-
         <!-- Main Content Section -->
         <main>
+            @include('frontend.components.story.desktop')
+
             @yield('content')
+
+
         </main>
         @if (request()->segment(1) != 'cart')
             @include('frontend/components/cart/desktopcart');
@@ -130,7 +159,8 @@
                             <h5 class="mb-3 text-uppercase">Useful Links</h5>
                             <ul class="list-unstyled">
                                 <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
-                                <li><a href="{{ url('/about') }}" class="text-dark text-decoration-none">About Us</a></li>
+                                <li><a href="{{ url('/about') }}" class="text-dark text-decoration-none">About Us</a>
+                                </li>
                                 <li><a href="#" class="text-dark text-decoration-none">Services</a></li>
                                 <li><a href="#" class="text-dark text-decoration-none">Contact</a></li>
                             </ul>
@@ -195,6 +225,7 @@
     @include('frontend.components.cart.desktopcart')
 
     <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
     <script>
@@ -203,7 +234,6 @@
         var userAddress = @json($address);
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="{{ asset('assets/frontend/js/cart.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>

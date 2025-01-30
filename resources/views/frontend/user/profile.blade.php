@@ -168,7 +168,7 @@
                 <div class="p-3 mb-2 text-center bg-white rounded-4"> 
                     <a href="{{ route('logout') }}">
                     <i class="m-0 text-center fas fa-sign-out-alt text-warning h1 cw-30"></i>
-                    <a href="{{ url('/logout') }}" class="col-4 order-item"><h5 class="mt-3 mb-1 fw-bold">Logout</h5></a> 
+                    <a href="{{ route('logout') }}" class="col-4 order-item"><h5 class="mt-3 mb-1 fw-bold">Logout</h5></a> 
                     </a>
                 </div> 
             </div>

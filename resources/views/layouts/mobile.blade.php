@@ -38,7 +38,6 @@
 
 <body class="bg-light">
     <!-- Top Navbar -->
-    @include('layouts.loader')
 
     <!-- Navbar -->
     <div class="px-4 pt-4 osahan-header-nav d-flex align-items-center bg-danger">

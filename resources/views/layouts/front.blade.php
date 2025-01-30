@@ -54,7 +54,6 @@
             $address = '';
         }
     @endphp
-    @include('layouts.loader')
 
     <nav class="pb-3 bg-light navbar navbar-expand-lg">
         <div class="container">

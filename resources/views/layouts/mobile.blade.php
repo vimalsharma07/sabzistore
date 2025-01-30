@@ -118,17 +118,18 @@
                     </a>
                 </div>
                 <div class="p-0 text-center col osahan-nav-bottom-link">
+                    <a href="javascript:void();">
+                        <span><i class="bi bi-receipt h1"></i></span>
+                        <p class="m-0">Categories</p>
+                    </a>
+                </div>
+                <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="{{ url('/cart') }}">
                         <span><i class="bi bi-basket h1"></i></span>
                         <p class="m-0">Cart</p>
                     </a>
                 </div>
-                <div class="p-0 text-center col osahan-nav-bottom-link">
-                    <a href="javascript:void();">
-                        <span><i class="bi bi-receipt h1"></i></span>
-                        <p class="m-0">Support</p>
-                    </a>
-                </div>
+                
             @else
                 <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="javascript:void();">
@@ -143,17 +144,19 @@
                     </a>
                 </div>
                 <div class="p-0 text-center col osahan-nav-bottom-link">
-                    <a href="{{ url('/cart') }}">
-                        <span><i class="bi bi-basket h1"></i></span>
-                        <p class="m-0">Cart</p>
-                    </a>
-                </div>
-                <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="tel:+919368311855">
                         <span><i class="bi bi-receipt h1"></i></span>
                         <p class="m-0">Support</p>
                     </a>
                 </div>
+                <div class="p-0 text-center col osahan-nav-bottom-link">
+                    <a href="{{ url('/cart') }}">
+                        <span><i class="bi bi-basket h1"></i></span>
+                        <p class="m-0">Cart</p>
+                    </a>
+                </div>
+                
+
             @endif
         </div>
     </div>

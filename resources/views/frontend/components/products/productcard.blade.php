@@ -92,21 +92,21 @@
 </style>
 
 <!-- 1st product -->
-<div class="col-6 col-md-4">
+<div class="col-6 col-md-3">
     <a href="javascript:void(0)" class="text-decoration-none link-dark">
-        <div class="card rounded-4 shadow border-0 overflow-hidden search-list-item">
+        <div class="overflow-hidden border-0 shadow card rounded-4 search-list-item">
             <div class="position-relative">
                 <div class="product-back"><img src="{{ asset($product->image) }}" alt=""
                         class="img-fluid rounded-top"></div>
                 <!-- product time  -->
-                <div class="product-time shadow-sm position-absolute bottom-0 end-0 m-2">
+                <div class="bottom-0 m-2 shadow-sm product-time position-absolute end-0">
                     <span class="badge bg-light text-dark rounded-pill"><i
                             class="fa-solid fa-stopwatch text-success"></i>&nbsp;37 mins</span>
                 </div>
                 <!-- product off -->
                 <div
-                    class="product-off bg-danger px-2 py-1 rounded-pill shadow-sm position-absolute top-0 end-0 m-2 small">
-                    <div class="d-flex align-items-start gap-1 fw-bold text-white">
+                    class="top-0 px-2 py-1 m-2 shadow-sm product-off bg-danger rounded-pill position-absolute end-0 small">
+                    <div class="gap-1 text-white d-flex align-items-start fw-bold">
                         <div><i class="fa-solid fa-percent"></i></div>
                         <div>
                             <div>{{ getDiscount($product) }}% OFF</div>
@@ -118,9 +118,9 @@
                 <div class="mb-1">
                     <div><span class="badge bg-success rounded-pill">4.2&nbsp;<i class="fa-solid fa-star"></i></span>
                     </div>
-                    <div class="h4 fw-bold m-0">{{ $product->name }}</div>
+                    <div class="m-0 h4 fw-bold">{{ $product->name }}</div>
                 </div>
-                <div class="d-flex gap-2 text-muted m-0 fw-normal add-footer">
+                <div class="gap-2 m-0 d-flex text-muted fw-normal add-footer">
                     {{-- <div class="add-btn"><i class="bi bi-plus-lg"></i></div> --}}
                     <!-- Quantity Control -->
 
@@ -148,7 +148,7 @@
                     <button id="increaseQty{{ $product->id }}" class="increaseQty"
                         data-id="{{ $product->id }}">+</button>
                 </div>
-                <div class="add-btn  addbuttoncart" id="addbutton{{ $product->id }}">
+                <div class="add-btn addbuttoncart" id="addbutton{{ $product->id }}">
                     <button id="addToCartButton{{ $product->id }}" data-id="{{ $product->id }}"
                         class="addToCartButton add-btn">
                         <span data-id="{{ $product->id }}"><i class="bi bi-plus-lg"></i></span>
@@ -207,7 +207,7 @@
                 <button id="increaseQty{{ $product->id }}" class="increaseQty"
                     data-id="{{ $product->id }}">+</button>
             </div>
-            <div class="quantity-control  addbuttoncart" id="addbutton{{ $product->id }}">
+            <div class="quantity-control addbuttoncart" id="addbutton{{ $product->id }}">
                 <button id="addToCartButton{{ $product->id }}" data-id="{{ $product->id }}"
                     class="addToCartButton">
                     <span data-id="{{ $product->id }}">Add</span>

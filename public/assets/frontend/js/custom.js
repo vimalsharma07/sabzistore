@@ -36,9 +36,48 @@
   });
   $(".desktop-story").slick({
     infinite: true,
-    slidesToShow: parseInt("5", 10),
+    slidesToShow: parseInt("7", 10),
     slidesToScroll: parseInt("1", 10),
     autoplay: true,
     arrows: false,
   });
 })(jQuery);
+
+
+ // Shop Category
+ $(window).on('load', function(){
+    $('.shop-category').slick({
+      infinite: true,
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      arrows: true,
+      autoplay: true,
+      prevArrow:"<i class='lni lni-chevron-left osahan-arrow osahan-left'></i>",
+      nextArrow:"<i class='lni lni-chevron-right osahan-arrow osahan-right'></i>",
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            infinite: true,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 4.1,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 3.1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+    $('.shop-category').fadeIn();
+    }); 

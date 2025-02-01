@@ -92,114 +92,123 @@
     }
 </style>
 
-<div class="p-4 mx-4 mb-4 bg-white shadow rounded-4 brands-list home-minus">
-    <div class="d-flex align-center justify-content-between">
-        <h3 class="mb-3 fw-bold">Top stories for you</h3> 
+<div class="container">
+    <div class="p-4 mx-4 mb-4 bg-white shadow rounded-4 brands-list home-minus">
+        <div class="d-flex align-center justify-content-between">
+            <h3 class="mb-3 fw-bold">Top stories for you</h3>
+        </div>
+
+        <div class=" desktop-story">
+            <!-- 1st slider -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of khushbu_r..."
+                        src="https://storage.googleapis.com/a1aa/image/E3wTSM8qdQzoSDm4vKnDgPwCkiZDIp_CJIQ0y_gi74g.jpg" />
+                    <div class="username">khushbu_r...</div>
+                </div>
+            </div>
+            <!-- 2nd -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of pinkiy_0911"
+                        src="https://storage.googleapis.com/a1aa/image/Otcwetymqvu8chkYlyTcvGavc7qqYSxbRzp5kjbviuM.jpg" />
+                    <div class="username">pinkiy_0911</div>
+                </div>
+            </div>
+            <!-- 3rd -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of jatt_love_60"
+                        src="https://storage.googleapis.com/a1aa/image/e9LYmCTXKC2khjyydKZAV4JyS9_yGJsW9MnlmPUPX7w.jpg" />
+                    <div class="username">jatt_love_60</div>
+                </div>
+            </div>
+            <!-- 4rth -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of up13_aala_..."
+                        src="https://storage.googleapis.com/a1aa/image/Yr4uREEQqbpLI9WTxvMl-w85xaPe-As3cz3CslfQFa0.jpg" />
+                    <div class="username">up13_aala_...</div>
+                </div>
+            </div>
+            <!-- 5th -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of khushbu_r..."
+                        src="https://storage.googleapis.com/a1aa/image/E3wTSM8qdQzoSDm4vKnDgPwCkiZDIp_CJIQ0y_gi74g.jpg" />
+                    <div class="username">khushbu_r...</div>
+                </div>
+            </div>
+            <!-- 6th -->
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of nitinkumar..."
+                        src="https://storage.googleapis.com/a1aa/image/pRbxazoPaBtkWy4IfWo8w2W_HxWFacoyuWBWy9huHHU.jpg" />
+                    <div class="username">nitinkumar...</div>
+                </div>
+            </div>
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of riyajudin07..."
+                        src="https://storage.googleapis.com/a1aa/image/MBeHnxyonc3FO0YTw-pKBPfSxc6V7SAlViyWenhJ8gM.jpg" />
+                    <div class="username">riyajudin07...</div>
+                </div>
+            </div>
+            <div class="item pe-3">
+                <div class="story story-border" onclick="openStory(this)">
+                    <img alt="Profile picture of hakim_k28..."
+                        src="https://storage.googleapis.com/a1aa/image/xjnR4wuZ3QD8yMSX0PFygeSOYlyrLj66y5Q1gG2xS_8.jpg" />
+                    <div class="username">hakim_k28...</div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-   
-    <div class=" desktop-story">
-        <!-- 1st slider -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of khushbu_r..."
-                    src="https://storage.googleapis.com/a1aa/image/E3wTSM8qdQzoSDm4vKnDgPwCkiZDIp_CJIQ0y_gi74g.jpg" />
-                <div class="username">khushbu_r...</div>
-            </div>
-        </div>
-        <!-- 2nd -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of pinkiy_0911"
-                    src="https://storage.googleapis.com/a1aa/image/Otcwetymqvu8chkYlyTcvGavc7qqYSxbRzp5kjbviuM.jpg" />
-                <div class="username">pinkiy_0911</div>
-            </div>
-        </div>
-        <!-- 3rd -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of jatt_love_60"
-                    src="https://storage.googleapis.com/a1aa/image/e9LYmCTXKC2khjyydKZAV4JyS9_yGJsW9MnlmPUPX7w.jpg" />
-                <div class="username">jatt_love_60</div>
-            </div>
-        </div>
-        <!-- 4rth -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of up13_aala_..."
-                    src="https://storage.googleapis.com/a1aa/image/Yr4uREEQqbpLI9WTxvMl-w85xaPe-As3cz3CslfQFa0.jpg" />
-                <div class="username">up13_aala_...</div>
-            </div>
-        </div>
-        <!-- 5th -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of khushbu_r..."
-                    src="https://storage.googleapis.com/a1aa/image/E3wTSM8qdQzoSDm4vKnDgPwCkiZDIp_CJIQ0y_gi74g.jpg" />
-                <div class="username">khushbu_r...</div>
-            </div>
-        </div>
-        <!-- 6th -->
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of nitinkumar..."
-                    src="https://storage.googleapis.com/a1aa/image/pRbxazoPaBtkWy4IfWo8w2W_HxWFacoyuWBWy9huHHU.jpg" />
-                <div class="username">nitinkumar...</div>
-            </div>
-        </div>
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of riyajudin07..."
-                    src="https://storage.googleapis.com/a1aa/image/MBeHnxyonc3FO0YTw-pKBPfSxc6V7SAlViyWenhJ8gM.jpg" />
-                <div class="username">riyajudin07...</div>
-            </div>
-        </div>
-        <div class="item pe-3">
-            <div class="story story-border" onclick="openStory(this)">
-                <img alt="Profile picture of hakim_k28..."
-                    src="https://storage.googleapis.com/a1aa/image/xjnR4wuZ3QD8yMSX0PFygeSOYlyrLj66y5Q1gG2xS_8.jpg" />
-                <div class="username">hakim_k28...</div>
-            </div>
-        </div>
-     </div>
-    
-   
 </div>
 
-<div class="px-4">
-    <div class="row g-2">
-       <div class="col-4">
-          <div class="text-white text-decoration-none">
-             <div class="p-3 text-white rounded-md bg-danger bg-gradient">
-                <h5 class="mb-1 fw-bold">Deals of the Day</h5>
-                <p class="m-0 small text-white-50">60% OFF&nbsp;
-                   <a href="#" class="text-decoration-none text-white-50"><i class="fa-solid fa-arrow-right"></i></a>
-                </p>
-             </div>
-          </div>
-       </div>
-       <div class="col-4">
-          <div class="text-white text-decoration-none">
-             <div class="p-3 text-white rounded-md bg-warning bg-gradient">
-                <h5 class="mb-1 fw-bold">Unlimited Flat Deal</h5>
-                <p class="m-0 small text-white-50">Big orders&nbsp;
-                   <a href="#" class="text-decoration-none text-white-50"><i class="fa-solid fa-arrow-right"></i></a>
-                </p>
-             </div>
-          </div>
-       </div>
-       <div class="col-4">
-          <div class="text-white text-decoration-none">
-             <div class="p-3 text-white rounded-md bg-success bg-gradient">
-                <h5 class="mb-1 fw-bold">Fastest Deliveries</h5>
-                <p class="m-0 small text-white-50">See offers&nbsp;
-                   <a href="#" class="text-decoration-none text-white-50"><i class="fa-solid fa-arrow-right"></i></a>
-                </p>
-             </div>
-          </div>
-       </div>
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-12">
+                <div class="p-4 ad-banner-1 rounded-4">
+                    <h3 class="fw-bold text-primary">10% <span class="text-black fw-light">Cashback</span>
+                        on <br>
+                        personal care
+                    </h3>
+                    <p class="text-muted fs-6">Max cashback: <span class="fw-bold text-dark">$100</span><br>
+                        Code: <span class="fw-bold text-dark">CARE12</span>
+                    </p>
+                    <a href="listing.html" class="btn btn-primary rounded-pill">Order Now</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="p-4 ad-banner-2 rounded-4">
+                    <h3 class="fw-bold text-danger">Say yes to<br>
+                        season’s<span class="text-black fw-light"> fresh </span>
+                    </h3>
+                    <p class="text-muted fs-6">Refresh your day<br>
+                        the fruity way
+                    </p>
+                    <a href="listing.html" class="btn btn-danger rounded-pill">Order Now</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="p-4 ad-banner-3 rounded-4">
+                    <h3 class="fw-bold text-success">When in <span class="text-black fw-light">doubt,</span><br>
+                        eat ice cream
+                    </h3>
+                    <p class="text-muted fs-6">Enjoy a scoop of<br>
+                        summer today
+                    </p>
+                    <a href="listing.html" class="btn btn-success rounded-pill">Order Now</a>
+                </div>
+            </div>
+        </div>
     </div>
- </div>
- 
+</section>
+
 
 <div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

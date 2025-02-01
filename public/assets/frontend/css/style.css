@@ -105,10 +105,10 @@ html ::-webkit-scrollbar-track-piece {
   max-width: 50px;
 }
 .search-list-item img.img-fluid.rounded-top {
-    border-bottom: 1px solid #f2f2f2;
-    /* height: 135px; */
-    width: 300px;
-    margin: auto;
+  border-bottom: 1px solid #f2f2f2;
+  /* height: 135px; */
+  width: 300px;
+  margin: auto;
 }
 .add-btn {
   position: absolute;
@@ -121,10 +121,11 @@ html ::-webkit-scrollbar-track-piece {
   display: flex;
   justify-content: center;
   align-items: center;
-  border:none;
+  border: none;
   bottom: 0;
   border-radius: 14px 0 0 0;
 }
+ 
 .add-footer {
   padding-right: 35px;
 }
@@ -412,9 +413,7 @@ h3,
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
-} 
-.fixed-bottom-btn
-{
-    bottom: 64px;
 }
- 
+.fixed-bottom-btn {
+  bottom: 64px;
+}

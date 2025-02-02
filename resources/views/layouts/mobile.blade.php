@@ -7,7 +7,7 @@
     <title>@yield('title', 'BharatStore') | {{ config('app.name', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    
+
 
 
 
@@ -34,10 +34,11 @@
     <!-- Navbar -->
     <div class="px-4 pt-4 osahan-header-nav d-flex align-items-center bg-danger">
         <h2 class="mb-0 text-white font-weight-normal">
-            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}" style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
-                <span style="color:white;">Bharat</span> 
-                <span style="color: #138808;">Store</span> 
-              </a>
+            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}"
+                style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                <span style="color:white;">Bharat</span>
+                <span style="color: #138808;">Store</span>
+            </a>
             </h5>
             <div class="gap-2 ms-auto d-flex align-items-center">
                 <a href="notifications.html" class="text-white"><i
@@ -121,7 +122,6 @@
                         <p class="m-0">Cart</p>
                     </a>
                 </div>
-                
             @else
                 <div class="p-0 text-center col osahan-nav-bottom-link">
                     <a href="javascript:void();">
@@ -147,8 +147,6 @@
                         <p class="m-0">Cart</p>
                     </a>
                 </div>
-                
-
             @endif
         </div>
     </div>
@@ -183,6 +181,10 @@
     <!-- Javascript -->
     <script src="{{ asset('assets/frontend/js/custom.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/frontend/js/rocket-loader.min.js') }}" type="text/javascript"></script>
+
+   
+
+
 
     @yield('scripts')
 </body>

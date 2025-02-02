@@ -23,14 +23,14 @@
     <link rel="icon" href="{{ asset('/uploads/media/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/frontend/vender/bootstrap/css/bootstrap.min.css') }}">
     <!-- Icofont -->
-    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/lineicons.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/lineicons.css') }}">
     <!-- Slick SLider Css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick-theme.css') }}">
     <!-- Font Awesome Icon -->
 
     <!-- Sidebar CSS -->
-    
+
     <link href="{{ asset('assets/frontend/vender/sidebar/demo.css') }}" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/icofont.min.css') }}">
@@ -88,18 +88,43 @@
             </form>
 
             <ul class="flex-shrink-0 m-0 list-inline d-flex align-items-center ms-auto">
-                <li class="m-0 list-inline-item">
-                    <a href="#"
-                        class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"
-                        data-bs-target="#login" data-bs-toggle="modal">
-                        <i class="p-2 text-white lni lni-user fs-5 bg-danger rounded-pill"></i>
-                        <div class="lh-sm d-none d-lg-block">
-                            <h6 class="mb-0 fw-bold">Hello, Sign in</h6>
-                            <small class="mb-0 align-bottom text-muted text-truncate d-inline-block small">My
-                                Account</small>
+                @if (Auth::check())
+                    <li class="m-0 list-inline-item">
+                        <div class="dropdown">
+                            <a class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"
+                                href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="p-2 text-white lni lni-user fs-5 bg-danger rounded-pill"></i>
+                                <div class="lh-sm d-none d-lg-block">
+                                    <h6 class="mb-0 fw-bold">Account </h6> 
+                                </div>
+                                <i class="lni lni-chevron-down"></i>
+                            </a>
+                            <ul
+                                class="p-0 mt-0 overflow-hidden shadow-sm dropdown-menu osahan-dropdown dropdown-menu-end border-secondary-subtle rounded-0 rounded-bottom-4">
+                                <li class="p-3 mb-2 bg-light">
+                                    <h6 class="m-0 fw-bold">My Account</h6> 
+                                </li>
+                                
+                                <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url('orders/all') }}">Orders</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+
+                            </ul>
                         </div>
-                    </a>
-                </li>
+                    </li>
+                @else
+                    <li class="m-0 list-inline-item">
+                        <a href="#"
+                            class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"id="accountDropdown"
+                            data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                            <i class="p-2 text-white lni lni-user fs-5 bg-danger rounded-pill"></i>
+                            <div class="lh-sm d-none d-lg-block">
+                                <h6 class="mb-0 fw-bold">Sign in</h6> 
+                            </div>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="m-0 list-inline-item">
                     <a href="#"
                         class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start bg-light border-start"
@@ -219,8 +244,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-1.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-1.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Foodmart Hot Deals</p>
                                         </div>
@@ -230,8 +255,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Fruits and Vegetables</p>
                                         </div>
@@ -241,8 +266,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Atta, Rice and Dals</p>
                                         </div>
@@ -252,8 +277,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-3.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-3.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Dry fruits and Masalas</p>
                                         </div>
@@ -263,8 +288,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-4.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-4.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Dairy, Bread and Eggs</p>
                                         </div>
@@ -274,8 +299,8 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-5.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-5.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Foodmart Instant Food</p>
                                         </div>
@@ -285,16 +310,16 @@
                             <div class="mx-2 shop-item">
                                 <a href="listing.html" class="link-dark">
                                     <div class="text-center bg-transparent border-0 card">
-                                        <img src="{{ asset('assets/frontend/img/shop-category/category-6.png') }}" alt=""
-                                            class="mb-2 card-img-top rounded-4">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-6.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
                                         <div class="p-0 card-body">
                                             <p class="m-0 card-title">Chocklates and Desserts</p>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -313,7 +338,7 @@
 
     <!-- Footer Section -->
     @section('footer')
-        <footer class="bg-white desktop_bg text-dark w-100 d-none d-md-block">
+        <footer class=" bg-light desktop_bg text-dark w-100 d-none d-md-block">
             <div class="container">
                 <div class="row">
                     <!-- Useful Links -->
@@ -323,7 +348,7 @@
                             <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
                             <li><a href="{{ url('/about') }}" class="text-dark text-decoration-none">About Us</a>
                             </li>
-                            <li><a href="#" class="text-dark text-decoration-none">Services</a></li>
+                            <li><a href="#" class="text-dark text-decoration-none">Products</a></li>
                             <li><a href="#" class="text-dark text-decoration-none">Contact</a></li>
                         </ul>
                     </div>
@@ -343,7 +368,7 @@
                     ?>
                     <!-- Social Media -->
                     <div class="col-md-4">
-                        <h5 class="mb-3 text-uppercase">Follow Us</h5>
+                        <h5 class="mb-3 text-uppercase">Profile</h5>
                         <div>
                             <a href="{{ $media->facebook }}" class="text-dark text-decoration-none me-3">
                                 <i class="fab fa-facebook-f"></i>
@@ -361,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="mt-4 row">
+                <div class="pt-2 mt-4 border-top row">
                     <div class="text-center col">
                         <p class="mb-0">&copy; 2024 @BharatStore All Rights Reserved.</p>
                     </div>
@@ -426,6 +451,8 @@
             $('#carttopright').text(totalQty + " items ₹" + itemTotal);
         });
     </script>
+
+   
 
     @yield('scripts')
 </body>

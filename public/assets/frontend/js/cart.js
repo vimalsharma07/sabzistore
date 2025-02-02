@@ -492,20 +492,17 @@ $(document).ready(function () {
       method: "POST",
       data: { attributes, mrp },
       success: function (response) {
-         
-        if(response.status){
-          var product= response.product;
-          $('#quantity'+product.id).text(product.quantity);
+        if (response.status) {
+          var product = response.product;
+          $("#quantity" + product.id).text(product.quantity);
           const fullUrl = window.location.pathname;
-          if (fullUrl.includes('cart')) {
+          if (fullUrl.includes("cart")) {
             location.reload();
-           }
-        } 
-        else{
+          }
+        } else {
           alert("not added");
           console.log("product not found");
-         }
-       
+        }
       },
       error: function (xhr) {
         console.log(xhr.responseText);
@@ -518,18 +515,16 @@ $(document).ready(function () {
     }
   }
 
-
   function removetoCart(productId, attributes) {
     $.ajax({
       url: `/cart/remove/${productId}`,
       method: "POST",
       data: { attributes },
       success: function (response) {
-       
         const fullUrl = window.location.pathname;
-         if(fullUrl=='/cart'){
+        if (fullUrl == "/cart") {
           location.reload();
-         }
+        }
       },
       error: function (xhr) {
         console.log(xhr.responseText);
@@ -539,9 +534,9 @@ $(document).ready(function () {
       updateMobileCart();
     } else {
       updateDesktopCart();
-    }}
- 
- 
+    }
+  }
+
   // Add to Cart
   $addToCartBtn.on("click", function () {
     const productId = $(this).data("id");
@@ -672,10 +667,9 @@ $(document).ready(function () {
     });
   }
 
-  $('#customtipbtn').click(function(){
-    var tipAmount = $('#customtipvalue').val();
+  $("#customtipbtn").click(function () {
+    var tipAmount = $("#customtipvalue").val();
     selectTip(tipAmount);
-
   });
   $(".tip-btn").click(function () {
     const tipAmount = parseInt($(this).attr("id").replace("tip", ""));
@@ -738,3 +732,35 @@ $(document).ready(function () {
     },
   });
 });
+
+// increase value
+$(".input-group").on("click", ".button-plus", function (n) {
+  var t, a;
+  (n = n).preventDefault(),
+    (t = $(n.target).data("field")),
+    (n = $(n.target).closest("div")),
+    (a = parseInt(n.find("input[name=" + t + "]").val(), 10)),
+    isNaN(a)
+      ? n.find("input[name=" + t + "]").val(0)
+      : n.find("input[name=" + t + "]").val(a + 1);
+}),
+  $(".input-group").on("click", ".button-minus", function (n) {
+    var t, a;
+    (n = n).preventDefault(),
+      (t = $(n.target).data("field")),
+      (n = $(n.target).closest("div")),
+      (a = parseInt(n.find("input[name=" + t + "]").val(), 10)),
+      !isNaN(a) && 0 < a
+        ? n.find("input[name=" + t + "]").val(a - 1)
+        : n.find("input[name=" + t + "]").val(0);
+  });
+
+const toastTrigger = document.getElementById("liveToastBtn");
+const toastLiveExample = document.getElementById("liveToast");
+if (toastTrigger) {
+  toastTrigger.addEventListener("click", () => {
+    const toast = new bootstrap.Toast(toastLiveExample);
+
+    toast.show();
+  });
+}

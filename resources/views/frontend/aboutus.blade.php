@@ -91,7 +91,7 @@
     <img src="{{ asset('assets/images/vege.webp') }}" alt="Vegetable Image">
 </div>
 
-<div class="content container">
+<div class="container content">
     <img src="{{ asset('assets/images/vege.webp') }}" alt="Vegetable Image">
     <h2>Fresh, Organic, and Delivered Fast!</h2>
     <p>

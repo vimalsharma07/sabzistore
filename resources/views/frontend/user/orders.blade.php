@@ -1,114 +1,70 @@
 @extends(getLayout())
 
 @section('content')
-<style>
-    .order-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 10px;
-        background-color: #fff;
-    }
-    .order-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .order-header .status {
-        display: flex;
-        align-items: center;
-    }
-    .order-header .status i {
-        margin-right: 5px;
-    }
-    .order-images img {
-        width: 50px;
-        height: 50px;
-        margin-right: 5px;
-        border-radius: 5px;
-    }
-</style>
+    <style>
+        .order-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+    </style>
 
-<div class="container mt-4">
-    <h1 class="mb-4">My Orders</h1>
-    <div id="ordersContainer">
-        @if(isset($orders) && count($orders) > 0)
-            @foreach($orders as $order)
-                <div class="order-card">
-                    <div class="order-header">
-                        <div class="status {{ $order->order_status === 'cancelled' ? 'text-danger' : 'text-success' }}">
-                            <i class="fas {{ $order->order_status === 'cancelled' ? 'fa-times-circle' : 'fa-check-circle' }}"></i>
-                            <span>{{ $order->order_status }}</span>
+    <div class="container mt-4 bg-light">
+        <div class="pb-3 osahan-header-main">
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ url()->previous() }}"><i class="m-0 bi bi-arrow-left d-flex text-success h3 back-page"></i></a>
+                <h3 class="m-0 fw-bold">Back</h3>
+            </div>
+        </div>
+        
+        <h1 class="mb-4">My Orders</h1>
+        
+        <div id="ordersContainer">
+            @if ($orders->isNotEmpty())
+                @foreach ($orders as $order)
+                    <div class="my-3 bg-white">
+                        <div class="overflow-hidden border card rounded-4">
+                            <div class="p-3 card-header border-bottom">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="mb-1">#{{ $order->order_number }}</h5>
+                                        <p class="my-0 text-muted">{{ $order->created_at->format('d-M-Y H:i') }}</p>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge bg-light rounded-pill {{ $order->order_status === 'cancelled' ? 'text-danger' : 'text-success' }}">
+                                            {{ ucfirst($order->order_status) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex gap-2 mb-3">
+                                    @foreach (array_slice(json_decode($order->products, true), 0, 4) as $product)
+                                        <img src="{{ url($product['image'] ?? 'https://placehold.co/50x50') }}" alt="Product image" class="img-fluid ch-40">
+                                    @endforeach
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-muted">{{ $order->created_at->format('d-M-Y') }}</div>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ url('/order/' . $order->order_number) }}" class="btn btn-danger btn-sm rounded-pill">
+                                        <i class="fas fa-eye"></i>&nbsp;View
+                                    </a>
+                                    <a href="{{ url('/reorder/' . $order->order_number) }}" class="btn btn-danger btn-sm rounded-pill">
+                                        <i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;Reorder
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="order-time text-muted">
-                            #{{ $order->order_number }} - {{ $order->created_at }}
-                        </div>
                     </div>
-                    <div class="order-images mt-2">
-                        @foreach(array_slice(json_decode($order->products, true), 0, 4) as $product)
-                            <img src="{{ url('/') }}/{{ $product['image'] ?? 'https://placehold.co/50x50' }}" alt="Product image" class="img-fluid mb-3">
-                        @endforeach
-                    </div>
-                    <div class="order-actions mt-3 d-flex justify-content-between">
-                        <a href="{{ url('/reorder/' . $order->order_number) }}" class="btn btn-primary btn-sm">Reorder</a>
-                        <a href="{{ url('/order/' . $order->order_number) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <!-- If no orders are passed, AJAX will fetch them -->
-        @endif
+                @endforeach
+            @else
+                <p class="text-muted text-center">No orders found.</p>
+            @endif
+        </div>
     </div>
-</div>
-@endsection
-
-@section('scripts')
-@if(!isset($orders) || count($orders) === 0)
-<script>
-    function fetchOrders() {
-        $.ajax({
-            url: '/orders/',
-            method: 'GET',
-            success: function(orders) {
-                const ordersContainer = $('#ordersContainer');
-                ordersContainer.empty();
-
-                orders.forEach((order) => {
-                    const statusClass = order.order_status === 'cancelled' ? 'text-danger' : 'text-success';
-                    const statusIcon = order.order_status === 'cancelled' ? 'fa-times-circle' : 'fa-check-circle';
-                    const productImages = JSON.parse(order.products).slice(0, 4).map(product => product.image || 'https://placehold.co/50x50');
-                    const formattedImages = productImages.map(image => `<img src="{{ url('/') }}/${image}" alt="Product image" class="img-fluid mb-3"/>`).join('');
-
-                    const row = `
-                        <div class="order-card">
-                            <div class="order-header">
-                                <div class="status ${statusClass}">
-                                    <i class="fas ${statusIcon}"></i>
-                                    <span>${order.order_status}</span>
-                                </div>
-                                <div class="order-time text-muted">
-                                    #${order.order_number} - ${order.created_at}
-                                </div>
-                            </div>
-                            <div class="order-images mt-2">
-                                ${formattedImages}
-                            </div>
-                           <div class="order-actions mt-3 d-flex justify-content-between">
-                                <a href="{{ url('/reorder/${order.order_number}') }}" class="btn btn-primary btn-sm">Reorder</a>
-                                <a href="{{ url('/order/${order.order_number}') }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    `;
-                    ordersContainer.append(row);
-                });
-            },
-            error: function(error) {
-                console.error('Error fetching orders:', error);
-            }
-        });
-    }
-
-    $(document).ready(fetchOrders);
-</script>
-@endif
 @endsection

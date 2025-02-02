@@ -19,31 +19,46 @@ class CartController extends Controller
         $quantity = $request->input('quantity', 1);
         $attributes = $request->input('attributes', []);
         $mrp = $request->input('mrp', 0);
-        $product=   Product::where('id',$productId)->first();
-        $product->attributes= $attributes;
-        $product->mrp= $mrp;
-
+    
+        // Fetch the product from the database
+        $product = Product::find($productId);
+    
+        if (!$product) {
+            return response()->json([
+                'message' => 'Product Not Found',
+                'cart' => $cart,
+                'status' => false,
+            ]);
+        }
+    
+        $product->attributes = $attributes;
+        $product->mrp = $mrp;
+    
         // Generate unique key for product + attributes combination
         $uniqueKey = $this->generateUniqueKey($productId, $attributes);
-
+    
         if (isset($cart[$uniqueKey])) {
-            $cart[$uniqueKey]['quantity'] += $quantity; 
+            $cart[$uniqueKey]['quantity'] += $quantity;
         } else {
             $cart[$uniqueKey] = [
                 'product_id' => $productId,
-                'quantity' => $quantity,
                 'attributes' => $attributes,
-                'product'=>$product,
+                'product' => $product,
+                'quantity' => $quantity,  
+                'status' => true,
             ];
         }
-
+    
         session()->put('cart', $cart);
-
+    
         return response()->json([
             'message' => 'Product added/updated successfully',
             'cart' => $cart,
+            'product' => $product,
+            'status' => true,
         ]);
     }
+    
 
     // Get cart details for a specific product and attributes
     public function getCart(Request $request, $productId)
@@ -115,6 +130,7 @@ class CartController extends Controller
         if (isset($cart[$uniqueKey])) {
             if ($cart[$uniqueKey]['quantity'] > 1) {
                 $cart[$uniqueKey]['quantity'] -= 1;
+
             } else {
                 unset($cart[$uniqueKey]);
             }
@@ -148,7 +164,7 @@ class CartController extends Controller
     // Generate a unique key for a product and attributes
     private function generateUniqueKey($productId, $attributes)
     {
-        return $productId . '-' . md5(json_encode($attributes));
+        return $productId . '-' .(json_encode($attributes));
     }
 
     public function saveTip(Request $request)

@@ -17,137 +17,345 @@
     <meta property="og:type" content="website">
 
     <!-- Title -->
-    <title>@yield('title', 'SabziStore') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'BharatStore') | {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('/uploads/media/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/bootstrap/css/bootstrap.min.css') }}">
+    <!-- Icofont -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/lineicons.css') }}">
+    <!-- Slick SLider Css -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/slick/slick/slick-theme.css') }}">
+    <!-- Font Awesome Icon -->
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Sidebar CSS -->
 
-    <!-- Font Awesome 6 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/frontend/css/desktopcart.css') }}">
-    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/mobilecart.css') }}">
-    <link rel="stylesheet"  type="text/css" href="{{ asset('/assets/frontend/css/home.css') }}">
-
-
+    <link href="{{ asset('assets/frontend/vender/sidebar/demo.css') }}" rel="stylesheet">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vender/icons/icofont.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/icofont/icofont.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/desktopcart.css') }}">
     <!-- Additional CSS -->
     @stack('styles')
-     
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-   
+
 </head>
 
 <body>
     @php
-    $cart = session()->get('cart', []);
-    $user= Auth::user();
-    if($user){
-    
-    $address= DB::table('address')->where('user_id',$user->id)->where('default',1)->first();
-    
-}
-else{
-$address='';
+        $cart = session()->get('cart', []);
+        $user = Auth::user();
+        if ($user) {
+            $address = DB::table('address')->where('user_id', $user->id)->where('default', 1)->first();
+        } else {
+            $address = '';
+        }
+    @endphp
 
-}
-@endphp
-
-    <nav class="navbar navbar-expand-lg bg-white py-3">
-        <div class="container">
-            <!-- Brand Logo -->
-            <a class="navbar-brand brand-logo" href="{{url('/')}}">
-                Sabzi<span>Store</span>
+    <nav class="p-0 navbar navbar-expand-lg osahan-header border-bottom">
+        <div class="p-0 container-fluid">
+            <a class="flex-shrink-0 p-3 m-0 text-danger navbar-brand border-end bg-light d-lg-block brand-logo"
+                href="{{ url('/') }}"
+                style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #FF9933;">Bharat</span>
+                <span style="color: #138808;">Store</span>
+            </a>
+            <a href="#"
+                class="flex-shrink-0 gap-2 p-3 link-dark osahan-location text-decoration-none d-flex align-items-center text-start"
+                data-bs-toggle="offcanvas" data-bs-target="#location" aria-controls="location">
+                <i class="lni lni-map-marker text-danger fs-4"></i>
+                <div class="lh-sm">
+                    <h6 class="mb-0 fw-bold">Delivery in 16 minutes</h6>
+                    <small class="mb-0 align-bottom text-muted text-truncate d-inline-block small delivery-address">
+                    </small>
+                </div>
             </a>
 
+
+
+            <form class="mx-auto w-75 d-flex" action="{{ url('/search') }}" method="GET">
+                <div class="py-1 mx-3 bg-white border input-group rounded-3 top-search-bar d-none d-lg-flex">
+                    <a href="#" class="px-3 bg-transparent border-0 input-group-text rounded-0"><i
+                            class="icofont-search"></i></a>
+                    <input type="text" class="bg-transparent border-0 form-control rounded-0 ps-0" type="search"
+                        id="searchInput" placeholder='Search "Tomato"' aria-label="Search" name="q">
+                </div>
+            </form>
+
+            <ul class="flex-shrink-0 m-0 list-inline d-flex align-items-center ms-auto">
+                @if (Auth::check())
+                    <li class="m-0 list-inline-item">
+                        <div class="dropdown">
+                            <a class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"
+                                href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="p-2 text-white lni lni-user fs-5 bg-danger rounded-pill"></i>
+                                <div class="lh-sm d-none d-lg-block">
+                                    <h6 class="mb-0 fw-bold">Account </h6> 
+                                </div>
+                                <i class="lni lni-chevron-down"></i>
+                            </a>
+                            <ul
+                                class="p-0 mt-0 overflow-hidden shadow-sm dropdown-menu osahan-dropdown dropdown-menu-end border-secondary-subtle rounded-0 rounded-bottom-4">
+                                <li class="p-3 mb-2 bg-light">
+                                    <h6 class="m-0 fw-bold">My Account</h6> 
+                                </li>
+                                
+                                <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url('orders/all') }}">Orders</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+                @else
+                    <li class="m-0 list-inline-item">
+                        <a href="#"
+                            class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"id="accountDropdown"
+                            data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                            <i class="p-2 text-white lni lni-user fs-5 bg-danger rounded-pill"></i>
+                            <div class="lh-sm d-none d-lg-block">
+                                <h6 class="mb-0 fw-bold">Sign in</h6> 
+                            </div>
+                        </a>
+                    </li>
+                @endif
+
+                <li class="m-0 list-inline-item">
+                    <a href="#"
+                        class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start bg-light border-start"
+                        data-bs-toggle="offcanvas" data-bs-target="#mycart" aria-controls="mycart">
+                        <i class="lni lni-shopping-basket text-danger fs-3"></i>
+                        <div class="lh-sm d-none d-lg-block">
+                            <h6 class="mb-0 fw-bold text-danger">3 items</h6>
+                            <small class="mb-0 align-bottom text-muted text-truncate d-inline-block small">$532</small>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    {{-- <nav class="pb-3 bg-light navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="text-danger navbar-brand brand-logo" href="{{ url('/') }}"
+                style="font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #FF9933;">Bharat</span>
+                <span style="color: #138808;">Store</span>
+            </a>
+
+
+
             <!-- Delivery Info -->
-            <div class="ms-4">
-                <div class="delivery-time">Delivery in 8 minutes</div>
-                <div class="delivery-address">
-                    Select Address
-                    <i class="fas fa-chevron-down ms-1"></i>
+            <div class="gap-3 d-flex align-items-center">
+                <div><i class="text-denger fa-solid fa-location-dot h4"></i></div>
+                <div>
+                    <h4 class="mb-1 fw-bold">Delivery in 8 minutes</h4>
+                    <p class="m-0 text-muted delivery-address"> </p>
                 </div>
             </div>
 
             <!-- Search Bar -->
-            <form class="d-flex mx-auto w-50"  action="{{url('/search')}}" method="GET">
-                <div style="max-width: 400px; margin: 50px auto;">
-                    <input 
-                        class="form-control search-bar" 
-                        type="search" 
-                        id="searchInput" 
-                        placeholder='Search "Tomato"'
-                        aria-label="Search" 
-                        name="q">
-                </div>            </form>
+
+
+            <form class="mx-auto w-75 d-flex" action="{{ url('/search') }}" method="GET">
+                <div style="width: 400px; margin: 50px auto;" class="d-flex">
+
+                    <input class="form-control search-bar" type="search" id="searchInput" placeholder='Search "Tomato"'
+                        aria-label="Search" name="q">
+                    <a href="#" class="px-3 bg-danger header-search input-group-text rounded-0"><i
+                            class="icofont-search"></i></a>
+                </div>
+            </form>
 
             <!-- Account and Cart -->
-            <div class="d-flex align-items-center">
-                @if(Auth::check())
-                <div class="dropdown me-3">
-                    <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        Account <i class="fas fa-chevron-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="{{url('/profile')}}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{url('orders/all')}}">Orders</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </div>
-                  @else                
-                <div class="dropdown me-3">
-                    <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
-                    data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
-                        Log In <i class="fas fa-chevron-down ms-1"></i>
-                    </a>
-                    
-                </div>
+            <ul class="flex-shrink-0 m-0 list-inline d-flex align-items-center ms-auto">
+                @if (Auth::check())
+                    <li class="m-0 list-inline-item dropdown">
+                        <a href="#"
+                            class="gap-2 p-3 link-dark text-decoration-none d-flex align-items-center text-start"role="button"
+                            id="accountDropdown" data-bs-toggle="dropdown">
+                            <i class="p-2 text-white bi bi-person h4 bg-danger rounded-pill"></i>
+                            <div class="lh-sm d-none d-lg-block">
+                                <h6 class="mb-0 fw-bold">Hello, Sign in</h6>
+                                <small class="mb-0 align-bottom text-muted text-truncate d-inline-block small">My
+                                    Account</small>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ url('orders/all') }}">Orders</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                @else
+                    <div class="dropdown me-3">
+                        <a class="text-dark text-decoration-none" href="#" role="button" id="accountDropdown"
+                            data-bs-toggle="modal" data-bs-target="#otpModal" aria-expanded="false">
+                            Log In <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+
+                    </div>
                 @endif
-                <a href="#" class="btn cart-button" id="openCartBtn">
-                    <i class="fas fa-shopping-cart"></i> 
-                    <span id="carttopright"> </span>
-                </a>
-            </div>
+
+
+                <li class="m-0 list-inline-item">
+                    <a href="#"
+                        class="gap-2 p-3 text-decoration-none d-flex align-items-center text-start btn btn-success btn-lg rounded-pill border-start"
+                        id="openCartBtn">
+                        <i class="fas fa-shopping-cart text-danger fs-3"></i>
+                        <div class="lh-sm d-none d-lg-block">
+                            <h6 class="mb-0 text-white fw-bold" id="carttopright">3 items</h6>
+                        </div>
+                    </a>
+
+
+                </li>
+            </ul>
+
         </div>
-    </nav>
+    </nav> --}}
     {{-- <button onclick="redirectToRoute()">Get Route on Google Maps</button> --}}
 
-    <div class="container">
-       
-        
 
-        <!-- Main Content Section -->
-        <main>
-            @yield('content')
-        </main>
-        @if(request()->segment(1)!='cart')   
-        @include('frontend/components/cart/desktopcart');
+
+    <!-- Main Content Section -->
+    <main>
+        @if (Agent::isDesktop())
+            @include('frontend.components.story.desktop')
         @endif
-        <!-- Footer Section -->
-        @section('footer')
-        <footer class="bg-white text-dark py-4 w-100 d-none d-md-block">
+
+        <!-- shop by category -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="mb-4 d-flex align-items-center justify-content-between">
+                    <h5 class="m-0 fw-bold">Great deals on top picks</h5>
+                    <a href="">View all<i class="icofont-rounded-right"></i></a>
+                </div>
+                <div class="row">
+                    <div class="col-12 ps-lg-1 pe-lg-3 ps-sm-1 pe-sm-3 pe-0">
+                        <div class="shop-category">
+                            <div class="mx-2 shop-item">
+                                <a href="" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-1.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Foodmart Hot Deals</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Fruits and Vegetables</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-2.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Atta, Rice and Dals</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-3.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Dry fruits and Masalas</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-4.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Dairy, Bread and Eggs</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-5.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Foodmart Instant Food</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="mx-2 shop-item">
+                                <a href="listing.html" class="link-dark">
+                                    <div class="text-center bg-transparent border-0 card">
+                                        <img src="{{ asset('assets/frontend/img/shop-category/category-6.png') }}"
+                                            alt="" class="mb-2 card-img-top rounded-4">
+                                        <div class="p-0 card-body">
+                                            <p class="m-0 card-title">Chocklates and Desserts</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            @yield('content')
+
+        </div>
+
+
+    </main>
+    @if (request()->segment(1) != 'cart')
+        @include('frontend/components/cart/desktopcart');
+    @endif
+
+    <!-- Footer Section -->
+    @section('footer')
+        <footer class=" bg-light desktop_bg text-dark w-100 d-none d-md-block">
             <div class="container">
                 <div class="row">
                     <!-- Useful Links -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Useful Links</h5>
+                        <h5 class="mb-3 text-uppercase">Useful Links</h5>
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-dark text-decoration-none">Home</a></li>
-                            <li><a href="{{url('/about')}}" class="text-dark text-decoration-none">About Us</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Services</a></li>
+                            <li><a href="{{ url('/about') }}" class="text-dark text-decoration-none">About Us</a>
+                            </li>
+                            <li><a href="#" class="text-dark text-decoration-none">Products</a></li>
                             <li><a href="#" class="text-dark text-decoration-none">Contact</a></li>
                         </ul>
                     </div>
-        
+
                     <!-- Categories -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Categories</h5>
+                        <h5 class="mb-3 text-uppercase">Categories</h5>
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-dark text-decoration-none">Technology</a></li>
                             <li><a href="#" class="text-dark text-decoration-none">Business</a></li>
@@ -155,90 +363,97 @@ $address='';
                             <li><a href="#" class="text-dark text-decoration-none">Health</a></li>
                         </ul>
                     </div>
-        <?php 
-       $media=  DB::table('media')->first();
-          ?>
+                    <?php
+                    $media = DB::table('media')->first();
+                    ?>
                     <!-- Social Media -->
                     <div class="col-md-4">
-                        <h5 class="text-uppercase mb-3">Follow Us</h5>
+                        <h5 class="mb-3 text-uppercase">Profile</h5>
                         <div>
-                            <a href="{{$media->facebook}}" class="text-dark text-decoration-none me-3">
+                            <a href="{{ $media->facebook }}" class="text-dark text-decoration-none me-3">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="{{$media->twitter}}" class="text-dark text-decoration-none me-3">
+                            <a href="{{ $media->twitter }}" class="text-dark text-decoration-none me-3">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="{{$media->instagram}}" class="text-dark text-decoration-none me-3">
+                            <a href="{{ $media->instagram }}" class="text-dark text-decoration-none me-3">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="{{$media->linkedin}}" class="text-dark text-decoration-none">
+                            <a href="{{ $media->linkedin }}" class="text-dark text-decoration-none">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-        
-                <div class="row mt-4">
-                    <div class="col text-center">
-                        <p class="mb-0">&copy; 2024 @SabziStore All Rights Reserved.</p>
+
+                <div class="pt-2 mt-4 border-top row">
+                    <div class="text-center col">
+                        <p class="mb-0">&copy; 2024 @BharatStore All Rights Reserved.</p>
                     </div>
                 </div>
             </div>
         </footer>
-    
+
         @php
-            $cart = session('cart', []); 
+            $cart = session('cart', []);
 
-        $itemTotal = 0;
-        $totalqty=0;
-        foreach ($cart as $item) {
-            $price = array_values($item['attributes'])[0] * $item['quantity'];
-            $itemTotal += $price;
-            $totalqty++;
-        }
-        
+            $itemTotal = 0;
+            $totalqty = 0;
+            foreach ($cart as $item) {
+                $price = array_values($item['attributes'])[0] * $item['quantity'];
+                $itemTotal += $price;
+                $totalqty++;
+            }
 
-    @endphp
-        @show
-    </div>
+        @endphp
+    @show
     @include('frontend.components.login.desktoplogin')
     @include('frontend.components.cart.desktopcart')
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
     <script>
         var isMobile = @json(\Jenssegers\Agent\Facades\Agent::isMobile());
         var isDesktop = @json(\Jenssegers\Agent\Facades\Agent::isDesktop());
-        var userAddress= @json($address);
+        var userAddress = @json($address);
     </script>
-    
-      
-      <script src="{{asset('assets/frontend/js/cart.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/slider.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/currentlocation.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/placeholder.js')}}"></script>
-      <script src="{{asset('assets/frontend/js/rating.js')}}"></script>
+
+    <script src="{{ asset('assets/frontend/js/cart.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/slider.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/currentlocation.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/placeholder.js') }}"></script>
+    {{-- <script src="{{asset('assets/frontend/js/rating.js')}}"></script> --}}
+    <script src="{{ asset('assets/frontend/js/loginmodal.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('assets/frontend/vender/bootstrap/js/bootstrap.bundle.min.js') }}" type="text/javascript">
+    </script>
+    <!-- slick Slider JS-->
+    <script src="{{ asset('assets/frontend/vender/slick/slick/slick.min.js') }}" type="text/javascript"></script>
+    <!-- Sidebar JS-->
+    <script src="{{ asset('assets/frontend/vender/sidebar/hc-offcanvas-nav.js') }}" type="text/javascript"></script>
+    <!-- Javascript -->
+    <script src="{{ asset('assets/frontend/js/custom.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/frontend/js/rocket-loader.min.js') }}" type="text/javascript"></script>
 
 
 
-<script>
-  $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
+
+
+
+            var totalQty = @json($totalqty);
+            var itemTotal = @json($itemTotal);
+
+            console.log(totalQty, itemTotal);
+            $('#carttopright').text(totalQty + " items ₹" + itemTotal);
+        });
+    </script>
+
    
 
-
-  var totalQty =  @json($totalqty);
-  var itemTotal =  @json($itemTotal);
-
-  console.log(totalQty, itemTotal);
-  $('#carttopright').text(totalQty + " items ₹" + itemTotal);
-});
-
-     
-</script>
     @yield('scripts')
 </body>
 

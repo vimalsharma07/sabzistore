@@ -20,4 +20,16 @@ class OrderReview extends Model
     protected $casts = [
         'photos' => 'array', // Automatically cast JSON column to array
     ];
+
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+public function order()
+{
+    return $this->belongsTo(Order::class);
+}
+  
 }

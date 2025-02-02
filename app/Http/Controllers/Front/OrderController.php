@@ -1,23 +1,26 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-use Illuminate\Support\Facades\Session;
+use PDF;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
-use PDF;
 use Illuminate\Support\Str;
-use Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class OrderController extends Controller
 {
 
     public function allorders(){
-        return view('frontend.user.orders');
+      $orders=   Order::where('user_id',Auth::user()->id)->get();
+        return view('frontend.user.orders',['orders'=>$orders]);
     }
+
+    
     public function index()
     {
         $orders = Order::with('address')->get(); // Assuming 'address' is a relation

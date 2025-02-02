@@ -1,58 +1,7 @@
 <style>
-    .product-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        overflow: hidden;
-        padding: 10px;
-        text-align: center;
-        max-width: 300px;
-        background-color: #fff;
-        position: relative;
-        font-family: Arial, sans-serif;
-        height: 320px; /* Fixed height */
-    }
+ 
 
-    .product-card img {
-        max-height: 150px;
-        height: 180px; /* Fixed height for uniform size */
-        object-fit: cover;
-        display: block;
-        margin: 0 auto 10px;
-    }
-
-    .badge-discount {
-        width: 35px;
-        height: 35px;
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        background-color:  rgb(49, 134, 22);
-        color: #fff;
-        font-size: 0.6rem;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
-
-    .badge-timer {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: #f8f9fa;
-        color: #28a745;
-        font-weight: bold;
-        font-size: 0.7rem;
-        padding: 3px 8px;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
-    }
-
-    .product-title {
-        font-size: 1rem;
-        font-weight: bold;
-        color: #000;
-        margin: 8px 0;
-        line-height: 1.3;
-    }
+   
 
     .product-attributes {
         display: flex;
@@ -111,8 +60,8 @@
         color: rgb(255, 255, 255);
         -webkit-box-pack: justify;
         justify-content: space-between;
-}
-    
+    }
+
 
     .quantity-control button {
         background-color: rgb(49, 134, 22);
@@ -124,7 +73,7 @@
         font-size: 1rem;
         font-weight: bold;
         cursor: pointer;
-        
+
     }
 
     .quantity-control button:hover {
@@ -135,13 +84,87 @@
         font-size: 1rem;
         font-weight: bold;
     }
-    .card-bottam{
+
+    .card-bottam {
         display: flex;
         justify-content: space-between;
     }
 </style>
 
-<div class="container my-4">
+<!-- 1st product -->
+<div class="col-6 col-md-3">
+    <a href="javascript:void(0)" class="text-decoration-none link-dark">
+        <div class="overflow-hidden border-0 shadow card rounded-4 search-list-item">
+            <div class="position-relative">
+                <div class="product-back"><img src="{{ asset($product->image) }}" alt=""
+                        class="img-fluid rounded-top"></div>
+                <!-- product time  -->
+                <div class="bottom-0 m-2 shadow-sm product-time position-absolute end-0">
+                    <span class="badge bg-light text-dark rounded-pill"><i
+                            class="fa-solid fa-stopwatch text-success"></i>&nbsp;37 mins</span>
+                </div>
+                <!-- product off -->
+                <div
+                    class="top-0 px-2 py-1 m-2 shadow-sm product-off bg-danger rounded-pill position-absolute end-0 small">
+                    <div class="gap-1 text-white d-flex align-items-start fw-bold">
+                        <div><i class="fa-solid fa-percent"></i></div>
+                        <div>
+                            <div>{{ getDiscount($product) }}% OFF</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-1">
+                    <div><span class="badge bg-success rounded-pill">4.2&nbsp;<i class="fa-solid fa-star"></i></span>
+                    </div>
+                    <div class="m-0 h4 fw-bold">{{ $product->name }}</div>
+                </div>
+                <div class="gap-2 m-0 d-flex text-muted fw-normal add-footer">
+                    {{-- <div class="add-btn"><i class="bi bi-plus-lg"></i></div> --}}
+                    <!-- Quantity Control -->
+
+                    @php
+                        $mrp = json_decode($product->attributes_mrp);
+                    @endphp
+                    @foreach (json_decode($product->attributes) as $key => $value)
+                        <div class="attribute-box" data-id="{{ $product->id }}" data-value="{{ $value }}"
+                            data-key="{{ $key }}" data-mrp="{{ $mrp[$loop->index] }}">
+                            {{ $key }}</div>
+                    @endforeach
+
+                </div>
+                <div class="product-price">
+                    ₹<span id="productPrice{{ $product->id }}">{{ $product->price }}</span>
+                    <span>
+                        <strike id="mrp{{ $product->id }}">₹{{ $product->mrp }}</strike>
+                    </span>
+                </div>
+                <div class=" quantity-control quantitycard" id="quantitycart{{ $product->id }}">
+                    <button id="decreaseQty{{ $product->id }}" class="decreaseQty"
+                        data-id="{{ $product->id }}">-</button>
+                    <span class="quantity-value" id="quantity{{ $product->id }}"
+                        data-id="{{ $product->id }}">0</span>
+                    <button id="increaseQty{{ $product->id }}" class="increaseQty"
+                        data-id="{{ $product->id }}">+</button>
+                </div>
+                <div class="add-btn addbuttoncart" id="addbutton{{ $product->id }}">
+                    <button id="addToCartButton{{ $product->id }}" data-id="{{ $product->id }}"
+                        class="addToCartButton add-btn">
+                        <span data-id="{{ $product->id }}"><i class="bi bi-plus-lg"></i></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+
+
+
+
+{{-- <div class="container my-4">
     <div class="product-card">
         <!-- Discount Badge -->
         <span class="badge-discount">{{ getDiscount($product) }}% OFF</span>
@@ -158,38 +181,40 @@
         <!-- Product Attributes -->
         <div class="product-attributes">
             @php
-                $mrp= json_decode($product->attributes_mrp);
+                $mrp = json_decode($product->attributes_mrp);
             @endphp
-            @foreach(json_decode($product->attributes) as $key => $value)
-                <div class="attribute-box" data-id="{{$product->id}}" data-value="{{ $value }}" data-key="{{$key}}" data-mrp="{{$mrp[$loop->index]}}">{{ $key }}</div>
+            @foreach (json_decode($product->attributes) as $key => $value)
+                <div class="attribute-box" data-id="{{ $product->id }}" data-value="{{ $value }}"
+                    data-key="{{ $key }}" data-mrp="{{ $mrp[$loop->index] }}">{{ $key }}</div>
             @endforeach
         </div>
 
         <!-- Product Price -->
         <div class="card-bottam">
             <div class="product-price">
-                ₹<span id="productPrice{{$product->id}}">{{ $product->price }}</span>
+                ₹<span id="productPrice{{ $product->id }}">{{ $product->price }}</span>
                 <div>
-                <strike id="mrp{{$product->id}}">₹{{ $product->mrp }}</strike>
-            </div>
+                    <strike id="mrp{{ $product->id }}">₹{{ $product->mrp }}</strike>
+                </div>
             </div>
 
             <!-- Quantity Control -->
-            <div class="quantity-control quantitycard" id="quantitycart{{$product->id}}">
-                <button id="decreaseQty{{$product->id}}" class="decreaseQty" data-id="{{$product->id}}">-</button>
-                <span class="quantity-value" id="quantity{{$product->id}}" data-id="{{$product->id}}">0</span>
-                <button id="increaseQty{{$product->id}}"  class="increaseQty"  data-id="{{$product->id}}">+</button>
+            <div class="quantity-control quantitycard" id="quantitycart{{ $product->id }}">
+                <button id="decreaseQty{{ $product->id }}" class="decreaseQty"
+                    data-id="{{ $product->id }}">-</button>
+                <span class="quantity-value" id="quantity{{ $product->id }}"
+                    data-id="{{ $product->id }}">0</span>
+                <button id="increaseQty{{ $product->id }}" class="increaseQty"
+                    data-id="{{ $product->id }}">+</button>
             </div>
-            <div class="quantity-control  addbuttoncart"  id="addbutton{{$product->id}}">
-                <button id="addToCartButton{{$product->id}}" data-id="{{$product->id}}"  class="addToCartButton">
-                <span  data-id="{{$product->id}}">Add</span>
-            </button>
-                    </div>
+            <div class="quantity-control addbuttoncart" id="addbutton{{ $product->id }}">
+                <button id="addToCartButton{{ $product->id }}" data-id="{{ $product->id }}"
+                    class="addToCartButton">
+                    <span data-id="{{ $product->id }}">Add</span>
+                </button>
+            </div>
         </div>
 
-      
+
     </div>
-</div>
-
-
-
+</div> --}}
